@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>구경 — SseulSaEop</title>
 
@@ -11,378 +11,534 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-:root{
---bg:#d9c8ff;
---deep:#211334;
---purple:#6338a8;
---forest:#173d2c;
---olive:#68752d;
---gray:#77717e;
---line:#b7a6d3;
+:root {
+    --bg: #b79bea;
+    --bg-dark: #9675cf;
+    --deep: #21152d;
+    --purple: #6035a0;
+    --forest: #173d2c;
+    --olive: #68752d;
+    --gray: #716879;
+    --white: #f8f5ff;
+    --line: #8e73b5;
 }
 
-*{
-box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-html,body{
-margin:0;
-width:100%;
-height:100%;
-overflow:hidden;
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-body{
-background:
-radial-gradient(circle at 20% 10%,#fff,transparent 27%),
-linear-gradient(135deg,#d9c8ff,#b99cff);
-color:var(--deep);
-font-family:"IBM Plex Sans KR",sans-serif;
-word-break:keep-all;
+body {
+    color: var(--deep);
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(255,255,255,.65),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg),
+            var(--bg-dark)
+        );
+
+    font-family:
+        "IBM Plex Sans KR",
+        sans-serif;
+
+    word-break: keep-all;
 }
 
-a{
-color:inherit;
-text-decoration:none;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-.header{
-height:72px;
-padding:0 5vw;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid #ffffff88;
+
+/* HEADER */
+
+.header {
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5vw;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.4);
+
+    background:
+        rgba(210,193,245,.35);
+
+    backdrop-filter: blur(14px);
+
+    position: relative;
+    z-index: 20;
 }
 
-.logo{
-font:700 21px "Space Grotesk";
+.logo {
+    font:
+        700 21px
+        "Space Grotesk",
+        sans-serif;
 }
 
-.nav{
-display:flex;
-gap:28px;
-font:700 14px "Space Grotesk","IBM Plex Sans KR";
+.nav {
+    display: flex;
+    gap: 28px;
+
+    font:
+        700 14px
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 }
 
-.explore{
-height:calc(100vh - 72px);
+.nav a {
+    transition:
+        color .2s ease,
+        transform .2s ease;
 }
 
-.layout{
-width:min(1050px,90%);
-height:100%;
-margin:auto;
-display:grid;
-grid-template-rows:42% 58%;
+.nav a:hover {
+    color: var(--forest);
+    transform: translateY(-1px);
 }
 
-.score-panel{
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
+
+/* MAIN */
+
+.explore {
+    width: 100%;
+    height: calc(100vh - 72px);
 }
 
-.score-line{
-position:absolute;
-width:75%;
-height:3px;
-background:linear-gradient(
-to right,
-var(--forest),
-#77717e,
-var(--olive)
-);
+.loading {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
 }
 
-.slider{
-position:absolute;
-width:75%;
-height:35px;
-opacity:0;
-cursor:pointer;
-z-index:5;
+
+/* CONTENT */
+
+.layout {
+    width: min(1050px, 90%);
+    height: 100%;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-rows: 43% 57%;
 }
 
-.knob{
-position:absolute;
-width:24px;
-height:24px;
-border-radius:50%;
-border:5px solid var(--purple);
-background:white;
-transform:translate(-50%,-50%);
-pointer-events:none;
-z-index:4;
+
+/* SCORE */
+
+.score-panel {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.value{
-position:absolute;
-top:calc(50% + 25px);
-transform:translateX(-50%);
-font:700 12px "Space Grotesk";
+.score-line {
+    position: absolute;
+
+    width: 78%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            to right,
+            var(--forest),
+            #77717e 50%,
+            var(--olive)
+        );
 }
 
-.label{
-position:absolute;
-top:calc(50% - 38px);
-font:700 10px "Space Grotesk";
+.slider {
+    position: absolute;
+
+    width: 78%;
+    height: 35px;
+
+    opacity: 0;
+
+    cursor: pointer;
+
+    z-index: 5;
 }
 
-.useless{
-left:12%;
-color:var(--forest);
+.knob {
+    position: absolute;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    border: 5px solid var(--purple);
+
+    background: var(--white);
+
+    transform:
+        translate(-50%, -50%);
+
+    pointer-events: none;
+
+    z-index: 4;
+
+    box-shadow:
+        0 3px 12px rgba(33,21,45,.25);
 }
 
-.useful{
-right:12%;
-color:var(--olive);
+.value {
+    position: absolute;
+
+    top: calc(50% + 27px);
+
+    transform: translateX(-50%);
+
+    font:
+        700 13px
+        "Space Grotesk";
 }
 
-.fact-area{
-display:flex;
-justify-content:center;
-align-items:flex-start;
-padding-top:20px;
-touch-action:pan-y;
+.label {
+    position: absolute;
+
+    top: calc(50% - 39px);
+
+    font:
+        700 10px
+        "Space Grotesk";
 }
 
-.fact-card{
-width:min(800px,90%);
-padding:35px 45px;
-background:#ffffffb8;
-border:1px solid var(--line);
-text-align:center;
+.useless {
+    left: 10%;
+
+    color: var(--forest);
 }
 
-.date{
-margin-bottom:20px;
-color:var(--gray);
-font:500 10px "Space Grotesk";
+.useful {
+    right: 10%;
+
+    color: var(--olive);
 }
 
-.fact{
-margin:0;
-font:700 clamp(25px,4vw,45px)/1.4 "Space Grotesk","IBM Plex Sans KR";
-letter-spacing:-1.5px;
+
+/* FACT */
+
+.fact-area {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-top: 15px;
+
+    touch-action: pan-y;
+
+    user-select: none;
 }
 
-.nickname{
-margin-top:22px;
-color:var(--gray);
-font-size:11px;
+.fact-card {
+    width: min(800px, 90%);
+
+    padding:
+        32px
+        42px
+        38px;
+
+    background:
+        rgba(255,255,255,.55);
+
+    border:
+        1px solid rgba(255,255,255,.5);
+
+    border-top:
+        4px solid var(--forest);
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 40px rgba(33,21,45,.08);
 }
 
-.down{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-width:48px;
-height:48px;
-border:1px solid var(--forest);
-background:var(--forest);
-color:white;
-font-size:20px;
-cursor:pointer;
-z-index:20;
+.date {
+    margin-bottom: 18px;
+
+    color: var(--gray);
+
+    font:
+        500 10px
+        "Space Grotesk";
 }
 
-.down:hover{
-background:var(--olive);
+.fact {
+    margin: 0;
+
+    font:
+        700 clamp(24px, 4vw, 44px)/1.4
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
+
+    letter-spacing: -1.5px;
 }
 
-.loading{
-height:100%;
-display:grid;
-place-items:center;
-font-size:13px;
+.nickname {
+    margin-top: 22px;
+
+    color: var(--gray);
+
+    font-size: 11px;
+}
+
+
+/* NEXT BUTTON */
+
+.down {
+    position: fixed;
+
+    bottom: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 50px;
+    height: 50px;
+
+    border:
+        1px solid var(--forest);
+
+    background:
+        var(--forest);
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    z-index: 30;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.down:hover {
+    background: var(--olive);
+
+    transform:
+        translateX(-50%)
+        translateY(-2px);
+}
+
+.down:active {
+    transform:
+        translateX(-50%)
+        translateY(1px);
 }
 
 
 /* MOBILE */
 
-@media(max-width:800px){
+@media (max-width: 800px) {
 
-.header{
-height:64px;
-padding:0 5%;
-}
+    .header {
+        height: 64px;
 
-.nav{
-gap:14px;
-font-size:11px;
-}
+        padding: 0 5%;
+    }
 
-.explore{
-height:calc(100dvh - 64px);
-}
+    .nav {
+        gap: 14px;
 
-.layout{
+        font-size: 11px;
+    }
 
-width:100%;
-height:100%;
+    .explore {
+        height: calc(100dvh - 64px);
+    }
 
-display:grid;
+    .layout {
+        width: 100%;
+        height: 100%;
 
-grid-template-columns:
-minmax(0,1fr) 82px;
+        margin: 0;
 
-grid-template-rows:1fr;
+        display: grid;
 
-}
+        grid-template-columns:
+            minmax(0, 1fr)
+            82px;
 
-.fact-area{
+        grid-template-rows: 1fr;
+    }
 
-width:100%;
-height:100%;
 
-padding:
-15px
-8px
-15px
-15px;
+    /* FACT LEFT */
 
-align-items:center;
+    .fact-area {
+        width: 100%;
+        height: 100%;
 
-overflow:hidden;
+        padding:
+            15px
+            7px
+            15px
+            15px;
 
-}
+        align-items: center;
 
-.fact-card{
+        overflow: hidden;
+    }
 
-width:100%;
+    .fact-card {
+        position: relative;
 
-height:
-calc(100dvh - 115px);
+        width: 100%;
+        height: calc(100dvh - 115px);
 
-padding:
-50px 18px 35px;
+        padding:
+            55px
+            18px
+            30px;
 
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:flex-start;
+        display: flex;
 
-text-align:left;
+        flex-direction: column;
 
-overflow:hidden;
+        justify-content: center;
+        align-items: flex-start;
 
-}
+        text-align: left;
 
-.date{
-position:absolute;
-top:18px;
-left:18px;
-}
+        overflow: hidden;
+    }
 
-.fact{
+    .date {
+        position: absolute;
 
-width:100%;
+        top: 18px;
+        left: 18px;
+    }
 
-font-size:
-clamp(22px,7vw,36px);
+    .fact {
+        width: 100%;
 
-line-height:1.4;
+        font-size:
+            clamp(21px, 7vw, 35px);
 
-}
+        line-height: 1.45;
+    }
 
-.nickname{
-margin-top:22px;
-}
+    .nickname {
+        margin-top: 22px;
+    }
 
-.score-panel{
 
-width:82px;
-height:100%;
+    /* SCORE RIGHT */
 
-overflow:visible;
+    .score-panel {
+        width: 82px;
+        height: 100%;
 
-}
+        overflow: visible;
+    }
 
-.score-line{
+    .score-line {
+        left: 50%;
+        top: 50%;
 
-left:50%;
-top:50%;
+        width: 3px;
+        height: 72%;
 
-width:3px;
-height:72%;
+        transform:
+            translate(-50%, -50%);
 
-transform:
-translate(-50%,-50%);
+        background:
+            linear-gradient(
+                to bottom,
+                var(--forest),
+                #77717e 50%,
+                var(--olive)
+            );
+    }
 
-background:linear-gradient(
-to bottom,
-var(--forest),
-#77717e 50%,
-var(--olive)
-);
+    .slider {
+        left: 50%;
+        top: 50%;
 
-}
+        width: 72%;
+        height: 100%;
 
-.slider{
+        transform:
+            translate(-50%, -50%)
+            rotate(-90deg);
+    }
 
-left:50%;
-top:50%;
+    .knob {
+        left: 50%;
+    }
 
-width:72%;
-height:100%;
+    .value {
+        left: 50%;
 
-transform:
-translate(-50%,-50%)
-rotate(-90deg);
+        top: calc(50% + 28px);
 
-}
+        transform:
+            translateX(-50%);
+    }
 
-.knob{
+    .label {
+        left: 50% !important;
+        right: auto !important;
 
-left:50%;
-top:50%;
+        width: 70px;
 
-}
+        text-align: center;
 
-.value{
+        transform:
+            translateX(-50%);
+    }
 
-left:50%;
+    .useless {
+        top: 10%;
+    }
 
-top:calc(50% + 28px);
+    .useful {
+        top: auto;
+        bottom: 10%;
+    }
 
-transform:translateX(-50%);
+    .down {
+        bottom: 12px;
 
-}
+        width: 43px;
+        height: 43px;
 
-.label{
-
-left:50% !important;
-right:auto !important;
-
-transform:translateX(-50%);
-
-width:70px;
-
-text-align:center;
-
-}
-
-.useless{
-top:10%;
-}
-
-.useful{
-top:auto;
-bottom:10%;
-}
-
-.down{
-
-bottom:12px;
-
-width:43px;
-height:43px;
-
-}
-
+        font-size: 18px;
+    }
 }
 </style>
 </head>
@@ -393,19 +549,28 @@ height:43px;
 
 <header class="header">
 
-<a href="./index.html" class="logo">
-SseulSaEop
-</a>
+    <a
+        href="./index.html"
+        class="logo"
+    >
+        SseulSaEop
+    </a>
 
-<nav class="nav">
+    <nav class="nav">
 
-<a href="./index.html">홈</a>
+        <a href="./index.html">
+            홈
+        </a>
 
-<a href="./share.html">공유</a>
+        <a href="./share.html">
+            공유
+        </a>
 
-<a href="./explore.html">구경</a>
+        <a href="./explore.html">
+            구경
+        </a>
 
-</nav>
+    </nav>
 
 </header>
 
@@ -413,75 +578,103 @@ SseulSaEop
 <main class="explore">
 
 
-<div id="loading" class="loading">
-불러오는 중...
-</div>
+    <div
+        id="loading"
+        class="loading"
+    >
+        불러오는 중...
+    </div>
 
 
-<div
-id="content"
-class="layout"
-style="display:none"
->
+    <div
+        id="content"
+        class="layout"
+        style="display:none"
+    >
 
 
-<section class="score-panel">
+        <!-- 위쪽 : 평가 -->
 
-<div class="label useless">
-−10 USELESS
-</div>
+        <section class="score-panel">
 
-<div class="label useful">
-+10 USEFUL
-</div>
+            <div class="label useless">
+                −10 USELESS
+            </div>
 
-<div class="score-line"></div>
+            <div class="label useful">
+                +10 USEFUL
+            </div>
 
-
-<input
-id="slider"
-class="slider"
-type="range"
-min="-10"
-max="10"
-step="0.01"
-value="0"
->
+            <div class="score-line"></div>
 
 
-<div id="knob" class="knob"></div>
-
-<div id="value" class="value">
-0.00
-</div>
-
-</section>
-
-
-<section id="factArea" class="fact-area">
-
-<article class="fact-card">
-
-<div id="date" class="date"></div>
-
-<p id="fact" class="fact"></p>
-
-<div id="nickname" class="nickname"></div>
-
-</article>
-
-</section>
-
-</div>
+            <input
+                id="slider"
+                class="slider"
+                type="range"
+                min="-10"
+                max="10"
+                step="0.01"
+                value="0"
+            >
 
 
-<button
-id="down"
-class="down"
-title="다음 사실"
->
-↓
-</button>
+            <div
+                id="knob"
+                class="knob"
+            ></div>
+
+
+            <div
+                id="value"
+                class="value"
+            >
+                0.00
+            </div>
+
+        </section>
+
+
+        <!-- 아래쪽 : 사실 -->
+
+        <section
+            id="factArea"
+            class="fact-area"
+        >
+
+            <article class="fact-card">
+
+                <div
+                    id="date"
+                    class="date"
+                ></div>
+
+                <p
+                    id="fact"
+                    class="fact"
+                ></p>
+
+                <div
+                    id="nickname"
+                    class="nickname"
+                ></div>
+
+            </article>
+
+        </section>
+
+    </div>
+
+
+    <!-- 다음 사실 -->
+
+    <button
+        id="down"
+        class="down"
+        title="다음 사실"
+    >
+        ↓
+    </button>
 
 
 </main>
@@ -489,296 +682,453 @@ title="다음 사실"
 
 <script>
 
-const db=supabase.createClient(
-"https://awujryapgmbhjvagonea.supabase.co",
-"sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
+/* =========================
+   SUPABASE
+========================= */
+
+const db = supabase.createClient(
+
+    "https://awujryapgmbhjvagonea.supabase.co",
+
+    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
+
 );
 
 
-let facts=[];
-let current=0;
-let startY=0;
+/* =========================
+   VARIABLES
+========================= */
+
+let facts = [];
+
+let current = 0;
+
+let startY = 0;
+
+let mouseStartY = 0;
 
 
-const slider=
-document.getElementById("slider");
+/* =========================
+   ELEMENTS
+========================= */
 
-const knob=
-document.getElementById("knob");
+const slider =
+    document.getElementById("slider");
 
-const value=
-document.getElementById("value");
+const knob =
+    document.getElementById("knob");
 
+const value =
+    document.getElementById("value");
 
-function updateSlider(){
-
-const score=Number(slider.value);
-
-value.textContent=
-score>=0
-? "+"+score.toFixed(2)
-: score.toFixed(2);
+const factArea =
+    document.getElementById("factArea");
 
 
-const percent=(score+10)/20;
+/* =========================
+   SLIDER
+========================= */
+
+function updateSlider() {
+
+    const score =
+        Number(slider.value);
 
 
-if(window.innerWidth<=800){
+    value.textContent =
+        score >= 0
+            ? "+" + score.toFixed(2)
+            : score.toFixed(2);
 
-knob.style.top=
-`${100-percent*100}%`;
 
-knob.style.left="50%";
+    const percent =
+        (score + 10) / 20;
 
-}else{
 
-knob.style.left=
-`${percent*100}%`;
+    if (window.innerWidth <= 800) {
 
-knob.style.top="50%";
+        /*
+         모바일:
+         -10 위
+         +10 아래
+        */
 
-}
+        knob.style.top =
+            `${percent * 100}%`;
+
+        knob.style.left =
+            "50%";
+
+    } else {
+
+        /*
+         PC:
+         -10 왼쪽
+         +10 오른쪽
+        */
+
+        knob.style.left =
+            `${percent * 100}%`;
+
+        knob.style.top =
+            "50%";
+
+    }
 
 }
 
 
 slider.addEventListener(
-"input",
-updateSlider
+    "input",
+    updateSlider
 );
 
 
-async function loadFacts(){
+/* =========================
+   LOAD FACTS
+========================= */
 
-const {data,error}=await db
-.from("facts")
-.select("id,nickname,fact,created_at")
-.order("created_at",{ascending:false});
+async function loadFacts() {
 
+    const {
+        data,
+        error
+    } = await db
 
-if(error){
+        .from("facts")
 
-console.error(error);
+        .select(
+            "id,nickname,fact,created_at"
+        )
 
-document.getElementById("loading").textContent=
-"사실을 불러오지 못했습니다.";
-
-return;
-
-}
-
-
-facts=data||[];
-
-
-if(facts.length===0){
-
-document.getElementById("loading").innerHTML=`
-<div style="text-align:center">
-아직 등록된 사실이 없습니다.<br><br>
-<a href="./share.html"
-style="font-weight:700">
-첫 번째 사실 남기기 →
-</a>
-</div>
-`;
-
-document.getElementById("down").style.display="none";
-
-return;
-
-}
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
 
 
-document.getElementById("loading").style.display="none";
+    if (error) {
 
-document.getElementById("content").style.display="grid";
+        console.error(error);
 
-showFact();
+        document
+            .getElementById("loading")
+            .textContent =
+            "사실을 불러오지 못했습니다.";
 
-}
+        return;
 
-
-function showFact(){
-
-const item=facts[current];
-
-
-document.getElementById("fact").textContent=
-item.fact;
+    }
 
 
-document.getElementById("nickname").textContent=
-"by "+(item.nickname||"익명");
+    facts = data || [];
 
 
-const date=new Date(item.created_at);
+    /* 사실이 없을 때 */
+
+    if (facts.length === 0) {
+
+        document
+            .getElementById("loading")
+            .innerHTML = `
+
+                <div style="
+                    text-align:center;
+                    line-height:1.8;
+                ">
+
+                    아직 등록된 사실이 없습니다.
+
+                    <br><br>
+
+                    <a
+                        href="./share.html"
+                        style="
+                            font-weight:700;
+                            text-decoration:underline;
+                        "
+                    >
+                        첫 번째 사실 남기기 →
+                    </a>
+
+                </div>
+
+            `;
+
+        document
+            .getElementById("down")
+            .style.display = "none";
+
+        return;
+
+    }
 
 
-document.getElementById("date").textContent=
-date.toLocaleDateString(
-"ko-KR",
-{
-year:"numeric",
-month:"2-digit",
-day:"2-digit"
-}
-);
+    document
+        .getElementById("loading")
+        .style.display = "none";
 
 
-slider.value=0;
-
-updateSlider();
-
-}
+    document
+        .getElementById("content")
+        .style.display = "grid";
 
 
-async function saveRating(){
-
-const item=facts[current];
-
-const score=
-Number(Number(slider.value).toFixed(2));
-
-
-const {error}=await db
-.from("ratings")
-.insert({
-
-fact_id:item.id,
-
-score:score
-
-});
-
-
-if(error){
-
-console.error(
-"평가 저장 오류:",
-error
-);
-
-}
+    showFact();
 
 }
 
 
-async function nextFact(){
+/* =========================
+   SHOW FACT
+========================= */
 
-await saveRating();
+function showFact() {
+
+    const item =
+        facts[current];
 
 
-current++;
+    document
+        .getElementById("fact")
+        .textContent =
+        item.fact;
 
-if(current>=facts.length){
-current=0;
+
+    document
+        .getElementById("nickname")
+        .textContent =
+        "by " +
+        (item.nickname || "익명");
+
+
+    const date =
+        new Date(item.created_at);
+
+
+    document
+        .getElementById("date")
+        .textContent =
+        date.toLocaleDateString(
+            "ko-KR",
+            {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }
+        );
+
+
+    /*
+        새로운 사실을 볼 때
+        점수는 항상 0부터 시작
+    */
+
+    slider.value = 0;
+
+    updateSlider();
+
 }
 
-showFact();
+
+/* =========================
+   SAVE SCORE
+========================= */
+
+async function saveRating() {
+
+    const item =
+        facts[current];
+
+
+    const score =
+        Number(
+            Number(slider.value)
+                .toFixed(2)
+        );
+
+
+    const {
+        error
+    } = await db
+
+        .from("ratings")
+
+        .insert({
+
+            fact_id: item.id,
+
+            score: score
+
+        });
+
+
+    if (error) {
+
+        console.error(
+            "평가 저장 오류:",
+            error
+        );
+
+    }
 
 }
 
 
-/* ↓ 버튼 */
+/* =========================
+   NEXT
+========================= */
+
+async function nextFact() {
+
+    if (!facts.length) {
+        return;
+    }
+
+
+    /*
+       현재 점수를 저장하고
+       다음 사실로 이동
+    */
+
+    await saveRating();
+
+
+    current++;
+
+
+    if (current >= facts.length) {
+
+        current = 0;
+
+    }
+
+
+    showFact();
+
+}
+
+
+/* =========================
+   ↓ BUTTON
+========================= */
 
 document
-.getElementById("down")
-.addEventListener(
-"click",
-nextFact
-);
+    .getElementById("down")
+    .addEventListener(
+        "click",
+        nextFact
+    );
 
 
-/* PC Space / 아래 화살표 */
+/* =========================
+   SPACE / ARROW DOWN
+========================= */
 
 document.addEventListener(
-"keydown",
-e=>{
+    "keydown",
+    function(e) {
 
-if(
-e.code==="Space" ||
-e.key==="ArrowDown"
-){
+        if (
+            e.code === "Space" ||
+            e.key === "ArrowDown"
+        ) {
 
-e.preventDefault();
+            e.preventDefault();
 
-nextFact();
+            nextFact();
 
-}
+        }
 
-}
+    }
 );
 
 
-/* 위아래 스와이프 */
+/* =========================
+   TOUCH SWIPE
+========================= */
 
-const area=
-document.getElementById("factArea");
+factArea.addEventListener(
+    "touchstart",
+    function(e) {
 
+        startY =
+            e.changedTouches[0].clientY;
 
-area.addEventListener(
-"touchstart",
-e=>{
-
-startY=
-e.changedTouches[0].clientY;
-
-},
-{passive:true}
+    },
+    {
+        passive: true
+    }
 );
 
 
-area.addEventListener(
-"touchend",
-e=>{
+factArea.addEventListener(
+    "touchend",
+    function(e) {
 
-const endY=
-e.changedTouches[0].clientY;
-
-const diff=endY-startY;
+        const endY =
+            e.changedTouches[0].clientY;
 
 
-if(Math.abs(diff)>60){
+        const diff =
+            endY - startY;
 
-nextFact();
 
-}
+        if (
+            Math.abs(diff) > 60
+        ) {
 
-},
-{passive:true}
+            nextFact();
+
+        }
+
+    },
+    {
+        passive: true
+    }
 );
 
 
-/* 마우스 드래그 */
+/* =========================
+   MOUSE DRAG
+========================= */
 
-let mouseStart=0;
+factArea.addEventListener(
+    "mousedown",
+    function(e) {
 
-area.addEventListener(
-"mousedown",
-e=>{
+        mouseStartY =
+            e.clientY;
 
-mouseStart=e.clientY;
-
-}
+    }
 );
 
 
-area.addEventListener(
-"mouseup",
-e=>{
+factArea.addEventListener(
+    "mouseup",
+    function(e) {
 
-const diff=e.clientY-mouseStart;
+        const diff =
+            e.clientY - mouseStartY;
 
-if(Math.abs(diff)>60){
 
-nextFact();
+        if (
+            Math.abs(diff) > 60
+        ) {
 
-}
+            nextFact();
 
-}
+        }
+
+    }
 );
 
+
+/* =========================
+   START
+========================= */
 
 loadFacts();
 
