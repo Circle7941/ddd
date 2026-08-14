@@ -11,37 +11,26 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root{
-    --purple-50:#f3edff;
-    --purple-100:#e7dcff;
-    --purple-300:#b89cff;
-    --purple-500:#8c63df;
-    --purple-700:#6741b5;
-    --purple-950:#24143d;
-
+    --bg:#d9c8ff;
+    --bg2:#b99cff;
+    --deep:#211334;
+    --purple:#6338a8;
     --forest:#173d2c;
-    --olive:#65702b;
-
-    --text:#241b30;
-    --muted:#756d7f;
-    --line:#d9d0e7;
-
-    --bg:#eee5ff;
+    --olive:#68752d;
+    --gray:#77717e;
+    --line:#b7a6d3;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
     margin:0;
+    color:var(--deep);
     background:
-        radial-gradient(circle at 20% 10%,#ffffffaa,transparent 30%),
-        var(--bg);
-    color:var(--text);
+        radial-gradient(circle at 20% 10%,#fff 0,transparent 27%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
     font-family:"IBM Plex Sans KR",sans-serif;
     word-break:keep-all;
 }
@@ -51,66 +40,41 @@ a{
     text-decoration:none;
 }
 
-button,
-input,
-textarea{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
 .header{
-    position:sticky;
-    top:0;
-    z-index:100;
     height:72px;
+    padding:0 5vw;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 5vw;
-    background:#eee5fff2;
-    backdrop-filter:blur(15px);
     border-bottom:1px solid #ffffff80;
+    background:#d9c8ffcc;
+    backdrop-filter:blur(15px);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
 .logo{
-    font-family:"Space Grotesk",sans-serif;
-    font-size:21px;
-    font-weight:700;
-    letter-spacing:-.5px;
+    font:700 21px "Space Grotesk";
 }
 
 .nav{
     display:flex;
     gap:30px;
-    font-family:"Space Grotesk","IBM Plex Sans KR",sans-serif;
-    font-weight:700;
+    font:700 14px "Space Grotesk","IBM Plex Sans KR";
 }
 
 .nav a{
-    position:relative;
-    padding:8px 0;
-}
-
-.nav a::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:2px;
-    width:0;
-    height:2px;
-    background:var(--forest);
     transition:.2s;
 }
 
-.nav a:hover::after{
-    width:100%;
+.nav a:hover{
+    color:var(--forest);
+    transform:translateY(-1px);
 }
 
 .container{
-    width:min(1100px,90%);
+    width:min(1050px,90%);
     margin:auto;
 }
 
@@ -120,154 +84,131 @@ button{
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:90px 0;
-}
-
-.hero-inner{
-    max-width:900px;
 }
 
 .badge{
     display:inline-block;
     padding:7px 12px;
-    margin-bottom:25px;
-    border:1px solid var(--forest);
     background:var(--forest);
     color:white;
     font:700 10px "Space Grotesk";
     letter-spacing:1px;
+    margin-bottom:25px;
 }
 
-.hero h1{
+h1{
     margin:0;
-    color:var(--purple-950);
-    font:700 clamp(45px,7vw,82px)/1.05 "Space Grotesk","IBM Plex Sans KR",sans-serif;
+    font:700 clamp(44px,7vw,82px)/1.05 "Space Grotesk","IBM Plex Sans KR";
     letter-spacing:-4px;
 }
 
 .hero p{
-    margin:25px auto 40px;
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.7;
+    color:#51465f;
+    font:500 13px "Space Grotesk";
+    margin:25px 0 38px;
 }
 
-.hero-buttons{
+.buttons{
     display:flex;
     justify-content:center;
     gap:12px;
 }
 
-.main-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:170px;
-    padding:16px 22px;
-    border:1px solid var(--purple-700);
-    background:var(--purple-700);
+.btn{
+    min-width:175px;
+    padding:17px 22px;
+    border:1px solid var(--purple);
+    background:var(--purple);
     color:white;
     font:700 13px "Space Grotesk","IBM Plex Sans KR";
     transition:.2s;
 }
 
-.main-btn:hover{
+.btn:hover{
     background:var(--forest);
     border-color:var(--forest);
     transform:translateY(-2px);
 }
 
-.main-btn.secondary{
+.btn.outline{
     background:transparent;
-    color:var(--purple-950);
+    color:var(--deep);
 }
 
-.main-btn.secondary:hover{
-    background:white;
+.btn.outline:hover{
+    color:white;
 }
 
 .section{
-    padding:90px 0;
-}
-
-.section-title{
-    margin-bottom:35px;
+    padding:80px 0;
 }
 
 .section-title small{
-    color:var(--forest);
     font:700 11px "Space Grotesk";
+    color:var(--forest);
     letter-spacing:1px;
 }
 
 .section-title h2{
-    margin:8px 0 0;
-    font:700 clamp(30px,5vw,50px) "Space Grotesk","IBM Plex Sans KR";
+    margin:8px 0 30px;
+    font:700 45px "Space Grotesk","IBM Plex Sans KR";
     letter-spacing:-2px;
 }
 
 .rank-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:25px;
+    gap:22px;
 }
 
 .rank-box{
-    background:#ffffffb8;
-    border:1px solid var(--line);
     padding:25px;
+    background:#ffffffb5;
+    border:1px solid var(--line);
 }
 
 .rank-box h3{
-    margin:0 0 18px;
-    font:700 16px "Space Grotesk";
+    margin:0 0 15px;
+    font:700 15px "Space Grotesk";
 }
 
 .rank-item{
     display:grid;
-    grid-template-columns:38px 1fr 65px;
+    grid-template-columns:35px 1fr 65px;
     align-items:center;
-    min-height:65px;
-    border-top:1px solid #ddd6e5;
+    min-height:58px;
+    border-top:1px solid #c8bad9;
 }
 
 .rank-number{
-    width:28px;
-    height:28px;
+    width:27px;
+    height:27px;
     display:grid;
     place-items:center;
-    background:#9a9a9a;
+    background:#888;
     color:white;
-    font:700 12px "Space Grotesk";
+    font:700 11px "Space Grotesk";
 }
 
-.rank-item:nth-child(1) .rank-number{
-    background:#c69b27;
-}
-
-.rank-item:nth-child(2) .rank-number{
-    background:#9d9d9d;
-}
-
-.rank-item:nth-child(3) .rank-number{
-    background:#a66b42;
-}
+.rank-item:nth-child(1) .rank-number{background:#c69b27}
+.rank-item:nth-child(2) .rank-number{background:#999}
+.rank-item:nth-child(3) .rank-number{background:#a66b42}
 
 .rank-fact{
-    min-width:0;
-    padding:0 10px;
+    overflow:hidden;
+    padding:0 8px;
 }
 
 .rank-fact strong{
     display:block;
-    overflow:hidden;
     white-space:nowrap;
+    overflow:hidden;
     text-overflow:ellipsis;
     font-size:12px;
 }
 
 .rank-fact small{
-    color:var(--muted);
+    color:var(--gray);
     font-size:9px;
 }
 
@@ -276,111 +217,74 @@ button{
     font:700 12px "Space Grotesk";
 }
 
-.together-section{
+.together{
     margin-top:70px;
-    padding:80px 0 50px;
+    padding:75px 0 30px;
     border-top:1px solid var(--line);
 }
 
-.together-tag{
+.tag{
     display:inline-block;
-    margin-bottom:18px;
     padding:6px 10px;
+    margin-bottom:18px;
     background:var(--forest);
     color:white;
     font:700 10px "Space Grotesk";
-    letter-spacing:1px;
 }
 
-.together-header h2{
+.together h2{
     margin:0;
     font:700 clamp(35px,5vw,58px)/1.1 "Space Grotesk","IBM Plex Sans KR";
-    letter-spacing:-2.5px;
+    letter-spacing:-2px;
 }
 
-.together-header h2 span{
+.together h2 span{
     color:var(--forest);
 }
 
-.together-header p{
-    margin:18px 0 30px;
-    color:var(--muted);
+.together p{
+    color:#51465f;
     font-size:13px;
     line-height:1.8;
 }
 
-.feedback-card{
-    max-width:760px;
-    padding:27px;
-    background:#ffffffc9;
+.feedback{
+    max-width:750px;
+    margin-top:30px;
+    padding:25px;
+    background:#ffffffb5;
     border:1px solid var(--line);
     border-top:4px solid var(--forest);
 }
 
-.feedback-title{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:15px;
-}
-
-.feedback-title strong{
-    font-size:15px;
-}
-
-.feedback-title span{
-    color:var(--muted);
-    font-size:10px;
-}
-
-.feedback-card input,
-.feedback-card textarea{
+.feedback input,
+.feedback textarea{
     width:100%;
-    border:1px solid #cfc5dc;
-    border-radius:0;
-    outline:none;
-    background:#faf8ff;
     padding:14px;
-}
-
-.feedback-card input{
-    height:48px;
     margin-bottom:10px;
+    border:1px solid #b9abc8;
+    background:#ffffffaa;
+    outline:none;
+    border-radius:0;
 }
 
-.feedback-card textarea{
-    min-height:145px;
-    resize:vertical;
-}
+.feedback input{height:48px}
+.feedback textarea{height:140px;resize:vertical}
 
-.feedback-card input:focus,
-.feedback-card textarea:focus{
-    border-color:var(--purple-700);
-    box-shadow:0 0 0 3px #8c63df20;
-}
-
-.feedback-submit{
+.feedback button{
     width:100%;
-    margin-top:10px;
     padding:15px;
     border:1px solid var(--forest);
     background:var(--forest);
     color:white;
-    font:700 13px "Space Grotesk","IBM Plex Sans KR";
-    transition:.2s;
-}
-
-.feedback-submit:hover{
-    background:var(--olive);
-}
-
-.feedback-submit:disabled{
-    opacity:.5;
+    font-weight:700;
+    cursor:pointer;
 }
 
 .footer{
     padding:35px 0;
-    color:var(--muted);
     border-top:1px solid var(--line);
+    color:#62576e;
     font-size:11px;
 }
 
@@ -388,26 +292,22 @@ button{
     position:fixed;
     left:50%;
     bottom:25px;
-    transform:translateX(-50%) translateY(20px);
-    opacity:0;
-    pointer-events:none;
+    transform:translateX(-50%);
     padding:13px 18px;
-    background:var(--purple-950);
+    background:var(--deep);
     color:white;
     font-size:12px;
-    transition:.25s;
-    z-index:999;
+    opacity:0;
+    pointer-events:none;
+    transition:.2s;
 }
 
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-}
+.toast.show{opacity:1}
 
 @media(max-width:700px){
+
     .header{
         height:64px;
-        padding:0 5%;
     }
 
     .nav{
@@ -417,18 +317,17 @@ button{
 
     .hero{
         min-height:calc(100dvh - 64px);
-        padding:60px 0;
     }
 
-    .hero h1{
+    h1{
         letter-spacing:-2.5px;
     }
 
-    .hero-buttons{
+    .buttons{
         flex-direction:column;
     }
 
-    .main-btn{
+    .btn{
         width:100%;
     }
 
@@ -436,16 +335,8 @@ button{
         grid-template-columns:1fr;
     }
 
-    .section{
-        padding:60px 0;
-    }
-
-    .together-section{
-        padding-top:55px;
-    }
-
-    .feedback-card{
-        padding:20px;
+    .section-title h2{
+        font-size:35px;
     }
 }
 </style>
@@ -454,115 +345,109 @@ button{
 <body>
 
 <header class="header">
-    <a class="logo" href="index.html">SseulSaEop</a>
 
-    <nav class="nav">
-        <a href="index.html">홈</a>
-        <a href="share.html">공유</a>
-        <a href="explore.html">구경</a>
-    </nav>
+<a href="./index.html" class="logo">SseulSaEop</a>
+
+<nav class="nav">
+    <a href="./index.html">홈</a>
+    <a href="./share.html">공유</a>
+    <a href="./explore.html">구경</a>
+</nav>
+
 </header>
 
 
 <main>
 
 <section class="hero">
-    <div class="hero-inner">
 
-        <div class="badge">USELESS VS USEFUL</div>
+<div>
 
-        <h1>세상에 쓸모없는<br>사실은 없습니다</h1>
+<div class="badge">USELESS VS USEFUL</div>
 
-        <p>
-            There are no useless facts in the world.
-        </p>
+<h1>
+세상에 쓸모없는<br>
+사실은 없습니다
+</h1>
 
-        <div class="hero-buttons">
-            <a href="share.html" class="main-btn">
-                나만의 사실 남기기 →
-            </a>
+<p>
+There are no useless facts in the world.
+</p>
 
-            <a href="explore.html" class="main-btn secondary">
-                사실 둘러보기 →
-            </a>
-        </div>
+<div class="buttons">
 
-    </div>
+<a href="./share.html" class="btn">
+나만의 사실 남기기 →
+</a>
+
+<a href="./explore.html" class="btn outline">
+사실 둘러보기 →
+</a>
+
+</div>
+
+</div>
+
 </section>
 
 
 <section class="section">
 
-    <div class="section-title">
-        <small>THIS WEEK</small>
-        <h2>이번주 쓸모도 랭킹</h2>
-    </div>
+<div class="section-title">
+<small>THIS WEEK</small>
+<h2>이번주 쓸모도 랭킹</h2>
+</div>
 
-    <div class="rank-grid">
+<div class="rank-grid">
 
-        <div class="rank-box">
-            <h3>− Useless TOP 10</h3>
-            <div id="uselessRanking"></div>
-        </div>
+<div class="rank-box">
+<h3>− Useless TOP 10</h3>
+<div id="useless">불러오는 중...</div>
+</div>
 
-        <div class="rank-box">
-            <h3>＋ Useful TOP 10</h3>
-            <div id="usefulRanking"></div>
-        </div>
+<div class="rank-box">
+<h3>＋ Useful TOP 10</h3>
+<div id="useful">불러오는 중...</div>
+</div>
 
-    </div>
-
-
-    <section class="together-section">
-
-        <div class="together-header">
-
-            <div class="together-tag">
-                TOGETHER
-            </div>
-
-            <h2>
-                함께 만들어가는
-                <span>쓸사없</span>
-            </h2>
-
-            <p>
-                SseulSaEop은 함께 만들어가는 쓸모없는 사실 공간입니다.<br>
-                불편한 점이나 재미있는 아이디어가 있다면 자유롭게 알려주세요.
-            </p>
-
-        </div>
+</div>
 
 
-        <div class="feedback-card">
+<div class="together">
 
-            <div class="feedback-title">
-                <strong>피드백 보내기</strong>
-                <span>최대 2,000자</span>
-            </div>
+<div class="tag">TOGETHER</div>
 
-            <input
-                id="feedbackNickname"
-                maxlength="30"
-                placeholder="닉네임 (선택)"
-            >
+<h2>
+함께 만들어가는 <span>쓸사없</span>
+</h2>
 
-            <textarea
-                id="feedbackMessage"
-                maxlength="2000"
-                placeholder="SseulSaEop에 하고 싶은 말을 남겨주세요."
-            ></textarea>
+<p>
+SseulSaEop은 함께 만들어가는 쓸모없는 사실 공간입니다.<br>
+불편한 점이나 아이디어가 있다면 자유롭게 알려주세요.
+</p>
 
-            <button
-                id="submitFeedback"
-                class="feedback-submit"
-            >
-                피드백 보내기 →
-            </button>
 
-        </div>
+<div class="feedback">
 
-    </section>
+<input
+id="feedbackNickname"
+maxlength="30"
+placeholder="닉네임 (선택)"
+>
+
+<textarea
+id="feedbackMessage"
+maxlength="2000"
+placeholder="SseulSaEop에 하고 싶은 말을 남겨주세요."
+></textarea>
+
+<button id="feedbackButton">
+피드백 보내기 →
+</button>
+
+</div>
+
+</div>
 
 </section>
 
@@ -570,9 +455,9 @@ button{
 
 
 <footer class="footer">
-    <div class="container">
-        SseulSaEop — 쓸모와 쓸모없음 사이
-    </div>
+<div class="container">
+SseulSaEop — 쓸모와 쓸모없음 사이
+</div>
 </footer>
 
 
@@ -580,310 +465,220 @@ button{
 
 
 <script>
-const SUPABASE_URL =
-    "https://awujryapgmbhjvagonea.supabase.co";
 
-const SUPABASE_KEY =
-    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE";
-
-const db =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-function toast(message){
-
-    const el =
-        document.getElementById("toast");
-
-    el.textContent = message;
-
-    el.classList.add("show");
-
-    setTimeout(
-        () => el.classList.remove("show"),
-        2500
-    );
-}
-
-
-function escapeHTML(str){
-
-    return String(str ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-
-async function loadRankings(){
-
-    const useless =
-        document.getElementById("uselessRanking");
-
-    const useful =
-        document.getElementById("usefulRanking");
-
-    useless.innerHTML =
-        "<p style='color:#756d7f;font-size:12px'>불러오는 중...</p>";
-
-    useful.innerHTML =
-        "<p style='color:#756d7f;font-size:12px'>불러오는 중...</p>";
-
-
-    const now = new Date();
-
-    const monday = new Date(now);
-
-    const day = monday.getDay();
-
-    const diff =
-        day === 0 ? 6 : day - 1;
-
-    monday.setDate(
-        monday.getDate() - diff
-    );
-
-    monday.setHours(0,0,0,0);
-
-
-    const {data,error} =
-        await db
-        .from("ratings")
-        .select(`
-            fact_id,
-            score,
-            created_at,
-            facts (
-                id,
-                fact,
-                nickname
-            )
-        `)
-        .gte(
-            "created_at",
-            monday.toISOString()
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        useless.innerHTML =
-            "<p style='color:#756d7f;font-size:12px'>랭킹을 불러오지 못했습니다.</p>";
-
-        useful.innerHTML =
-            "<p style='color:#756d7f;font-size:12px'>랭킹을 불러오지 못했습니다.</p>";
-
-        return;
-    }
-
-
-    const grouped = {};
-
-
-    for(const row of data || []){
-
-        if(!row.facts) continue;
-
-        if(!grouped[row.fact_id]){
-
-            grouped[row.fact_id] = {
-                fact:row.facts.fact,
-                nickname:row.facts.nickname,
-                scores:[]
-            };
-
-        }
-
-        grouped[row.fact_id]
-            .scores
-            .push(Number(row.score));
-
-    }
-
-
-    const rankings =
-        Object.values(grouped)
-        .map(item => {
-
-            const avg =
-                item.scores.reduce(
-                    (a,b)=>a+b,
-                    0
-                ) / item.scores.length;
-
-            return {
-                ...item,
-                average:Number(
-                    avg.toFixed(2)
-                )
-            };
-
-        });
-
-
-    const uselessList =
-        rankings
-        .filter(x=>x.average < 0)
-        .sort((a,b)=>a.average-b.average)
-        .slice(0,10);
-
-
-    const usefulList =
-        rankings
-        .filter(x=>x.average > 0)
-        .sort((a,b)=>b.average-a.average)
-        .slice(0,10);
-
-
-    renderRanking(
-        useless,
-        uselessList
-    );
-
-    renderRanking(
-        useful,
-        usefulList
-    );
-}
-
-
-function renderRanking(container,list){
-
-    container.innerHTML = "";
-
-    if(!list.length){
-
-        container.innerHTML =
-            "<p style='color:#756d7f;font-size:12px'>아직 평가된 사실이 없습니다.</p>";
-
-        return;
-    }
-
-
-    list.forEach((item,index)=>{
-
-        const row =
-            document.createElement("div");
-
-        row.className = "rank-item";
-
-        const score =
-            item.average > 0
-            ? "+" + item.average.toFixed(2)
-            : item.average.toFixed(2);
-
-        row.innerHTML = `
-            <div class="rank-number">
-                ${index+1}
-            </div>
-
-            <div class="rank-fact">
-                <strong>${escapeHTML(item.fact)}</strong>
-                <small>${escapeHTML(item.nickname || "익명")}</small>
-            </div>
-
-            <div class="rank-score">
-                ${score}
-            </div>
-        `;
-
-        container.appendChild(row);
-
-    });
-}
-
-
-const feedbackButton =
-    document.getElementById(
-        "submitFeedback"
-    );
-
-
-feedbackButton.addEventListener(
-    "click",
-    async ()=>{
-
-        const nickname =
-            document
-            .getElementById("feedbackNickname")
-            .value
-            .trim();
-
-        const message =
-            document
-            .getElementById("feedbackMessage")
-            .value
-            .trim();
-
-
-        if(!message){
-
-            toast(
-                "피드백 내용을 입력해주세요."
-            );
-
-            return;
-        }
-
-
-        feedbackButton.disabled = true;
-
-        feedbackButton.textContent =
-            "보내는 중...";
-
-
-        const {error} =
-            await db
-            .from("feedback")
-            .insert({
-                nickname:
-                    nickname || null,
-                message
-            });
-
-
-        if(error){
-
-            console.error(error);
-
-            toast(
-                "피드백을 보내지 못했습니다."
-            );
-
-        }else{
-
-            document
-            .getElementById("feedbackNickname")
-            .value = "";
-
-            document
-            .getElementById("feedbackMessage")
-            .value = "";
-
-            toast(
-                "피드백을 보내주셔서 감사합니다."
-            );
-
-        }
-
-
-        feedbackButton.disabled = false;
-
-        feedbackButton.textContent =
-            "피드백 보내기 →";
-
-    }
+const db = supabase.createClient(
+"https://awujryapgmbhjvagonea.supabase.co",
+"sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
 );
 
 
-loadRankings();
+function toast(text){
+
+const t=document.getElementById("toast");
+
+t.textContent=text;
+t.classList.add("show");
+
+setTimeout(()=>{
+t.classList.remove("show");
+},2500);
+
+}
+
+
+async function loadRanking(){
+
+const {data,error}=await db
+.from("ratings")
+.select(`
+fact_id,
+score,
+created_at,
+facts(
+fact,
+nickname
+)
+`)
+.order("created_at",{ascending:false});
+
+
+if(error){
+
+console.error(error);
+
+document.getElementById("useless").textContent=
+"랭킹을 불러오지 못했습니다.";
+
+document.getElementById("useful").textContent=
+"랭킹을 불러오지 못했습니다.";
+
+return;
+
+}
+
+
+const grouped={};
+
+(data||[]).forEach(row=>{
+
+if(!row.facts) return;
+
+if(!grouped[row.fact_id]){
+grouped[row.fact_id]={
+fact:row.facts.fact,
+nickname:row.facts.nickname,
+scores:[]
+};
+}
+
+grouped[row.fact_id].scores.push(
+Number(row.score)
+);
+
+});
+
+
+const list=Object.values(grouped).map(x=>{
+
+const average=
+x.scores.reduce((a,b)=>a+b,0)/
+x.scores.length;
+
+return {
+...x,
+average:Number(average.toFixed(2))
+};
+
+});
+
+
+const useless=list
+.filter(x=>x.average<0)
+.sort((a,b)=>a.average-b.average)
+.slice(0,10);
+
+
+const useful=list
+.filter(x=>x.average>0)
+.sort((a,b)=>b.average-a.average)
+.slice(0,10);
+
+
+renderRanking(
+document.getElementById("useless"),
+useless
+);
+
+renderRanking(
+document.getElementById("useful"),
+useful
+);
+
+}
+
+
+function renderRanking(el,list){
+
+el.innerHTML="";
+
+if(!list.length){
+
+el.innerHTML=
+"<p style='font-size:12px;color:#777'>아직 평가된 사실이 없습니다.</p>";
+
+return;
+
+}
+
+
+list.forEach((item,i)=>{
+
+const row=document.createElement("div");
+
+row.className="rank-item";
+
+const score=
+item.average>0
+? "+"+item.average.toFixed(2)
+:item.average.toFixed(2);
+
+
+row.innerHTML=`
+
+<div class="rank-number">${i+1}</div>
+
+<div class="rank-fact">
+
+<strong>${item.fact}</strong>
+
+<small>
+${item.nickname||"익명"}
+</small>
+
+</div>
+
+<div class="rank-score">
+${score}
+</div>
+
+`;
+
+el.appendChild(row);
+
+});
+
+}
+
+
+document
+.getElementById("feedbackButton")
+.addEventListener("click",async()=>{
+
+const nickname=
+document.getElementById("feedbackNickname").value.trim();
+
+const message=
+document.getElementById("feedbackMessage").value.trim();
+
+
+if(!message){
+
+toast("피드백 내용을 입력해주세요.");
+
+return;
+
+}
+
+
+const {error}=await db
+.from("feedback")
+.insert({
+nickname:nickname||null,
+message:message
+});
+
+
+if(error){
+
+console.error(error);
+
+toast("피드백을 보내지 못했습니다.");
+
+return;
+
+}
+
+
+document.getElementById("feedbackNickname").value="";
+document.getElementById("feedbackMessage").value="";
+
+toast("피드백을 보내주셔서 감사합니다.");
+
+});
+
+
+loadRanking();
+
 </script>
 
 </body>
