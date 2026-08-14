@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>사실 공유 — SseulSaEop</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>구경 — SseulSaEop</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -15,15 +15,23 @@
     --deep:#24143d;
     --violet:#6741b5;
     --forest:#173d2c;
+    --olive:#65702b;
     --muted:#756d7f;
     --line:#d9d0e7;
 }
 
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
 
 body{
-    margin:0;
-    min-height:100vh;
     background:var(--purple);
     color:var(--deep);
     font-family:"IBM Plex Sans KR",sans-serif;
@@ -31,10 +39,10 @@ body{
 
 .header{
     height:72px;
-    padding:0 5vw;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:0 5vw;
     border-bottom:1px solid #ffffff99;
 }
 
@@ -53,104 +61,268 @@ a{
     text-decoration:none;
 }
 
-.container{
-    width:min(720px,90%);
-    margin:auto;
+.explore{
+    height:calc(100vh - 72px);
+    position:relative;
 }
 
-.page{
-    min-height:calc(100vh - 72px);
+.layout{
+    width:min(1000px,90%);
+    height:100%;
+    margin:auto;
+    display:grid;
+    grid-template-rows:42% 58%;
+}
+
+.score-panel{
+    position:relative;
     display:flex;
     align-items:center;
-    padding:70px 0;
+    justify-content:center;
 }
 
-.back{
-    display:inline-block;
-    margin-bottom:30px;
+.score-line{
+    position:absolute;
+    width:75%;
+    height:3px;
+    background:linear-gradient(
+        to right,
+        var(--forest),
+        #77737e,
+        var(--olive)
+    );
+}
+
+.slider{
+    position:absolute;
+    width:75%;
+    height:35px;
+    opacity:0;
+    cursor:pointer;
+    z-index:5;
+}
+
+.knob{
+    position:absolute;
+    width:24px;
+    height:24px;
+    border:5px solid var(--violet);
+    background:white;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:4;
+}
+
+.value{
+    position:absolute;
+    top:calc(50% + 25px);
+    transform:translateX(-50%);
     font:700 12px "Space Grotesk";
 }
 
-h1{
-    margin:0;
-    font:700 clamp(40px,7vw,70px)/1.05 "Space Grotesk","IBM Plex Sans KR";
-    letter-spacing:-3px;
+.label{
+    position:absolute;
+    top:calc(50% - 38px);
+    font:700 10px "Space Grotesk";
 }
 
-.sub{
-    margin:20px 0 40px;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.8;
+.label.useless{
+    left:12%;
+    color:var(--forest);
 }
 
-label{
-    display:block;
-    margin:20px 0 8px;
-    font-size:11px;
-    font-weight:700;
+.label.useful{
+    right:12%;
+    color:var(--olive);
 }
 
-input,
-textarea{
-    width:100%;
-    border:1px solid #cfc5dc;
-    border-radius:0;
-    outline:none;
-    padding:15px;
+.fact-area{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding-top:20px;
+    touch-action:pan-y;
+}
+
+.fact-card{
+    width:min(760px,90%);
+    padding:30px 40px;
+    border:1px solid var(--line);
     background:#ffffffc9;
+    text-align:center;
 }
 
-input{
-    height:50px;
+.date{
+    color:var(--muted);
+    font:500 10px "Space Grotesk";
+    margin-bottom:20px;
 }
 
-textarea{
-    min-height:220px;
-    resize:vertical;
+.fact{
+    margin:0;
+    font:700 clamp(25px,4vw,45px)/1.35 "Space Grotesk","IBM Plex Sans KR";
+    letter-spacing:-1.5px;
 }
 
-input:focus,
-textarea:focus{
-    border-color:var(--violet);
-    box-shadow:0 0 0 3px #6741b520;
+.nickname{
+    margin-top:22px;
+    color:var(--muted);
+    font-size:11px;
 }
 
-.submit{
-    width:100%;
-    margin-top:18px;
-    padding:17px;
+.down{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:48px;
+    height:48px;
     border:1px solid var(--forest);
     background:var(--forest);
     color:white;
-    font:700 13px "Space Grotesk","IBM Plex Sans KR";
+    font-size:20px;
+    z-index:20;
 }
 
-.submit:hover{
-    background:#65702b;
+.down:hover{
+    background:var(--olive);
 }
 
-.toast{
-    position:fixed;
-    bottom:25px;
-    left:50%;
-    transform:translateX(-50%);
-    padding:13px 18px;
-    background:var(--deep);
-    color:white;
-    font-size:12px;
-    opacity:0;
-    transition:.2s;
+.empty{
+    display:grid;
+    place-items:center;
+    height:100%;
+    text-align:center;
 }
 
-.toast.show{
-    opacity:1;
-}
+@media(max-width:800px){
 
-@media(max-width:600px){
-    .header{height:64px}
-    .nav{gap:13px;font-size:11px}
-    .page{min-height:calc(100dvh - 64px)}
+    .header{
+        height:64px;
+        padding:0 5%;
+    }
+
+    .nav{
+        gap:14px;
+        font-size:11px;
+    }
+
+    .explore{
+        height:calc(100dvh - 64px);
+    }
+
+    .layout{
+        width:100%;
+        height:100%;
+        display:grid;
+        grid-template-columns:minmax(0,1fr) 82px;
+        grid-template-rows:1fr;
+    }
+
+    .fact-area{
+        width:100%;
+        height:100%;
+        min-height:0;
+        padding:15px 8px 15px 15px;
+        align-items:center;
+        overflow:hidden;
+    }
+
+    .fact-card{
+        width:100%;
+        height:calc(100dvh - 115px);
+        min-height:0;
+        padding:50px 18px 35px;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:center;
+        text-align:left;
+        overflow:hidden;
+    }
+
+    .date{
+        position:absolute;
+        margin:0;
+        top:18px;
+        left:18px;
+    }
+
+    .fact{
+        width:100%;
+        font-size:clamp(22px,7vw,36px);
+        line-height:1.4;
+        word-break:keep-all;
+    }
+
+    .nickname{
+        margin-top:22px;
+    }
+
+    .score-panel{
+        width:82px;
+        height:100%;
+        overflow:visible;
+    }
+
+    .score-line{
+        left:50%;
+        top:50%;
+        width:3px;
+        height:72%;
+        transform:translate(-50%,-50%);
+        background:linear-gradient(
+            to bottom,
+            var(--forest),
+            #77737e 50%,
+            var(--olive)
+        );
+    }
+
+    .slider{
+        left:50%;
+        top:50%;
+        width:72%;
+        height:100%;
+        transform:
+            translate(-50%,-50%)
+            rotate(-90deg);
+    }
+
+    .knob{
+        left:50%;
+        top:50%;
+    }
+
+    .value{
+        left:50%;
+        top:calc(50% + 28px);
+        transform:translateX(-50%);
+    }
+
+    .label{
+        left:50% !important;
+        right:auto !important;
+        transform:translateX(-50%);
+        width:70px;
+        text-align:center;
+    }
+
+    .label.useless{
+        top:10%;
+    }
+
+    .label.useful{
+        top:auto;
+        bottom:10%;
+    }
+
+    .down{
+        bottom:12px;
+        width:43px;
+        height:43px;
+    }
 }
 </style>
 </head>
@@ -172,56 +344,79 @@ textarea:focus{
 </header>
 
 
-<main class="page">
+<main class="explore">
 
-<div class="container">
-
-<a class="back" href="index.html">
-    ← HOME
-</a>
-
-<h1>
-    당신만의<br>
-    쓸모없는 사실은?
-</h1>
-
-<p class="sub">
-    아무에게도 필요하지 않을 것 같지만<br>
-    이상하게 기억에 남는 사실을 남겨주세요.
-</p>
+<div id="loading" class="empty">
+    불러오는 중...
+</div>
 
 
-<label>닉네임</label>
-
-<input
-    id="nickname"
-    maxlength="30"
-    placeholder="어떤 이름으로 남길까요?"
+<div
+    id="content"
+    class="layout"
+    style="display:none"
 >
 
+    <section class="score-panel">
 
-<label>쓸모없는 사실</label>
+        <span class="label useless">
+            −10 USELESS
+        </span>
 
-<textarea
-    id="fact"
-    maxlength="2000"
-    placeholder="당신만 알고 있는 쓸모없는 사실을 적어주세요."
-></textarea>
+        <span class="label useful">
+            +10 USEFUL
+        </span>
+
+        <div class="score-line"></div>
+
+        <input
+            id="slider"
+            class="slider"
+            type="range"
+            min="-10"
+            max="10"
+            step="0.01"
+            value="0"
+        >
+
+        <div id="knob" class="knob"></div>
+
+        <div id="value" class="value">
+            0.00
+        </div>
+
+    </section>
 
 
-<button
-    id="submit"
-    class="submit"
->
-    사실 남기기 →
-</button>
+    <section
+        id="factArea"
+        class="fact-area"
+    >
+
+        <article class="fact-card">
+
+            <div id="date" class="date"></div>
+
+            <p id="fact" class="fact"></p>
+
+            <div id="nickname" class="nickname"></div>
+
+        </article>
+
+    </section>
 
 </div>
 
+
+<button
+    id="down"
+    class="down"
+    aria-label="다음 사실"
+>
+    ↓
+</button>
+
 </main>
-
-
-<div id="toast" class="toast"></div>
 
 
 <script>
@@ -233,95 +428,378 @@ supabase.createClient(
 );
 
 
-function toast(text){
+let facts = [];
+let current = 0;
 
-    const el =
-        document.getElementById("toast");
+let startY = 0;
+let dragging = false;
 
-    el.textContent=text;
-    el.classList.add("show");
+const slider =
+    document.getElementById("slider");
 
-    setTimeout(
-        ()=>el.classList.remove("show"),
-        2300
-    );
+const knob =
+    document.getElementById("knob");
+
+const value =
+    document.getElementById("value");
+
+const factArea =
+    document.getElementById("factArea");
+
+
+function escapeHTML(str){
+
+    return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
 }
 
 
-document
-.getElementById("submit")
-.addEventListener(
-    "click",
-    async ()=>{
+function updateSlider(){
 
-        const nickname =
-            document
-            .getElementById("nickname")
-            .value.trim();
+    const score =
+        Number(slider.value);
 
-        const fact =
-            document
-            .getElementById("fact")
-            .value.trim();
+    value.textContent =
+        score >= 0
+        ? "+" + score.toFixed(2)
+        : score.toFixed(2);
 
 
-        if(!fact){
-
-            toast(
-                "사실을 하나 적어주세요."
-            );
-
-            return;
-        }
+    const percent =
+        (score + 10) / 20;
 
 
-        const button =
-            document.getElementById("submit");
+    if(window.innerWidth <= 800){
 
-        button.disabled=true;
-        button.textContent="저장 중...";
+        knob.style.top =
+            `${100 - percent * 100}%`;
+
+        knob.style.left = "50%";
+
+    }else{
+
+        knob.style.left =
+            `${percent * 100}%`;
+
+        knob.style.top = "50%";
+
+    }
+
+}
 
 
+slider.addEventListener(
+    "input",
+    updateSlider
+);
+
+
+async function loadFacts(){
+
+    const {data,error} =
+        await db
+        .from("facts")
+        .select(
+            "id,nickname,fact,created_at"
+        )
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("loading")
+        .textContent =
+            "사실을 불러오지 못했습니다.";
+
+        return;
+
+    }
+
+
+    facts = data || [];
+
+
+    if(!facts.length){
+
+        document.getElementById("loading")
+        .innerHTML =
+            `
+            <div>
+                <strong>아직 등록된 사실이 없습니다.</strong>
+                <br><br>
+                <a href="share.html">
+                    첫 번째 사실 남기기 →
+                </a>
+            </div>
+            `;
+
+        document.getElementById("down")
+        .style.display="none";
+
+        return;
+
+    }
+
+
+    document.getElementById("loading")
+    .style.display="none";
+
+    document.getElementById("content")
+    .style.display="grid";
+
+
+    showFact();
+
+}
+
+
+function showFact(){
+
+    const item =
+        facts[current];
+
+    document.getElementById("fact")
+    .textContent =
+        item.fact;
+
+    document.getElementById("nickname")
+    .textContent =
+        "by " +
+        (item.nickname || "익명");
+
+
+    const date =
+        new Date(item.created_at);
+
+    document.getElementById("date")
+    .textContent =
+        date.toLocaleDateString(
+            "ko-KR",
+            {
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit"
+            }
+        );
+
+
+    slider.value = 0;
+
+    updateSlider();
+
+}
+
+
+function getVoterId(){
+
+    let id =
+        localStorage.getItem(
+            "sseulsaeop_voter_id"
+        );
+
+
+    if(!id){
+
+        id =
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "sseulsaeop_voter_id",
+            id
+        );
+
+    }
+
+    return id;
+
+}
+
+
+async function saveRating(){
+
+    const fact =
+        facts[current];
+
+    const score =
+        Number(
+            Number(slider.value)
+            .toFixed(2)
+        );
+
+
+    try{
+
+        /*
+         * 기존 테이블 구조에 voter_id가
+         * 있는 경우 사용
+         */
         const {error} =
             await db
-            .from("facts")
+            .from("ratings")
             .insert({
-                nickname:
-                    nickname || "익명",
-                fact
+
+                fact_id:fact.id,
+
+                voter_id:
+                    getVoterId(),
+
+                score:score
+
             });
 
 
         if(error){
 
-            console.error(error);
-
-            toast(
-                "저장하지 못했습니다."
-            );
-
-        }else{
-
-            document
-            .getElementById("nickname")
-            .value="";
-
-            document
-            .getElementById("fact")
-            .value="";
-
-            toast(
-                "쓸모없는 사실이 등록되었습니다."
+            console.error(
+                "RATING ERROR:",
+                error
             );
 
         }
 
+    }catch(error){
 
-        button.disabled=false;
-        button.textContent="사실 남기기 →";
+        console.error(error);
+
+    }
+
+}
+
+
+async function nextFact(){
+
+    await saveRating();
+
+
+    if(current < facts.length - 1){
+
+        current++;
+
+    }else{
+
+        /*
+         * 마지막까지 본 뒤에는 처음으로
+         */
+        current=0;
+
+    }
+
+
+    showFact();
+
+}
+
+
+document
+.getElementById("down")
+.addEventListener(
+    "click",
+    nextFact
+);
+
+
+/* 마우스 / 터치 스와이프 */
+
+factArea.addEventListener(
+    "pointerdown",
+    e=>{
+
+        startY=e.clientY;
+        dragging=true;
 
     }
 );
+
+
+factArea.addEventListener(
+    "pointerup",
+    e=>{
+
+        if(!dragging) return;
+
+        dragging=false;
+
+        const diff =
+            e.clientY - startY;
+
+
+        if(Math.abs(diff) > 70){
+
+            nextFact();
+
+        }
+
+    }
+);
+
+
+/* 모바일 위아래 스와이프 */
+factArea.addEventListener(
+    "touchstart",
+    e=>{
+
+        startY =
+            e.changedTouches[0].clientY;
+
+    },
+    {passive:true}
+);
+
+
+factArea.addEventListener(
+    "touchend",
+    e=>{
+
+        const endY =
+            e.changedTouches[0].clientY;
+
+        const diff =
+            endY - startY;
+
+
+        if(Math.abs(diff) > 70){
+
+            nextFact();
+
+        }
+
+    },
+    {passive:true}
+);
+
+
+/* PC Space / 아래 방향키 */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.code === "Space" ||
+            e.key === "ArrowDown"
+        ){
+
+            e.preventDefault();
+
+            nextFact();
+
+        }
+
+    }
+);
+
+
+loadFacts();
 
 </script>
 
