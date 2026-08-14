@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>SseulSaEop</title>
 
@@ -14,7 +17,7 @@
    FONT
 ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 
 /* =========================================================
@@ -23,23 +26,42 @@
 
 :root {
 
-    --purple: #b79cff;
-    --purple-bright: #a987ff;
-    --purple-light: #eee8ff;
-    --purple-pale: #f7f3ff;
+    --purple-950: #211638;
+    --purple-900: #2d1d4d;
+    --purple-800: #432b70;
+    --purple-700: #5d3c99;
+    --purple-600: #7650c5;
+    --purple-500: #8e68e2;
+    --purple-400: #a889ef;
+    --purple-300: #c0a9f5;
 
-    --purple-dark: #7656c7;
+    --purple-bg: #eee7ff;
+    --purple-soft: #e2d7fb;
 
-    --forest: #315c48;
-    --olive: #85884b;
+    --forest-950: #102d22;
+    --forest-900: #173d2e;
+    --forest-800: #20523d;
+    --forest-700: #2c694e;
 
-    --text: #29252f;
-    --muted: #77717f;
+    --olive-950: #353716;
+    --olive-900: #484b1c;
+    --olive-800: #5f6225;
+    --olive-700: #74772e;
 
+    --cream: #f6f3ff;
     --white: #ffffff;
-    --bg: #faf8ff;
 
-    --border: rgba(100, 80, 150, .14);
+    --text: #211d2a;
+    --muted: #716a7d;
+    --muted-light: #9a92a7;
+
+    --line: rgba(52, 35, 80, .18);
+
+    --shadow:
+        0 20px 55px rgba(40, 23, 70, .14);
+
+    --ease:
+        cubic-bezier(.2,.8,.2,1);
 
 }
 
@@ -62,29 +84,48 @@ body {
 
     min-height: 100vh;
 
-    font-family:
-        "Nunito",
-        Pretendard,
-        Arial,
-        sans-serif;
+    background:
+        radial-gradient(
+            circle at 12% 5%,
+            rgba(142,104,226,.25),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(118,80,197,.17),
+            transparent 30%
+        ),
+        var(--cream);
 
     color: var(--text);
 
-    background:
+    font-family:
+        "IBM Plex Sans KR",
+        "Noto Sans KR",
+        sans-serif;
 
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(183,156,255,.30),
-            transparent 32%
-        ),
+    overflow-x: hidden;
 
-        radial-gradient(
-            circle at 90% 85%,
-            rgba(167,143,255,.18),
-            transparent 32%
-        ),
+}
 
-        var(--bg);
+
+/*
+    한국어 단어가 중간에 끊기는 것을 방지
+*/
+
+h1,
+h2,
+h3,
+h4,
+p,
+button,
+label,
+span,
+div {
+
+    word-break: keep-all;
+
+    overflow-wrap: break-word;
 
 }
 
@@ -116,11 +157,13 @@ button {
 
 header {
 
-    height: 78px;
+    position: sticky;
 
-    padding:
-        0
-        5vw;
+    top: 0;
+
+    z-index: 100;
+
+    height: 76px;
 
     display: flex;
 
@@ -128,21 +171,18 @@ header {
 
     justify-content: space-between;
 
-    position: sticky;
-
-    top: 0;
-
-    z-index: 100;
+    padding:
+        0
+        clamp(20px, 5vw, 72px);
 
     background:
-        rgba(250,248,255,.78);
+        rgba(246,243,255,.88);
 
     backdrop-filter:
-        blur(18px);
+        blur(20px);
 
     border-bottom:
-        1px solid
-        var(--border);
+        1px solid var(--line);
 
 }
 
@@ -153,34 +193,34 @@ header {
 
     border: 0;
 
+    padding: 7px 0;
+
     background: transparent;
 
-    padding: 0;
+    color: var(--purple-950);
 
-    font-size: 22px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-weight: 900;
+    font-size: 21px;
 
-    letter-spacing: -.8px;
+    font-weight: 700;
 
-    color: var(--text);
+    letter-spacing: -.7px;
 
     transition:
-        transform .2s;
+        color .2s var(--ease),
+        transform .2s var(--ease);
 
 }
 
 .logo:hover {
 
+    color: var(--purple-600);
+
     transform:
         translateY(-1px);
-
-}
-
-.logo span {
-
-    color:
-        var(--purple-dark);
 
 }
 
@@ -191,55 +231,63 @@ nav {
 
     display: flex;
 
-    gap: 5px;
+    align-items: center;
+
+    gap: 3px;
 
 }
 
 .nav-btn {
 
+    position: relative;
+
     border: 0;
+
+    padding:
+        10px 17px;
 
     background: transparent;
 
-    color: #77717f;
+    color: var(--muted);
 
-    padding:
-        11px
-        18px;
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    border-radius: 999px;
+    font-size: 14px;
 
-    font-size: 15px;
-
-    font-weight: 800;
-
-    letter-spacing: -.3px;
+    font-weight: 700;
 
     transition:
-        .2s;
+        color .2s var(--ease),
+        background .2s var(--ease),
+        transform .15s var(--ease);
 
 }
 
 .nav-btn:hover {
 
-    color:
-        var(--purple-dark);
+    color: var(--purple-700);
 
     background:
-        var(--purple-light);
+        rgba(192,169,245,.25);
+
+}
+
+.nav-btn:active {
+
+    transform:
+        translateY(1px);
 
 }
 
 .nav-btn.active {
 
-    color: white;
+    color: var(--white);
 
     background:
-        var(--purple-bright);
-
-    box-shadow:
-        0 5px 18px
-        rgba(169,135,255,.28);
+        var(--purple-800);
 
 }
 
@@ -266,21 +314,15 @@ nav {
 .home {
 
     padding:
-        95px
-        0
-        110px;
+        95px 0 110px;
 
 }
 
-
-/* HERO */
-
 .hero {
 
-    max-width: 900px;
+    max-width: 1000px;
 
-    margin-bottom:
-        55px;
+    margin-bottom: 55px;
 
 }
 
@@ -288,26 +330,29 @@ nav {
 
     display: inline-block;
 
-    padding:
-        8px
-        15px;
+    margin-bottom: 22px;
 
-    border-radius: 999px;
+    padding:
+        7px 12px;
+
+    border:
+        1px solid var(--purple-500);
 
     background:
-        var(--purple-light);
+        var(--purple-800);
 
     color:
-        var(--purple-dark);
+        white;
 
-    font-size: 12px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-weight: 900;
+    font-size: 11px;
 
-    letter-spacing: .3px;
+    font-weight: 700;
 
-    margin-bottom:
-        22px;
+    letter-spacing: .8px;
 
 }
 
@@ -316,244 +361,240 @@ nav {
 
     margin: 0;
 
+    color:
+        var(--purple-950);
+
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
+
     font-size:
-        clamp(
-            47px,
-            7vw,
-            88px
-        );
+        clamp(45px, 7vw, 88px);
 
     line-height:
         1.02;
 
     letter-spacing:
-        -5px;
+        -4px;
 
-    font-weight:
-        900;
+    font-weight: 700;
 
 }
 
 .hero h1 em {
 
-    font-style:
-        normal;
-
     color:
-        var(--purple-dark);
+        var(--purple-600);
+
+    font-style: normal;
 
 }
 
+.english {
 
-.hero .english {
+    margin-top: 20px;
 
-    margin:
-        22px
-        0
-        0;
+    color: var(--muted);
 
-    color:
-        #8b8397;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
     font-size:
-        clamp(
-            15px,
-            2vw,
-            20px
-        );
+        clamp(14px, 1.8vw, 19px);
 
-    line-height:
-        1.5;
-
-    font-weight:
-        600;
+    font-weight: 500;
 
 }
 
 
 /* =========================================================
-   HOME BUTTONS
+   HOME CHOICES
 ========================================================= */
 
 .choice-grid {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap:
-        20px;
+    gap: 18px;
 
-    margin-bottom:
-        95px;
+    margin-bottom: 90px;
 
 }
-
 
 .choice {
 
-    min-height:
-        275px;
+    position: relative;
 
-    padding:
-        36px;
+    min-height: 270px;
 
-    text-align:
-        left;
+    padding: 34px;
+
+    text-align: left;
 
     border:
-        1px solid
-        var(--border);
+        1px solid var(--line);
 
-    border-radius:
-        30px;
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
+    border-radius: 3px;
 
     transition:
-        transform .25s,
-        box-shadow .25s;
+        transform .25s var(--ease),
+        background .25s var(--ease),
+        border-color .25s var(--ease),
+        box-shadow .25s var(--ease);
 
 }
-
 
 .choice:first-child {
 
     background:
         linear-gradient(
             135deg,
-            #eee7ff,
-            #e4dbff
+            #d8c9fa,
+            #c5b0f2
         );
 
 }
-
 
 .choice:last-child {
 
     background:
         linear-gradient(
             135deg,
-            #edf0dc,
-            #e4e6ce
+            #d7dbb2,
+            #bcc18b
         );
 
 }
 
-
 .choice:hover {
 
     transform:
-        translateY(-6px);
+        translateY(-5px);
+
+    border-color:
+        rgba(45,29,77,.42);
 
     box-shadow:
-        0 25px 55px
-        rgba(90,70,140,.13);
+        var(--shadow);
 
 }
 
+.choice:active {
+
+    transform:
+        translateY(-1px);
+
+}
 
 .choice .number {
 
-    font-size:
-        12px;
-
-    font-weight:
-        900;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
     color:
-        var(--purple-dark);
+        var(--purple-900);
 
-    letter-spacing:
-        .8px;
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
 
 }
-
 
 .choice:last-child .number {
 
     color:
-        var(--forest);
+        var(--forest-900);
 
 }
-
 
 .choice h2 {
 
+    max-width: 620px;
+
     margin:
-        65px
-        0
-        12px;
+        68px 0 13px;
 
-    font-size:
-        27px;
+    color:
+        var(--purple-950);
 
-    letter-spacing:
-        -1.3px;
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    font-weight:
-        900;
+    font-size: 27px;
+
+    line-height: 1.25;
+
+    letter-spacing: -1.1px;
+
+    font-weight: 700;
 
 }
-
 
 .choice p {
 
-    margin:
-        0;
+    margin: 0;
 
     color:
-        #716b78;
+        rgba(33,29,42,.65);
 
-    font-size:
-        14px;
+    font-size: 13px;
 
-    font-weight:
-        600;
+    font-weight: 600;
 
 }
 
-
 .arrow {
 
-    position:
-        absolute;
+    position: absolute;
 
-    right:
-        30px;
+    right: 28px;
 
-    bottom:
-        25px;
+    bottom: 25px;
 
-    width:
-        42px;
+    width: 38px;
 
-    height:
-        42px;
+    height: 38px;
 
-    border-radius:
-        50%;
+    display: grid;
 
-    display:
-        grid;
+    place-items: center;
 
-    place-items:
-        center;
+    border:
+        1px solid rgba(33,29,42,.2);
 
     background:
-        rgba(255,255,255,.5);
-
-    font-size:
-        20px;
+        rgba(255,255,255,.28);
 
     color:
-        var(--purple-dark);
+        var(--purple-950);
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    transition:
+        transform .2s var(--ease),
+        background .2s var(--ease);
+
+}
+
+.choice:hover .arrow {
+
+    transform:
+        translateX(4px);
+
+    background:
+        rgba(255,255,255,.6);
 
 }
 
@@ -564,28 +605,29 @@ nav {
 
 .ranking-title {
 
-    margin-bottom:
-        25px;
+    margin-bottom: 22px;
 
 }
-
 
 .ranking-title h2 {
 
-    margin:
-        0;
+    margin: 0;
 
-    font-size:
-        32px;
+    color:
+        var(--purple-950);
 
-    letter-spacing:
-        -1.8px;
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    font-weight:
-        900;
+    font-size: 30px;
+
+    letter-spacing: -1.5px;
+
+    font-weight: 700;
 
 }
-
 
 .ranking-title p {
 
@@ -595,484 +637,455 @@ nav {
     color:
         var(--muted);
 
-    font-size:
-        13px;
+    font-size: 12px;
 
-    font-weight:
-        600;
+    font-weight: 500;
 
 }
 
-
 .rank-grid {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap:
-        22px;
+    gap: 18px;
 
 }
 
-
 .rank-box {
 
-    padding:
-        25px;
+    padding: 25px;
 
     border:
-        1px solid
-        var(--border);
+        1px solid var(--line);
 
-    border-radius:
-        26px;
+    border-radius: 3px;
 
     background:
         rgba(255,255,255,.72);
 
 }
 
-
 .rank-box.useless {
 
     border-top:
-        5px solid
-        var(--olive);
+        5px solid var(--olive-900);
 
 }
-
 
 .rank-box.useful {
 
     border-top:
-        5px solid
-        var(--forest);
+        5px solid var(--forest-900);
 
 }
-
 
 .rank-box h3 {
 
     margin:
-        0 0 18px;
+        0 0 16px;
 
-    font-size:
-        17px;
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    font-weight:
-        900;
+    font-size: 15px;
+
+    font-weight: 700;
 
 }
-
 
 .rank-item {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
-        40px
-        1fr
-        65px;
+        35px 1fr 65px;
 
-    gap:
-        10px;
+    align-items: center;
 
-    align-items:
-        center;
+    gap: 10px;
 
-    min-height:
-        58px;
+    min-height: 55px;
 
     border-bottom:
         1px solid
-        rgba(100,80,150,.09);
+        rgba(52,35,80,.09);
 
 }
-
 
 .rank-number {
 
-    font-weight:
-        900;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-size:
-        14px;
+    font-size: 13px;
 
-}
-
-
-/* 1,2,3등 */
-
-.rank-item:nth-child(1)
-.rank-number,
-.rank-item:nth-child(1)
-.rank-score {
-
-    color:
-        #c49a22;
+    font-weight: 700;
 
 }
-
-
-.rank-item:nth-child(2)
-.rank-number,
-.rank-item:nth-child(2)
-.rank-score {
-
-    color:
-        #8d9298;
-
-}
-
-
-.rank-item:nth-child(3)
-.rank-number,
-.rank-item:nth-child(3)
-.rank-score {
-
-    color:
-        #9a6847;
-
-}
-
-
-/* 4~10 */
-
-.rank-item:nth-child(n+4)
-.rank-number,
-.rank-item:nth-child(n+4)
-.rank-score {
-
-    color:
-        #99999e;
-
-}
-
 
 .rank-fact {
 
-    min-width:
-        0;
+    min-width: 0;
 
 }
-
 
 .rank-fact strong {
 
-    display:
-        block;
+    display: block;
 
-    white-space:
-        nowrap;
+    overflow: hidden;
 
-    overflow:
-        hidden;
+    white-space: nowrap;
 
-    text-overflow:
-        ellipsis;
+    text-overflow: ellipsis;
 
-    font-size:
-        13px;
+    font-size: 12px;
 
-    font-weight:
-        800;
+    font-weight: 700;
 
 }
-
 
 .rank-fact small {
 
-    color:
-        var(--muted);
+    display: block;
 
-    font-size:
-        11px;
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+}
+
+.rank-score {
+
+    text-align: right;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 700;
 
 }
 
 
+/* GOLD */
+
+.rank-item:nth-child(1)
+.rank-number,
+.rank-item:nth-child(1)
 .rank-score {
 
-    text-align:
-        right;
+    color:
+        #a77b09;
 
-    font-weight:
-        900;
+}
+
+/* SILVER */
+
+.rank-item:nth-child(2)
+.rank-number,
+.rank-item:nth-child(2)
+.rank-score {
+
+    color:
+        #747b84;
+
+}
+
+/* BRONZE */
+
+.rank-item:nth-child(3)
+.rank-number,
+.rank-item:nth-child(3)
+.rank-score {
+
+    color:
+        #8a5d3f;
+
+}
+
+/* REST */
+
+.rank-item:nth-child(n+4)
+.rank-number,
+.rank-item:nth-child(n+4)
+.rank-score {
+
+    color:
+        #85818b;
 
 }
 
 
 /* =========================================================
-   SHARE
+   SHARE PAGE
 ========================================================= */
 
 .form-page {
 
-    max-width:
-        720px;
+    max-width: 760px;
 
     padding:
-        70px
-        0
-        120px;
+        65px 0 120px;
 
 }
-
 
 .back {
 
     border:
-        0;
+        1px solid var(--purple-700);
 
-    background:
-        transparent;
+    border-radius: 2px;
 
     padding:
-        12px
-        20px;
-
-    border-radius:
-        999px;
-
-    color:
-        var(--purple-dark);
-
-    font-size:
-        14px;
-
-    font-weight:
-        900;
+        12px 18px;
 
     background:
-        var(--purple-light);
-
-    margin-bottom:
-        40px;
-
-    transition:
-        .2s;
-
-}
-
-
-.back:hover {
-
-    background:
-        var(--purple);
+        var(--purple-900);
 
     color:
         white;
 
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition:
+        background .2s var(--ease),
+        transform .15s var(--ease),
+        box-shadow .2s var(--ease);
+
 }
 
+.back:hover {
+
+    background:
+        var(--purple-700);
+
+    box-shadow:
+        0 8px 25px
+        rgba(45,29,77,.18);
+
+}
+
+.back:active {
+
+    transform:
+        translateY(2px);
+
+}
 
 .form-page h1 {
 
     margin:
-        0 0 18px;
+        38px 0 17px;
+
+    color:
+        var(--purple-950);
+
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
     font-size:
-        clamp(
-            42px,
-            6vw,
-            64px
-        );
-
-    letter-spacing:
-        -3px;
+        clamp(42px, 6vw, 66px);
 
     line-height:
         1.05;
 
-    font-weight:
-        900;
+    letter-spacing:
+        -3px;
+
+    font-weight: 700;
 
 }
-
 
 .form-page > p {
 
     margin:
-        0 0 42px;
+        0 0 38px;
 
     color:
         var(--muted);
 
-    font-size:
-        15px;
+    font-size: 14px;
 
-    line-height:
-        1.7;
+    line-height: 1.8;
 
-    font-weight:
-        600;
+    font-weight: 500;
 
 }
-
 
 .form-card {
 
-    padding:
-        35px;
-
-    background:
-        rgba(255,255,255,.8);
+    padding: 32px;
 
     border:
-        1px solid
-        var(--border);
+        1px solid var(--line);
 
-    border-radius:
-        28px;
+    border-radius: 3px;
+
+    background:
+        rgba(255,255,255,.82);
 
     box-shadow:
-        0 20px 60px
-        rgba(80,60,130,.06);
+        var(--shadow);
 
 }
-
 
 .field {
 
-    margin-bottom:
-        25px;
+    margin-bottom: 24px;
 
 }
-
 
 .field label {
 
-    display:
-        block;
+    display: block;
 
-    margin-bottom:
-        9px;
+    margin-bottom: 8px;
 
-    font-size:
-        13px;
+    color:
+        var(--purple-950);
 
-    font-weight:
-        900;
+    font-size: 12px;
+
+    font-weight: 700;
 
 }
-
 
 .field input,
 .field textarea {
 
-    width:
-        100%;
-
-    padding:
-        15px;
+    width: 100%;
 
     border:
         1px solid
-        var(--border);
+        rgba(52,35,80,.22);
 
-    border-radius:
-        15px;
+    border-radius: 2px;
+
+    outline: none;
+
+    padding:
+        14px 15px;
 
     background:
-        #fbfaff;
-
-    outline:
-        none;
+        #faf8ff;
 
     color:
         var(--text);
 
     transition:
-        .2s;
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
 
 }
 
+.field input:hover,
+.field textarea:hover {
+
+    border-color:
+        var(--purple-500);
+
+}
 
 .field input:focus,
 .field textarea:focus {
 
     border-color:
-        var(--purple-bright);
+        var(--purple-700);
+
+    background:
+        white;
 
     box-shadow:
-        0 0 0 4px
-        rgba(169,135,255,.12);
+        0 0 0 3px
+        rgba(118,80,197,.13);
 
 }
-
 
 .field textarea {
 
-    min-height:
-        190px;
+    min-height: 185px;
 
-    resize:
-        vertical;
+    resize: vertical;
 
 }
 
-
 .submit {
 
-    width:
-        100%;
+    width: 100%;
 
     border:
-        0;
+        1px solid var(--purple-700);
 
-    border-radius:
-        16px;
+    border-radius: 2px;
 
-    padding:
-        17px;
+    padding: 16px;
+
+    background:
+        var(--purple-800);
 
     color:
         white;
 
-    background:
-        var(--purple-bright);
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    font-size:
-        15px;
+    font-size: 14px;
 
-    font-weight:
-        900;
-
-    box-shadow:
-        0 10px 25px
-        rgba(169,135,255,.22);
+    font-weight: 700;
 
     transition:
-        .2s;
+        background .2s var(--ease),
+        transform .15s var(--ease),
+        box-shadow .2s var(--ease);
 
 }
-
 
 .submit:hover {
 
-    transform:
-        translateY(-2px);
-
     background:
-        var(--purple-dark);
+        var(--purple-600);
+
+    box-shadow:
+        0 10px 30px
+        rgba(93,60,153,.22);
 
 }
 
+.submit:active {
 
-.notice {
+    transform:
+        translateY(2px);
 
-    margin-top:
-        12px;
+}
 
-    color:
-        #98919f;
+.submit:disabled {
 
-    font-size:
-        11px;
+    opacity: .6;
+
+    cursor: wait;
 
 }
 
@@ -1083,8 +1096,8 @@ nav {
 
 .explore-page {
 
-    height:
-        calc(100vh - 78px);
+    min-height:
+        calc(100vh - 76px);
 
     overflow:
         hidden;
@@ -1092,45 +1105,281 @@ nav {
 }
 
 
+/*
+    PC 구조
+
+    ┌─────────────────────────────┐
+    │         날짜                │
+    │                             │
+    │  -10 ─────── ● ───── +10   │
+    │                             │
+    │                             │
+    │          FACT               │
+    │                             │
+    │        @nickname            │
+    └─────────────────────────────┘
+*/
+
 .explore-layout {
 
     width:
-        min(1200px, 92vw);
+        min(1000px, 88vw);
 
-    height:
-        100%;
+    min-height:
+        calc(100vh - 76px);
 
     margin:
-        auto;
+        0 auto;
 
     display:
         grid;
 
-    grid-template-columns:
-        1fr
-        240px;
-
-    gap:
-        60px;
+    grid-template-rows:
+        155px 1fr 150px;
 
     align-items:
+        center;
+
+    position:
+        relative;
+
+}
+
+
+/* =========================================================
+   SCORE - DESKTOP
+========================================================= */
+
+.score-panel {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 120px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
         center;
 
 }
 
 
-/* FACT */
+/* horizontal line */
+
+.score-line {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    top: 50%;
+
+    height: 3px;
+
+    transform:
+        translateY(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--olive-900),
+            #85818d 50%,
+            var(--forest-900)
+        );
+
+}
+
+
+/* center tick */
+
+.score-line::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background:
+        #85818d;
+
+}
+
+
+/* invisible range */
+
+.score-slider {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    margin: 0;
+
+    opacity: 0;
+
+    cursor:
+        ew-resize;
+
+    z-index: 5;
+
+}
+
+
+/* knob */
+
+.score-knob {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 25px;
+
+    height: 25px;
+
+    border:
+        5px solid var(--purple-700);
+
+    border-radius: 50%;
+
+    background:
+        white;
+
+    transform:
+        translate(-50%, -50%);
+
+    box-shadow:
+        0 4px 15px
+        rgba(33,29,42,.22);
+
+    pointer-events:
+        none;
+
+    z-index: 4;
+
+}
+
+
+/* value */
+
+.score-value {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: calc(50% + 31px);
+
+    transform:
+        translateX(-50%);
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color:
+        var(--purple-800);
+
+    pointer-events:
+        none;
+
+}
+
+
+/* score labels */
+
+.score-label {
+
+    position: absolute;
+
+    top: calc(50% - 37px);
+
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
+
+    font-size: 10px;
+
+    line-height: 1.35;
+
+    font-weight: 600;
+
+}
+
+.score-label.left {
+
+    left: 0;
+
+    color:
+        var(--olive-900);
+
+}
+
+.score-label.right {
+
+    right: 0;
+
+    color:
+        var(--forest-900);
+
+    text-align: right;
+
+}
+
+
+/* =========================================================
+   FACT AREA - DESKTOP
+========================================================= */
 
 .fact-area {
 
-    height:
-        82%;
+    position: relative;
 
-    min-height:
-        470px;
+    width: 100%;
 
-    position:
-        relative;
+    height: 100%;
+
+    min-height: 350px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     touch-action:
         pan-y;
@@ -1138,20 +1387,20 @@ nav {
 }
 
 
+/*
+    사실 카드 자체를 최대한 단순하게
+*/
+
 .fact-card {
 
-    position:
-        absolute;
+    position: relative;
 
-    inset:
-        0;
+    width: 100%;
+
+    min-height: 350px;
 
     padding:
-        clamp(
-            35px,
-            7vw,
-            90px
-        );
+        40px 70px;
 
     display:
         flex;
@@ -1159,34 +1408,37 @@ nav {
     flex-direction:
         column;
 
+    align-items:
+        center;
+
     justify-content:
         center;
 
-    border:
-        1px solid
-        var(--border);
+    text-align:
+        center;
 
-    border-radius:
-        35px;
+    border:
+        1px solid var(--line);
+
+    border-radius: 3px;
 
     background:
-        rgba(255,255,255,.88);
+        rgba(255,255,255,.78);
 
     box-shadow:
         0 25px 75px
-        rgba(80,60,130,.09);
+        rgba(40,23,70,.10);
 
     transition:
-        transform .35s ease,
-        opacity .35s ease;
+        transform .3s var(--ease),
+        opacity .3s var(--ease);
 
 }
-
 
 .fact-card.leaving {
 
     transform:
-        translateY(-110%);
+        translateY(-85px);
 
     opacity:
         0;
@@ -1194,63 +1446,67 @@ nav {
 }
 
 
+/* date */
+
 .fact-date {
 
-    position:
-        absolute;
+    position: absolute;
 
-    top:
-        30px;
+    top: 25px;
 
-    left:
-        35px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
 
     color:
-        #938c9d;
+        var(--muted-light);
 
-    font-size:
-        12px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-weight:
-        800;
+    font-size: 11px;
+
+    font-weight: 600;
 
 }
 
+
+/* fact */
 
 .fact-text {
 
     max-width:
-        850px;
+        780px;
 
-    margin:
-        0;
+    margin: 0;
+
+    color:
+        var(--purple-950);
+
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
     font-size:
-        clamp(
-            28px,
-            4.2vw,
-            55px
-        );
+        clamp(28px, 4vw, 52px);
 
     line-height:
-        1.28;
+        1.3;
 
     letter-spacing:
         -2px;
 
-    font-weight:
-        900;
-
-    word-break:
-        keep-all;
+    font-weight: 700;
 
 }
 
 
-.fact-meta {
+/* nickname */
 
-    margin-top:
-        35px;
+.fact-meta {
 
     display:
         flex;
@@ -1258,270 +1514,49 @@ nav {
     align-items:
         center;
 
-    gap:
-        10px;
+    gap: 8px;
+
+    margin-top: 35px;
 
     color:
         var(--muted);
 
-    font-size:
-        13px;
+    font-family:
+        "Space Grotesk",
+        "IBM Plex Sans KR",
+        sans-serif;
 
-    font-weight:
-        700;
+    font-size: 12px;
+
+    font-weight: 600;
 
 }
 
 
 .avatar {
 
-    width:
-        29px;
+    width: 25px;
 
-    height:
-        29px;
+    height: 25px;
 
-    border-radius:
-        50%;
+    display: grid;
 
-    display:
-        grid;
-
-    place-items:
-        center;
-
-    background:
-        var(--purple-light);
-
-    color:
-        var(--purple-dark);
-
-    font-weight:
-        900;
-
-}
-
-
-/* =========================================================
-   HORIZONTAL SCORE
-========================================================= */
-
-.score-panel {
-
-    position:
-        relative;
-
-    width:
-        100%;
-
-    height:
-        130px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-}
-
-
-.score-line {
-
-    width:
-        100%;
-
-    height:
-        4px;
-
-    border-radius:
-        999px;
-
-    background:
-        linear-gradient(
-            to right,
-            var(--olive),
-            #aaa 50%,
-            var(--forest)
-        );
-
-    position:
-        relative;
-
-}
-
-
-.score-line::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        50%;
-
-    top:
-        50%;
-
-    width:
-        10px;
-
-    height:
-        10px;
-
-    transform:
-        translate(-50%,-50%);
-
-    background:
-        #aaa;
-
-    border-radius:
-        50%;
-
-}
-
-
-.score-slider {
-
-    position:
-        absolute;
-
-    left:
-        0;
-
-    top:
-        50%;
-
-    transform:
-        translateY(-50%);
-
-    width:
-        100%;
-
-    height:
-        60px;
-
-    opacity:
-        0;
-
-    cursor:
-        ew-resize;
-
-}
-
-
-.score-knob {
-
-    position:
-        absolute;
-
-    left:
-        50%;
-
-    top:
-        50%;
-
-    width:
-        27px;
-
-    height:
-        27px;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:
-        50%;
-
-    background:
-        white;
+    place-items: center;
 
     border:
-        5px solid
-        var(--purple-bright);
+        1px solid var(--purple-400);
 
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,.18);
+    border-radius: 50%;
 
-    pointer-events:
-        none;
-
-}
-
-
-.score-label {
-
-    position:
-        absolute;
-
-    top:
-        72px;
-
-    font-size:
-        11px;
-
-    line-height:
-        1.4;
+    background:
+        var(--purple-soft);
 
     color:
-        var(--muted);
+        var(--purple-900);
 
-    font-weight:
-        700;
+    font-size: 10px;
 
-}
-
-
-.score-label.left {
-
-    left:
-        0;
-
-    text-align:
-        left;
-
-}
-
-
-.score-label.right {
-
-    right:
-        0;
-
-    text-align:
-        right;
-
-}
-
-
-.score-value {
-
-    position:
-        absolute;
-
-    left:
-        50%;
-
-    top:
-        50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    font-size:
-        12px;
-
-    font-weight:
-        900;
-
-    color:
-        #777;
-
-    pointer-events:
-        none;
+    font-weight: 700;
 
 }
 
@@ -1532,63 +1567,71 @@ nav {
 
 .down-button {
 
-    position:
-        fixed;
+    position: fixed;
 
-    left:
-        50%;
+    left: 50%;
 
-    bottom:
-        22px;
+    bottom: 24px;
+
+    z-index: 200;
+
+    width: 44px;
+
+    height: 44px;
 
     transform:
         translateX(-50%);
 
-    width:
-        46px;
-
-    height:
-        46px;
-
     border:
-        0;
+        1px solid var(--purple-700);
 
-    border-radius:
-        50%;
+    border-radius: 2px;
 
     background:
-        var(--purple-bright);
+        var(--purple-900);
 
     color:
         white;
 
-    font-size:
-        22px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-weight:
-        900;
+    font-size: 20px;
+
+    font-weight: 700;
 
     box-shadow:
-        0 10px 25px
-        rgba(120,80,200,.25);
-
-    z-index:
-        200;
+        0 10px 30px
+        rgba(45,29,77,.25);
 
     transition:
-        .2s;
+        background .2s var(--ease),
+        transform .15s var(--ease),
+        box-shadow .2s var(--ease);
 
 }
 
-
 .down-button:hover {
+
+    background:
+        var(--purple-600);
 
     transform:
         translateX(-50%)
         translateY(-3px);
 
-    background:
-        var(--purple-dark);
+    box-shadow:
+        0 14px 35px
+        rgba(45,29,77,.30);
+
+}
+
+.down-button:active {
+
+    transform:
+        translateX(-50%)
+        translateY(1px);
 
 }
 
@@ -1600,25 +1643,28 @@ nav {
 .empty-facts {
 
     display:
-        flex;
+        grid;
 
-    align-items:
+    place-items:
         center;
 
-    justify-content:
-        center;
+    width: 100%;
 
-    text-align:
-        center;
+    height: 100%;
 
-    height:
-        100%;
+    min-height: 350px;
+
+    border:
+        1px solid var(--line);
+
+    background:
+        rgba(255,255,255,.7);
 
     color:
         var(--muted);
 
     font-weight:
-        700;
+        600;
 
 }
 
@@ -1629,57 +1675,49 @@ nav {
 
 .toast {
 
-    position:
-        fixed;
+    position: fixed;
 
-    bottom:
-        25px;
+    left: 50%;
 
-    left:
-        50%;
+    bottom: 25px;
+
+    z-index: 500;
+
+    padding:
+        12px 18px;
 
     transform:
-        translateX(-50%)
-        translateY(30px);
+        translate(-50%, 25px);
 
-    opacity:
-        0;
+    opacity: 0;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 2px;
 
     background:
-        #302b38;
+        var(--purple-950);
 
     color:
         white;
 
-    padding:
-        13px 20px;
+    font-size: 12px;
 
-    border-radius:
-        999px;
-
-    font-size:
-        13px;
-
-    font-weight:
-        700;
+    font-weight: 600;
 
     transition:
-        .3s;
-
-    z-index:
-        500;
+        opacity .25s var(--ease),
+        transform .25s var(--ease);
 
 }
 
-
 .toast.show {
 
-    opacity:
-        1;
+    opacity: 1;
 
     transform:
-        translateX(-50%)
-        translateY(0);
+        translate(-50%, 0);
 
 }
 
@@ -1690,59 +1728,58 @@ nav {
 
 .loading {
 
-    position:
-        fixed;
+    position: fixed;
 
-    inset:
-        0;
+    inset: 0;
 
-    z-index:
-        1000;
+    z-index: 1000;
 
-    display:
-        grid;
+    display: grid;
 
-    place-items:
-        center;
+    place-items: center;
 
     background:
-        var(--bg);
+        var(--cream);
+
+    color:
+        var(--purple-900);
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
 
 }
-
 
 .loader {
 
-    width:
-        35px;
+    width: 30px;
 
-    height:
-        35px;
-
-    border:
-        4px solid
-        var(--purple-light);
-
-    border-top-color:
-        var(--purple-bright);
-
-    border-radius:
-        50%;
-
-    animation:
-        spin .8s linear infinite;
+    height: 30px;
 
     margin:
-        auto auto 15px;
+        0 auto 15px;
+
+    border:
+        3px solid var(--purple-soft);
+
+    border-top-color:
+        var(--purple-700);
+
+    border-radius: 50%;
+
+    animation:
+        spin .75s linear infinite;
 
 }
-
 
 @keyframes spin {
 
     to {
-        transform:
-            rotate(360deg);
+        transform: rotate(360deg);
     }
 
 }
@@ -1757,49 +1794,53 @@ nav {
 
     header {
 
-        height:
-            68px;
+        height: 66px;
 
         padding:
-            0 18px;
+            0 16px;
 
     }
-
 
     .logo {
 
-        font-size:
-            19px;
+        font-size: 18px;
 
     }
 
+    nav {
+
+        gap: 0;
+
+    }
 
     .nav-btn {
 
         padding:
-            8px 10px;
+            9px 9px;
 
-        font-size:
-            12px;
+        font-size: 12px;
 
     }
 
+
+    /* HOME */
 
     .home {
 
-        padding-top:
-            60px;
+        padding:
+            60px 0 90px;
 
     }
-
 
     .hero h1 {
 
+        font-size:
+            clamp(40px, 12vw, 65px);
+
         letter-spacing:
-            -3px;
+            -2.5px;
 
     }
-
 
     .choice-grid {
 
@@ -1808,14 +1849,12 @@ nav {
 
     }
 
-
     .choice {
 
         min-height:
-            225px;
+            220px;
 
     }
-
 
     .rank-grid {
 
@@ -1825,99 +1864,346 @@ nav {
     }
 
 
+    /* SHARE */
+
     .form-page {
 
-        padding-top:
-            45px;
+        padding:
+            45px 0 90px;
 
     }
 
+    .form-page h1 {
+
+        font-size:
+            clamp(40px, 12vw, 60px);
+
+        letter-spacing:
+            -2px;
+
+    }
+
+
+    /* =====================================================
+       MOBILE EXPLORE
+
+       LEFT = FACT
+       RIGHT = VERTICAL SCORE
+    ===================================================== */
 
     .explore-page {
 
+        min-height:
+            calc(100vh - 66px);
+
         height:
-            calc(100vh - 68px);
+            calc(100vh - 66px);
 
     }
-
 
     .explore-layout {
 
+        width: 100%;
+
+        height: 100%;
+
+        min-height: 0;
+
         display:
-            block;
+            grid;
 
-        width:
-            94vw;
+        grid-template-columns:
+            minmax(0, 1fr)
+            82px;
 
-        padding-top:
-            18px;
+        grid-template-rows:
+            1fr;
+
+        gap: 0;
+
+        align-items:
+            stretch;
 
     }
 
 
+    /* FACT LEFT */
+
     .fact-area {
 
-        height:
-            58vh;
+        width: 100%;
 
-        min-height:
-            390px;
+        height: 100%;
+
+        min-height: 0;
+
+        padding:
+            18px 12px 18px 18px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
 
     }
 
 
     .fact-card {
 
+        width: 100%;
+
+        min-height: 0;
+
+        height:
+            min(74vh, 620px);
+
         padding:
-            45px
-            25px;
+            50px 22px;
+
+        align-items:
+            flex-start;
+
+        justify-content:
+            center;
+
+        text-align:
+            left;
 
         border-radius:
-            27px;
+            2px;
+
+    }
+
+
+    .fact-date {
+
+        top: 20px;
+
+        left: 22px;
+
+        transform: none;
 
     }
 
 
     .fact-text {
 
+        max-width: none;
+
         font-size:
-            28px;
+            clamp(24px, 7vw, 38px);
+
+        line-height:
+            1.35;
 
         letter-spacing:
             -1px;
 
-        padding-right:
-            10px;
+    }
+
+
+    .fact-meta {
+
+        margin-top: 25px;
 
     }
 
 
+    /* =====================================================
+       MOBILE SCORE
+
+       VERTICAL
+    ===================================================== */
+
     .score-panel {
 
-        width:
-            88%;
+        width: 82px;
 
-        margin:
-            15px auto 0;
+        height: 100%;
 
-        height:
-            100px;
+        min-height: 0;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+    }
+
+
+    .score-line {
+
+        top: 50%;
+
+        left: 50%;
+
+        right: auto;
+
+        width: 3px;
+
+        height: 76%;
+
+        transform:
+            translate(-50%, -50%);
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--forest-900),
+                #85818d 50%,
+                var(--olive-900)
+            );
+
+    }
+
+
+    .score-line::after {
+
+        left: 50%;
+
+        top: 50%;
+
+    }
+
+
+    .score-slider {
+
+        left: 50%;
+
+        top: 50%;
+
+        width: 76%;
+
+        height: 100%;
+
+        transform:
+            translate(-50%, -50%)
+            rotate(-90deg);
+
+        cursor:
+            ns-resize;
+
+    }
+
+
+    .score-knob {
+
+        left: 50%;
+
+        top: 50%;
+
+    }
+
+
+    .score-value {
+
+        left: 50%;
+
+        top: calc(50% + 17px);
+
+        transform:
+            translateX(-50%);
 
     }
 
 
     .score-label {
 
-        top:
-            55px;
+        left: 50% !important;
+
+        right: auto !important;
+
+        transform:
+            translateX(-50%);
+
+        width: 75px;
+
+        text-align:
+            center !important;
+
+        font-size:
+            9px;
 
     }
 
 
-    .down-button {
+    .score-label.left {
+
+        top:
+            9%;
+
+        color:
+            var(--forest-900);
+
+    }
+
+
+    .score-label.right {
+
+        top:
+            auto;
 
         bottom:
-            15px;
+            9%;
+
+        color:
+            var(--olive-900);
+
+    }
+
+
+    /* DOWN */
+
+    .down-button {
+
+        bottom: 14px;
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width: 420px) {
+
+    .nav-btn {
+
+        padding:
+            8px 7px;
+
+        font-size: 11px;
+
+    }
+
+    .fact-card {
+
+        padding:
+            48px 18px;
+
+    }
+
+    .fact-text {
+
+        font-size:
+            23px;
+
+    }
+
+    .score-panel {
+
+        width: 70px;
 
     }
 
@@ -1943,9 +2229,7 @@ nav {
 
         <div class="loader"></div>
 
-        <div>
-            SseulSaEop을 준비하는 중...
-        </div>
+        SseulSaEop을 준비하는 중...
 
     </div>
 
@@ -1958,20 +2242,13 @@ nav {
 
 <header>
 
-
-    <!-- LOGO -->
-
     <button
         class="logo"
         id="logoButton"
     >
-
         SseulSaEop
-
     </button>
 
-
-    <!-- NAV -->
 
     <nav>
 
@@ -1998,7 +2275,6 @@ nav {
 
     </nav>
 
-
 </header>
 
 
@@ -2014,42 +2290,26 @@ nav {
     class="page home"
 >
 
-
     <div class="hero">
 
-
         <div class="eyebrow">
-
-            Useless VS Useful
-
+            USELESS VS USEFUL
         </div>
-
 
         <h1>
-
             세상에 쓸모없는 사실은
             <em>없습니다.</em>
-
         </h1>
 
-
         <div class="english">
-
             There are no useless facts in the world.
-
         </div>
-
 
     </div>
 
 
-
-    <!-- CHOICE -->
-
     <div class="choice-grid">
 
-
-        <!-- SHARE -->
 
         <button
             class="choice"
@@ -2057,38 +2317,24 @@ nav {
         >
 
             <div class="number">
-
                 01 / SHARE
-
             </div>
 
-
             <h2>
-
                 나만 알고 있는 사실을
                 남겨보세요 →
-
             </h2>
 
-
             <p>
-
                 별로 중요하지 않아도 괜찮습니다.
-
             </p>
 
-
             <div class="arrow">
-
                 →
-
             </div>
 
         </button>
 
-
-
-        <!-- EXPLORE -->
 
         <button
             class="choice"
@@ -2096,31 +2342,20 @@ nav {
         >
 
             <div class="number">
-
                 02 / EXPLORE
-
             </div>
 
-
             <h2>
-
                 다른 사람의 사실을
                 구경해보세요 →
-
             </h2>
 
-
             <p>
-
                 쓸모와 쓸모없음 사이에서 직접 판단해보세요.
-
             </p>
 
-
             <div class="arrow">
-
                 →
-
             </div>
 
         </button>
@@ -2129,77 +2364,51 @@ nav {
     </div>
 
 
-
-    <!-- RANKING -->
-
     <div class="ranking-title">
 
         <h2>
-
             이번주 쓸모도 랭킹
-
         </h2>
 
-
         <p>
-
             이번 주 가장 쓸모없거나 쓸모있다고 평가받은 사실
-
         </p>
 
     </div>
 
 
-
     <div class="rank-grid">
 
-
-        <!-- USELESS -->
 
         <div class="rank-box useless">
 
             <h3>
-
                 − Useless TOP 10
-
             </h3>
 
-
-            <div
-                id="uselessRanking"
-            ></div>
+            <div id="uselessRanking"></div>
 
         </div>
 
 
-
-        <!-- USEFUL -->
-
         <div class="rank-box useful">
 
             <h3>
-
                 ＋ Useful TOP 10
-
             </h3>
 
-
-            <div
-                id="usefulRanking"
-            ></div>
+            <div id="usefulRanking"></div>
 
         </div>
 
 
     </div>
 
-
 </section>
 
 
-
 <!-- ========================================================
-     SHARE PAGE
+     SHARE
 ========================================================= -->
 
 <section
@@ -2212,35 +2421,26 @@ nav {
         class="back"
         id="shareBack"
     >
-
         ← 홈으로 돌아가기
-
     </button>
 
 
     <h1>
-
         당신만의<br>
         쓸모없는 사실은?
-
     </h1>
 
 
     <p>
-
-        알아두면 언젠가 쓸지도 모르지만,
-        지금 당장은 아무짝에도 필요 없는 사실.
-        혹은 그냥 당신이 알고 있다는 이유만으로
-        공유하고 싶은 이야기를 남겨주세요.
-
+        알아두면 언젠가 도움이 될지도 모르지만,
+        지금 당장은 딱히 필요하지 않은 사실.
+        혹은 그냥 다른 사람에게 알려주고 싶은
+        당신만의 이상한 지식을 남겨주세요.
     </p>
-
 
 
     <div class="form-card">
 
-
-        <!-- NICKNAME -->
 
         <div class="field">
 
@@ -2248,18 +2448,15 @@ nav {
                 닉네임
             </label>
 
-
             <input
                 id="nickname"
                 maxlength="30"
+                autocomplete="off"
                 placeholder="예: 감자도둑"
             >
 
         </div>
 
-
-
-        <!-- FACT -->
 
         <div class="field">
 
@@ -2267,36 +2464,30 @@ nav {
                 당신의 사실
             </label>
 
-
             <textarea
                 id="fact"
                 maxlength="1000"
-                placeholder="당신만 알고 있을지도 모르는 사실을 적어주세요."
+                placeholder="당신만의 쓸모없는 사실을 적어주세요."
             ></textarea>
 
         </div>
-
 
 
         <button
             class="submit"
             id="submitFact"
         >
-
             사실 남기기
-
         </button>
 
 
     </div>
 
-
 </section>
 
 
-
 <!-- ========================================================
-     EXPLORE PAGE
+     EXPLORE
 ========================================================= -->
 
 <section
@@ -2308,136 +2499,113 @@ nav {
     <div class="explore-layout">
 
 
-        <!-- FACT -->
-
-        <div
-            class="fact-area"
-            id="factArea"
-        >
-
-
-            <div
-                class="fact-card"
-                id="factCard"
-            >
-
-
-                <!-- DATE -->
-
-                <div
-                    class="fact-date"
-                    id="factDate"
-                >
-
-                    2026. 08. 14
-
-                </div>
-
-
-
-                <!-- FACT -->
-
-                <p
-                    class="fact-text"
-                    id="factText"
-                >
-
-                    사실을 불러오는 중...
-
-                </p>
-
-
-
-                <!-- NICKNAME -->
-
-                <div class="fact-meta">
-
-
-                    <div
-                        class="avatar"
-                        id="avatar"
-                    >
-
-                        ?
-
-                    </div>
-
-
-                    <span
-                        id="factNickname"
-                    >
-
-                        익명의 사실 수집가
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- SCORE -->
+        <!-- =================================================
+             SCORE
+             PC: TOP HORIZONTAL
+             MOBILE: RIGHT VERTICAL
+        ================================================== -->
 
         <div class="score-panel">
 
-
-            <div
-                class="score-line"
-            ></div>
-
+            <div class="score-line"></div>
 
             <input
                 id="scoreSlider"
                 class="score-slider"
                 type="range"
-                min="-100"
-                max="100"
+                min="-10"
+                max="10"
                 value="0"
-                step="1"
+                step="0.01"
             >
-
 
             <div
                 id="scoreKnob"
                 class="score-knob"
             ></div>
 
-
             <div
-                class="score-value"
                 id="scoreValue"
+                class="score-value"
             >
-
-                0
-
+                0.00
             </div>
-
 
             <div
                 class="score-label left"
             >
+                <span class="desktop-score">
+                    -10.00 · 완전 쓸모없음
+                </span>
 
-                −100<br>
-                완전 쓸모없음
-
+                <span class="mobile-score">
+                    +10.00<br>
+                    USEFUL
+                </span>
             </div>
-
 
             <div
                 class="score-label right"
             >
+                <span class="desktop-score">
+                    +10.00 · 엄청 쓸모있음
+                </span>
 
-                +100<br>
-                엄청 쓸모있음
-
+                <span class="mobile-score">
+                    -10.00<br>
+                    USELESS
+                </span>
             </div>
 
+        </div>
+
+
+        <!-- =================================================
+             FACT
+        ================================================== -->
+
+        <div
+            class="fact-area"
+            id="factArea"
+        >
+
+            <div
+                class="fact-card"
+                id="factCard"
+            >
+
+                <div
+                    class="fact-date"
+                    id="factDate"
+                >
+                    2026. 08. 14
+                </div>
+
+
+                <p
+                    class="fact-text"
+                    id="factText"
+                >
+                    사실을 불러오는 중...
+                </p>
+
+
+                <div class="fact-meta">
+
+                    <div
+                        class="avatar"
+                        id="avatar"
+                    >
+                        ?
+                    </div>
+
+                    <span id="factNickname">
+                        익명의 사실 수집가
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -2445,27 +2613,20 @@ nav {
     </div>
 
 
-
-    <!-- DOWN -->
-
     <button
         class="down-button"
         id="downButton"
         title="다음 사실"
+        aria-label="다음 사실"
     >
-
         ↓
-
     </button>
 
 
 </section>
 
-
 </main>
 
-
-<!-- TOAST -->
 
 <div
     class="toast"
@@ -2474,7 +2635,6 @@ nav {
 
 
 <script>
-
 
 /* =========================================================
    SUPABASE
@@ -2486,11 +2646,9 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE";
 
-
 const {
     createClient
 } = supabase;
-
 
 const db =
     createClient(
@@ -2499,9 +2657,8 @@ const db =
     );
 
 
-
 /* =========================================================
-   GLOBAL
+   STATE
 ========================================================= */
 
 let facts = [];
@@ -2510,56 +2667,166 @@ let currentIndex = 0;
 
 let isMoving = false;
 
+let audioContext = null;
 
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const pages = {
 
     home:
-        document.getElementById(
-            "homePage"
-        ),
+        document.getElementById("homePage"),
 
     share:
-        document.getElementById(
-            "sharePage"
-        ),
+        document.getElementById("sharePage"),
 
     explore:
-        document.getElementById(
-            "explorePage"
-        )
+        document.getElementById("explorePage")
 
 };
-
 
 
 const navs = {
 
     home:
-        document.getElementById(
-            "homeNav"
-        ),
+        document.getElementById("homeNav"),
 
     share:
-        document.getElementById(
-            "shareNav"
-        ),
+        document.getElementById("shareNav"),
 
     explore:
-        document.getElementById(
-            "exploreNav"
-        )
+        document.getElementById("exploreNav")
 
 };
 
 
+const scoreSlider =
+    document.getElementById("scoreSlider");
+
+const scoreKnob =
+    document.getElementById("scoreKnob");
+
+const scoreValue =
+    document.getElementById("scoreValue");
+
+const factCard =
+    document.getElementById("factCard");
+
 
 /* =========================================================
-   PAGE
+   SOUND
+   짧은 Web Audio UI 효과
+========================================================= */
+
+function playClickSound(
+    type = "click"
+) {
+
+    try {
+
+        if (!audioContext) {
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
+
+            audioContext.resume();
+
+        }
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+        oscillator.connect(
+            gain
+        );
+
+        gain.connect(
+            audioContext.destination
+        );
+
+        const now =
+            audioContext.currentTime;
+
+        if (type === "next") {
+
+            oscillator.frequency.setValueAtTime(
+                210,
+                now
+            );
+
+            oscillator.frequency.exponentialRampToValueAtTime(
+                310,
+                now + .055
+            );
+
+        } else {
+
+            oscillator.frequency.setValueAtTime(
+                280,
+                now
+            );
+
+            oscillator.frequency.exponentialRampToValueAtTime(
+                220,
+                now + .045
+            );
+
+        }
+
+        gain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .018,
+            now + .008
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now + .065
+        );
+
+        oscillator.start(now);
+
+        oscillator.stop(
+            now + .07
+        );
+
+    } catch(error) {
+
+        /*
+            브라우저가 Web Audio를
+            지원하지 않아도 사이트 기능에는
+            영향을 주지 않음.
+        */
+
+    }
+
+}
+
+
+/* =========================================================
+   PAGE NAVIGATION
 ========================================================= */
 
 function showPage(page) {
-
 
     Object.values(pages)
         .forEach(
@@ -2569,7 +2836,6 @@ function showPage(page) {
                 )
         );
 
-
     Object.values(navs)
         .forEach(
             element =>
@@ -2578,12 +2844,10 @@ function showPage(page) {
                 )
         );
 
-
     pages[page]
         .classList.remove(
             "hidden"
         );
-
 
     if (navs[page]) {
 
@@ -2594,19 +2858,18 @@ function showPage(page) {
 
     }
 
-
     window.scrollTo(
         0,
         0
     );
 
+    playClickSound();
 
     if (page === "home") {
 
         loadRankings();
 
     }
-
 
     if (page === "explore") {
 
@@ -2617,15 +2880,12 @@ function showPage(page) {
 }
 
 
-
 /* =========================================================
-   NAVIGATION
+   NAV EVENTS
 ========================================================= */
 
 document
-    .getElementById(
-        "logoButton"
-    )
+    .getElementById("logoButton")
     .addEventListener(
         "click",
         () =>
@@ -2634,9 +2894,7 @@ document
 
 
 document
-    .getElementById(
-        "homeNav"
-    )
+    .getElementById("homeNav")
     .addEventListener(
         "click",
         () =>
@@ -2645,9 +2903,7 @@ document
 
 
 document
-    .getElementById(
-        "shareNav"
-    )
+    .getElementById("shareNav")
     .addEventListener(
         "click",
         () =>
@@ -2656,9 +2912,7 @@ document
 
 
 document
-    .getElementById(
-        "exploreNav"
-    )
+    .getElementById("exploreNav")
     .addEventListener(
         "click",
         () =>
@@ -2667,9 +2921,7 @@ document
 
 
 document
-    .getElementById(
-        "shareChoice"
-    )
+    .getElementById("shareChoice")
     .addEventListener(
         "click",
         () =>
@@ -2678,9 +2930,7 @@ document
 
 
 document
-    .getElementById(
-        "exploreChoice"
-    )
+    .getElementById("exploreChoice")
     .addEventListener(
         "click",
         () =>
@@ -2689,15 +2939,12 @@ document
 
 
 document
-    .getElementById(
-        "shareBack"
-    )
+    .getElementById("shareBack")
     .addEventListener(
         "click",
         () =>
             showPage("home")
     );
-
 
 
 /* =========================================================
@@ -2706,64 +2953,48 @@ document
 
 function toast(message) {
 
-
     const element =
-        document.getElementById(
-            "toast"
-        );
-
+        document.getElementById("toast");
 
     element.textContent =
         message;
 
-
     element.classList.add(
         "show"
     );
-
 
     setTimeout(
         () =>
             element.classList.remove(
                 "show"
             ),
-        2400
+        2200
     );
 
 }
 
 
-
 /* =========================================================
-   SHARE
+   SHARE FACT
 ========================================================= */
 
 document
-    .getElementById(
-        "submitFact"
-    )
+    .getElementById("submitFact")
     .addEventListener(
         "click",
         async () => {
 
-
             const nickname =
                 document
-                    .getElementById(
-                        "nickname"
-                    )
+                    .getElementById("nickname")
                     .value
                     .trim();
-
 
             const fact =
                 document
-                    .getElementById(
-                        "fact"
-                    )
+                    .getElementById("fact")
                     .value
                     .trim();
-
 
             if (!nickname) {
 
@@ -2775,7 +3006,6 @@ document
 
             }
 
-
             if (!fact) {
 
                 toast(
@@ -2786,23 +3016,20 @@ document
 
             }
 
-
             const button =
                 document.getElementById(
                     "submitFact"
                 );
 
-
             button.disabled =
                 true;
-
 
             button.textContent =
                 "남기는 중...";
 
+            playClickSound();
 
             try {
-
 
                 const {
                     error
@@ -2819,65 +3046,44 @@ document
 
                         });
 
-
                 if (error) {
 
                     throw error;
 
                 }
 
-
                 document
-                    .getElementById(
-                        "nickname"
-                    )
+                    .getElementById("nickname")
                     .value = "";
 
-
                 document
-                    .getElementById(
-                        "fact"
-                    )
+                    .getElementById("fact")
                     .value = "";
-
 
                 toast(
                     "당신의 사실이 남겨졌습니다."
                 );
 
-
                 setTimeout(
                     () =>
-                        showPage(
-                            "home"
-                        ),
-                    800
+                        showPage("home"),
+                    700
                 );
 
-
-            }
-
-            catch(error) {
-
+            } catch(error) {
 
                 console.error(
                     error
                 );
 
-
                 toast(
                     "저장하지 못했습니다."
                 );
 
-            }
-
-
-            finally {
-
+            } finally {
 
                 button.disabled =
                     false;
-
 
                 button.textContent =
                     "사실 남기기";
@@ -2888,13 +3094,11 @@ document
     );
 
 
-
 /* =========================================================
    LOAD FACTS
 ========================================================= */
 
 async function loadFacts() {
-
 
     const {
         data,
@@ -2913,10 +3117,10 @@ async function loadFacts() {
                 }
             );
 
-
     if (error) {
 
         console.error(
+            "FACT LOAD ERROR:",
             error
         );
 
@@ -2924,11 +3128,9 @@ async function loadFacts() {
 
     }
 
-
     return data || [];
 
 }
-
 
 
 /* =========================================================
@@ -2937,18 +3139,15 @@ async function loadFacts() {
 
 function getVoterId() {
 
-
     let id =
         localStorage.getItem(
             "sseulsaeop_voter"
         );
 
-
     if (!id) {
 
         id =
             crypto.randomUUID();
-
 
         localStorage.setItem(
             "sseulsaeop_voter",
@@ -2957,11 +3156,9 @@ function getVoterId() {
 
     }
 
-
     return id;
 
 }
-
 
 
 /* =========================================================
@@ -2970,73 +3167,60 @@ function getVoterId() {
 
 function formatDate(date) {
 
-
     const d =
         new Date(date);
-
 
     return `${d.getFullYear()}. ${
         String(
             d.getMonth() + 1
-        ).padStart(2,"0")
+        ).padStart(2, "0")
     }. ${
         String(
             d.getDate()
-        ).padStart(2,"0")
+        ).padStart(2, "0")
     }`;
 
 }
 
 
-
 /* =========================================================
-   START EXPLORE
+   EXPLORE START
 ========================================================= */
 
 async function startExplore() {
 
-
     facts =
         await loadFacts();
 
-
-    currentIndex = 0;
-
+    currentIndex =
+        0;
 
     if (!facts.length) {
 
         document
-            .getElementById(
-                "factText"
-            )
+            .getElementById("factText")
             .textContent =
-            "아직 올라온 사실이 없습니다.";
-
+            "아직 공유된 사실이 없습니다.";
 
         document
-            .getElementById(
-                "factNickname"
-            )
+            .getElementById("factNickname")
             .textContent =
             "첫 번째 사실을 남겨주세요";
 
-
         document
-            .getElementById(
-                "factDate"
-            )
+            .getElementById("factDate")
             .textContent =
             "SseulSaEop";
 
+        resetScore();
 
         return;
 
     }
 
-
     /*
-        순서를 섞어서
-        매번 다른 사실을 볼 수 있게 함
+        임의의 사실을 미리 생성하지 않고
+        DB에 있는 실제 사실만 사용한다.
     */
 
     facts.sort(
@@ -3044,11 +3228,9 @@ async function startExplore() {
             Math.random() - .5
     );
 
-
     showFact();
 
 }
-
 
 
 /* =========================================================
@@ -3057,138 +3239,128 @@ async function startExplore() {
 
 function showFact() {
 
-
     if (!facts.length) {
 
         return;
 
     }
 
-
     const fact =
         facts[currentIndex];
 
-
     document
-        .getElementById(
-            "factText"
-        )
+        .getElementById("factText")
         .textContent =
         fact.fact;
 
-
     document
-        .getElementById(
-            "factNickname"
-        )
+        .getElementById("factNickname")
         .textContent =
         fact.nickname ||
         "익명의 사실 수집가";
 
-
     document
-        .getElementById(
-            "factDate"
-        )
+        .getElementById("factDate")
         .textContent =
         formatDate(
             fact.created_at
         );
 
-
     document
-        .getElementById(
-            "avatar"
-        )
+        .getElementById("avatar")
         .textContent =
         (
             fact.nickname ||
             "?"
         ).charAt(0);
 
-
     resetScore();
 
 }
 
 
-
 /* =========================================================
-   SCORE
+   SCORE FORMAT
 ========================================================= */
 
-const scoreSlider =
-    document.getElementById(
-        "scoreSlider"
-    );
+function formatScore(value) {
+
+    const number =
+        Number(value);
+
+    if (
+        Math.abs(number) < 0.005
+    ) {
+
+        return "0.00";
+
+    }
+
+    return (
+        number > 0
+            ? "+"
+            : ""
+    ) + number.toFixed(2);
+
+}
 
 
-const scoreKnob =
-    document.getElementById(
-        "scoreKnob"
-    );
-
-
-const scoreValue =
-    document.getElementById(
-        "scoreValue"
-    );
-
-
+/* =========================================================
+   SCORE UI
+========================================================= */
 
 function updateScoreUI() {
-
 
     const value =
         Number(
             scoreSlider.value
         );
 
-
     const percentage =
         (
-            (value + 100) /
-            200
+            (value + 10) /
+            20
         ) * 100;
-
 
     scoreKnob.style.left =
         `${percentage}%`;
 
-
     scoreValue.textContent =
-        value > 0
-            ? `+${value}`
-            : value;
+        formatScore(value);
 
+
+    /*
+        - = OLIVE
+        + = FOREST
+    */
 
     if (value < 0) {
 
         scoreValue.style.color =
-            "var(--olive)";
+            "var(--olive-900)";
 
         scoreKnob.style.borderColor =
-            "var(--olive)";
+            "var(--olive-800)";
 
     }
 
     else if (value > 0) {
 
         scoreValue.style.color =
-            "var(--forest)";
+            "var(--forest-900)";
 
         scoreKnob.style.borderColor =
-            "var(--forest)";
+            "var(--forest-800)";
 
     }
 
     else {
 
         scoreValue.style.color =
-            "#777";
+            "var(--purple-800)";
 
         scoreKnob.style.borderColor =
-            "var(--purple-bright)";
+            "var(--purple-700)";
 
     }
 
@@ -3198,7 +3370,7 @@ function updateScoreUI() {
 function resetScore() {
 
     scoreSlider.value =
-        0;
+        "0";
 
     updateScoreUI();
 
@@ -3207,21 +3379,30 @@ function resetScore() {
 
 scoreSlider.addEventListener(
     "input",
-    updateScoreUI
+    () => {
+
+        updateScoreUI();
+
+        /*
+            평가를 움직일 때
+            너무 자주 소리가 나지 않도록
+            소리는 넣지 않음.
+
+            실제 클릭/넘김에만 소리가 난다.
+        */
+
+    }
 );
 
 
-
 /* =========================================================
-   SAVE CURRENT SCORE
+   SAVE SCORE
 ========================================================= */
 
 async function saveCurrentScore() {
 
-
     const fact =
         facts[currentIndex];
-
 
     if (!fact) {
 
@@ -3229,16 +3410,15 @@ async function saveCurrentScore() {
 
     }
 
-
     const score =
         Number(
-            scoreSlider.value
+            Number(
+                scoreSlider.value
+            ).toFixed(2)
         );
-
 
     const voterId =
         getVoterId();
-
 
     const {
         error
@@ -3269,11 +3449,10 @@ async function saveCurrentScore() {
 
             );
 
-
     if (error) {
 
         console.error(
-            "RATING ERROR",
+            "RATING SAVE ERROR:",
             error
         );
 
@@ -3282,13 +3461,11 @@ async function saveCurrentScore() {
 }
 
 
-
 /* =========================================================
-   NEXT
+   NEXT FACT
 ========================================================= */
 
 async function nextFact() {
-
 
     if (
         isMoving ||
@@ -3299,42 +3476,35 @@ async function nextFact() {
 
     }
 
-
     isMoving =
         true;
 
+    playClickSound("next");
 
     /*
-        현재 점수 저장
+        점수가 0이어도 저장.
+        평가하지 않고 넘긴 경우에도
+        0점으로 기록됨.
     */
 
     await saveCurrentScore();
 
-
-    const card =
-        document.getElementById(
-            "factCard"
-        );
-
-
-    card.classList.add(
+    factCard.classList.add(
         "leaving"
     );
-
 
     setTimeout(
         () => {
 
-
             currentIndex++;
-
 
             if (
                 currentIndex >=
                 facts.length
             ) {
 
-                currentIndex = 0;
+                currentIndex =
+                    0;
 
                 facts.sort(
                     () =>
@@ -3343,53 +3513,84 @@ async function nextFact() {
 
             }
 
-
-            card.classList.remove(
+            factCard.classList.remove(
                 "leaving"
             );
 
-
             showFact();
-
 
             isMoving =
                 false;
 
-
         },
-        300
+        280
     );
 
 }
 
 
+/* =========================================================
+   PREVIOUS FACT
+========================================================= */
+
+function previousFact() {
+
+    if (
+        isMoving ||
+        !facts.length
+    ) {
+
+        return;
+
+    }
+
+    currentIndex--;
+
+    if (
+        currentIndex < 0
+    ) {
+
+        currentIndex =
+            facts.length - 1;
+
+    }
+
+    playClickSound();
+
+    showFact();
+
+}
+
 
 /* =========================================================
-   MOUSE WHEEL
+   PC MOUSE WHEEL
 ========================================================= */
 
 document
-    .getElementById(
-        "factArea"
-    )
+    .getElementById("factArea")
     .addEventListener(
         "wheel",
         event => {
 
-
-            event.preventDefault();
-
-
             if (
-                Math.abs(
-                    event.deltaY
-                ) < 15
+                window.innerWidth <= 800
             ) {
 
                 return;
 
             }
 
+            event.preventDefault();
+
+            if (
+                Math.abs(
+                    event.deltaY
+                ) < 10
+            ) {
+
+                return;
+
+            }
 
             if (
                 event.deltaY > 0
@@ -3397,9 +3598,7 @@ document
 
                 nextFact();
 
-            }
-
-            else {
+            } else {
 
                 previousFact();
 
@@ -3413,94 +3612,79 @@ document
     );
 
 
-
 /* =========================================================
-   PREVIOUS
+   MOBILE TOUCH SWIPE
 ========================================================= */
 
-function previousFact() {
+let touchStartY =
+    0;
 
-
-    if (
-        isMoving ||
-        !facts.length
-    ) {
-
-        return;
-
-    }
-
-
-    currentIndex--;
-
-
-    if (
-        currentIndex < 0
-    ) {
-
-        currentIndex =
-            facts.length - 1;
-
-    }
-
-
-    showFact();
-
-}
-
-
-
-/* =========================================================
-   TOUCH SWIPE
-========================================================= */
-
-let touchStartY = 0;
+let touchStartX =
+    0;
 
 
 document
-    .getElementById(
-        "factArea"
-    )
+    .getElementById("factArea")
     .addEventListener(
         "touchstart",
         event => {
-
 
             touchStartY =
                 event
                     .touches[0]
                     .clientY;
 
+            touchStartX =
+                event
+                    .touches[0]
+                    .clientX;
+
         },
         {
-            passive:
-                true
+            passive: true
         }
     );
 
 
 document
-    .getElementById(
-        "factArea"
-    )
+    .getElementById("factArea")
     .addEventListener(
         "touchend",
         event => {
 
-
-            const touchEndY =
+            const endY =
                 event
                     .changedTouches[0]
                     .clientY;
 
+            const endX =
+                event
+                    .changedTouches[0]
+                    .clientX;
 
-            const difference =
+            const dy =
                 touchStartY -
-                touchEndY;
+                endY;
 
+            const dx =
+                touchStartX -
+                endX;
+
+            /*
+                세로 스와이프만 인정
+            */
 
             if (
-                difference > 55
+                Math.abs(dy) <
+                Math.abs(dx)
+            ) {
+
+                return;
+
+            }
+
+            if (
+                dy > 50
             ) {
 
                 nextFact();
@@ -3508,16 +3692,18 @@ document
             }
 
             else if (
-                difference < -55
+                dy < -50
             ) {
 
                 previousFact();
 
             }
 
+        },
+        {
+            passive: true
         }
     );
-
 
 
 /* =========================================================
@@ -3527,11 +3713,6 @@ document
 document.addEventListener(
     "keydown",
     event => {
-
-
-        /*
-            구경 페이지에서만
-        */
 
         if (
             pages.explore.classList.contains(
@@ -3543,14 +3724,28 @@ document.addEventListener(
 
         }
 
-
         /*
-            스페이스
+            입력창에 글 쓰는 중에는
+            Space로 다음 사실이 넘어가지 않게 함.
         */
 
+        const active =
+            document.activeElement;
+
         if (
-            event.code ===
-            "Space"
+            active &&
+            (
+                active.tagName === "INPUT" ||
+                active.tagName === "TEXTAREA"
+            )
+        ) {
+
+            return;
+
+        }
+
+        if (
+            event.code === "Space"
         ) {
 
             event.preventDefault();
@@ -3559,14 +3754,8 @@ document.addEventListener(
 
         }
 
-
-        /*
-            아래 화살표
-        */
-
         if (
-            event.key ===
-            "ArrowDown"
+            event.key === "ArrowDown"
         ) {
 
             event.preventDefault();
@@ -3575,14 +3764,8 @@ document.addEventListener(
 
         }
 
-
-        /*
-            위 화살표
-        */
-
         if (
-            event.key ===
-            "ArrowUp"
+            event.key === "ArrowUp"
         ) {
 
             event.preventDefault();
@@ -3595,21 +3778,17 @@ document.addEventListener(
 );
 
 
-
 /* =========================================================
    DOWN BUTTON
 ========================================================= */
 
 document
-    .getElementById(
-        "downButton"
-    )
+    .getElementById("downButton")
     .addEventListener(
         "click",
         () =>
             nextFact()
     );
-
 
 
 /* =========================================================
@@ -3618,29 +3797,23 @@ document
 
 function getWeekStart() {
 
-
     const now =
         new Date();
 
-
     const day =
         now.getDay();
-
 
     const diff =
         day === 0
             ? 6
             : day - 1;
 
-
     const monday =
         new Date(now);
-
 
     monday.setDate(
         now.getDate() - diff
     );
-
 
     monday.setHours(
         0,
@@ -3649,11 +3822,9 @@ function getWeekStart() {
         0
     );
 
-
     return monday.toISOString();
 
 }
-
 
 
 /* =========================================================
@@ -3662,10 +3833,8 @@ function getWeekStart() {
 
 async function loadRankings() {
 
-
     const weekStart =
         getWeekStart();
-
 
     const {
         data,
@@ -3688,18 +3857,16 @@ async function loadRankings() {
                 weekStart
             );
 
-
     if (error) {
 
         console.error(
-            "RANKING ERROR",
+            "RANKING ERROR:",
             error
         );
 
         return;
 
     }
-
 
     const grouped = {};
 
@@ -3708,7 +3875,6 @@ async function loadRankings() {
         .forEach(
             row => {
 
-
                 if (
                     !row.facts
                 ) {
@@ -3716,7 +3882,6 @@ async function loadRankings() {
                     return;
 
                 }
-
 
                 if (
                     !grouped[
@@ -3744,18 +3909,18 @@ async function loadRankings() {
 
                 }
 
-
                 grouped[
                     row.fact_id
                 ]
                 .scores
                 .push(
-                    row.score
+                    Number(
+                        row.score
+                    )
                 );
 
             }
         );
-
 
 
     const ranked =
@@ -3764,17 +3929,18 @@ async function loadRankings() {
             .map(
                 item => {
 
-
                     const average =
                         item.scores
                             .reduce(
-                                (a,b) =>
-                                    a + b,
+                                (
+                                    total,
+                                    score
+                                ) =>
+                                    total + score,
                                 0
                             )
                         /
                         item.scores.length;
-
 
                     return {
 
@@ -3789,16 +3955,11 @@ async function loadRankings() {
             );
 
 
-
-    /*
-        가장 쓸모없는
-    */
-
     const useless =
         ranked
             .filter(
-                x =>
-                    x.average < 0
+                item =>
+                    item.average < 0
             )
             .sort(
                 (a,b) =>
@@ -3811,16 +3972,11 @@ async function loadRankings() {
             );
 
 
-
-    /*
-        가장 쓸모있는
-    */
-
     const useful =
         ranked
             .filter(
-                x =>
-                    x.average > 0
+                item =>
+                    item.average > 0
             )
             .sort(
                 (a,b) =>
@@ -3833,12 +3989,10 @@ async function loadRankings() {
             );
 
 
-
     renderRanking(
         "uselessRanking",
         useless
     );
-
 
     renderRanking(
         "usefulRanking",
@@ -3846,7 +4000,6 @@ async function loadRankings() {
     );
 
 }
-
 
 
 /* =========================================================
@@ -3858,16 +4011,11 @@ function renderRanking(
     list
 ) {
 
-
     const container =
-        document.getElementById(
-            id
-        );
-
+        document.getElementById(id);
 
     container.innerHTML =
         "";
-
 
     if (
         !list.length
@@ -3877,14 +4025,13 @@ function renderRanking(
 
             <div
                 style="
-                    padding:20px 0;
-                    color:#999;
-                    font-size:13px;
+                    padding:18px 0;
+                    color:#85818b;
+                    font-size:12px;
+                    font-weight:500;
                 "
             >
-
                 아직 평가된 사실이 없습니다.
-
             </div>
 
         `;
@@ -3895,75 +4042,52 @@ function renderRanking(
 
 
     list.forEach(
-        (item,index) => {
-
+        (item, index) => {
 
             const element =
                 document.createElement(
                     "div"
                 );
 
-
             element.className =
                 "rank-item";
 
-
-            const score =
-                Math.round(
-                    item.average
-                );
-
-
             element.innerHTML = `
 
-                <div
-                    class="rank-number"
-                >
-
+                <div class="rank-number">
                     ${index + 1}
-
                 </div>
 
-
-                <div
-                    class="rank-fact"
-                >
+                <div class="rank-fact">
 
                     <strong>
-
                         ${escapeHTML(
                             item.fact
                         )}
-
                     </strong>
 
-
                     <small>
-
                         ${escapeHTML(
                             item.nickname ||
                             "익명"
                         )}
-
                     </small>
 
                 </div>
 
-
-                <div
-                    class="rank-score"
-                >
+                <div class="rank-score">
 
                     ${
-                        score > 0
+                        item.average > 0
                             ? "+"
                             : ""
-                    }${score}
+                    }${Number(
+                        item.average
+                    ).toFixed(2)}
 
                 </div>
 
             `;
-
 
             container.appendChild(
                 element
@@ -3975,7 +4099,6 @@ function renderRanking(
 }
 
 
-
 /* =========================================================
    ESCAPE HTML
 ========================================================= */
@@ -3983,7 +4106,6 @@ function renderRanking(
 function escapeHTML(
     value
 ) {
-
 
     return String(value)
 
@@ -4015,48 +4137,30 @@ function escapeHTML(
 }
 
 
-
 /* =========================================================
    INIT
 ========================================================= */
 
 async function init() {
 
-
     try {
 
-
-        facts =
-            await loadFacts();
-
-
         await loadRankings();
-
 
     }
 
     catch(error) {
 
-
         console.error(
             error
         );
 
-
-        toast(
-            "데이터를 불러오지 못했습니다."
-        );
-
     }
-
 
     finally {
 
-
         document
-            .getElementById(
-                "loading"
-            )
+            .getElementById("loading")
             .classList.add(
                 "hidden"
             );
