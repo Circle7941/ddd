@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>구경 — SseulSaEop</title>
 
@@ -11,534 +11,378 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-:root {
-    --bg: #b79bea;
-    --bg-dark: #9675cf;
-    --deep: #21152d;
-    --purple: #6035a0;
-    --forest: #173d2c;
-    --olive: #68752d;
-    --gray: #716879;
-    --white: #f8f5ff;
-    --line: #8e73b5;
+:root{
+--bg:#d9c8ff;
+--deep:#211334;
+--purple:#6338a8;
+--forest:#173d2c;
+--olive:#68752d;
+--gray:#77717e;
+--line:#b7a6d3;
 }
 
-* {
-    box-sizing: border-box;
+*{
+box-sizing:border-box;
 }
 
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+html,body{
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
 }
 
-body {
-    color: var(--deep);
-    background:
-        radial-gradient(
-            circle at 20% 10%,
-            rgba(255,255,255,.65),
-            transparent 28%
-        ),
-        linear-gradient(
-            135deg,
-            var(--bg),
-            var(--bg-dark)
-        );
-
-    font-family:
-        "IBM Plex Sans KR",
-        sans-serif;
-
-    word-break: keep-all;
+body{
+background:
+radial-gradient(circle at 20% 10%,#fff,transparent 27%),
+linear-gradient(135deg,#d9c8ff,#b99cff);
+color:var(--deep);
+font-family:"IBM Plex Sans KR",sans-serif;
+word-break:keep-all;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+a{
+color:inherit;
+text-decoration:none;
 }
 
-
-/* HEADER */
-
-.header {
-    width: 100%;
-    height: 72px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 5vw;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.4);
-
-    background:
-        rgba(210,193,245,.35);
-
-    backdrop-filter: blur(14px);
-
-    position: relative;
-    z-index: 20;
+.header{
+height:72px;
+padding:0 5vw;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #ffffff88;
 }
 
-.logo {
-    font:
-        700 21px
-        "Space Grotesk",
-        sans-serif;
+.logo{
+font:700 21px "Space Grotesk";
 }
 
-.nav {
-    display: flex;
-    gap: 28px;
-
-    font:
-        700 14px
-        "Space Grotesk",
-        "IBM Plex Sans KR",
-        sans-serif;
+.nav{
+display:flex;
+gap:28px;
+font:700 14px "Space Grotesk","IBM Plex Sans KR";
 }
 
-.nav a {
-    transition:
-        color .2s ease,
-        transform .2s ease;
+.explore{
+height:calc(100vh - 72px);
 }
 
-.nav a:hover {
-    color: var(--forest);
-    transform: translateY(-1px);
+.layout{
+width:min(1050px,90%);
+height:100%;
+margin:auto;
+display:grid;
+grid-template-rows:42% 58%;
 }
 
-
-/* MAIN */
-
-.explore {
-    width: 100%;
-    height: calc(100vh - 72px);
+.score-panel{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.loading {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 13px;
+.score-line{
+position:absolute;
+width:75%;
+height:3px;
+background:linear-gradient(
+to right,
+var(--forest),
+#77717e,
+var(--olive)
+);
 }
 
-
-/* CONTENT */
-
-.layout {
-    width: min(1050px, 90%);
-    height: 100%;
-
-    margin: 0 auto;
-
-    display: grid;
-    grid-template-rows: 43% 57%;
+.slider{
+position:absolute;
+width:75%;
+height:35px;
+opacity:0;
+cursor:pointer;
+z-index:5;
 }
 
-
-/* SCORE */
-
-.score-panel {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.knob{
+position:absolute;
+width:24px;
+height:24px;
+border-radius:50%;
+border:5px solid var(--purple);
+background:white;
+transform:translate(-50%,-50%);
+pointer-events:none;
+z-index:4;
 }
 
-.score-line {
-    position: absolute;
-
-    width: 78%;
-    height: 3px;
-
-    background:
-        linear-gradient(
-            to right,
-            var(--forest),
-            #77717e 50%,
-            var(--olive)
-        );
+.value{
+position:absolute;
+top:calc(50% + 25px);
+transform:translateX(-50%);
+font:700 12px "Space Grotesk";
 }
 
-.slider {
-    position: absolute;
-
-    width: 78%;
-    height: 35px;
-
-    opacity: 0;
-
-    cursor: pointer;
-
-    z-index: 5;
+.label{
+position:absolute;
+top:calc(50% - 38px);
+font:700 10px "Space Grotesk";
 }
 
-.knob {
-    position: absolute;
-
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    border: 5px solid var(--purple);
-
-    background: var(--white);
-
-    transform:
-        translate(-50%, -50%);
-
-    pointer-events: none;
-
-    z-index: 4;
-
-    box-shadow:
-        0 3px 12px rgba(33,21,45,.25);
+.useless{
+left:12%;
+color:var(--forest);
 }
 
-.value {
-    position: absolute;
-
-    top: calc(50% + 27px);
-
-    transform: translateX(-50%);
-
-    font:
-        700 13px
-        "Space Grotesk";
+.useful{
+right:12%;
+color:var(--olive);
 }
 
-.label {
-    position: absolute;
-
-    top: calc(50% - 39px);
-
-    font:
-        700 10px
-        "Space Grotesk";
+.fact-area{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding-top:20px;
+touch-action:pan-y;
 }
 
-.useless {
-    left: 10%;
-
-    color: var(--forest);
+.fact-card{
+width:min(800px,90%);
+padding:35px 45px;
+background:#ffffffb8;
+border:1px solid var(--line);
+text-align:center;
 }
 
-.useful {
-    right: 10%;
-
-    color: var(--olive);
+.date{
+margin-bottom:20px;
+color:var(--gray);
+font:500 10px "Space Grotesk";
 }
 
-
-/* FACT */
-
-.fact-area {
-    display: flex;
-
-    align-items: flex-start;
-    justify-content: center;
-
-    padding-top: 15px;
-
-    touch-action: pan-y;
-
-    user-select: none;
+.fact{
+margin:0;
+font:700 clamp(25px,4vw,45px)/1.4 "Space Grotesk","IBM Plex Sans KR";
+letter-spacing:-1.5px;
 }
 
-.fact-card {
-    width: min(800px, 90%);
-
-    padding:
-        32px
-        42px
-        38px;
-
-    background:
-        rgba(255,255,255,.55);
-
-    border:
-        1px solid rgba(255,255,255,.5);
-
-    border-top:
-        4px solid var(--forest);
-
-    text-align: center;
-
-    box-shadow:
-        0 12px 40px rgba(33,21,45,.08);
+.nickname{
+margin-top:22px;
+color:var(--gray);
+font-size:11px;
 }
 
-.date {
-    margin-bottom: 18px;
-
-    color: var(--gray);
-
-    font:
-        500 10px
-        "Space Grotesk";
+.down{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:48px;
+height:48px;
+border:1px solid var(--forest);
+background:var(--forest);
+color:white;
+font-size:20px;
+cursor:pointer;
+z-index:20;
 }
 
-.fact {
-    margin: 0;
-
-    font:
-        700 clamp(24px, 4vw, 44px)/1.4
-        "Space Grotesk",
-        "IBM Plex Sans KR",
-        sans-serif;
-
-    letter-spacing: -1.5px;
+.down:hover{
+background:var(--olive);
 }
 
-.nickname {
-    margin-top: 22px;
-
-    color: var(--gray);
-
-    font-size: 11px;
-}
-
-
-/* NEXT BUTTON */
-
-.down {
-    position: fixed;
-
-    bottom: 20px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 50px;
-    height: 50px;
-
-    border:
-        1px solid var(--forest);
-
-    background:
-        var(--forest);
-
-    color: white;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-    z-index: 30;
-
-    transition:
-        background .2s ease,
-        transform .2s ease;
-}
-
-.down:hover {
-    background: var(--olive);
-
-    transform:
-        translateX(-50%)
-        translateY(-2px);
-}
-
-.down:active {
-    transform:
-        translateX(-50%)
-        translateY(1px);
+.loading{
+height:100%;
+display:grid;
+place-items:center;
+font-size:13px;
 }
 
 
 /* MOBILE */
 
-@media (max-width: 800px) {
+@media(max-width:800px){
 
-    .header {
-        height: 64px;
+.header{
+height:64px;
+padding:0 5%;
+}
 
-        padding: 0 5%;
-    }
+.nav{
+gap:14px;
+font-size:11px;
+}
 
-    .nav {
-        gap: 14px;
+.explore{
+height:calc(100dvh - 64px);
+}
 
-        font-size: 11px;
-    }
+.layout{
 
-    .explore {
-        height: calc(100dvh - 64px);
-    }
+width:100%;
+height:100%;
 
-    .layout {
-        width: 100%;
-        height: 100%;
+display:grid;
 
-        margin: 0;
+grid-template-columns:
+minmax(0,1fr) 82px;
 
-        display: grid;
+grid-template-rows:1fr;
 
-        grid-template-columns:
-            minmax(0, 1fr)
-            82px;
+}
 
-        grid-template-rows: 1fr;
-    }
+.fact-area{
 
+width:100%;
+height:100%;
 
-    /* FACT LEFT */
+padding:
+15px
+8px
+15px
+15px;
 
-    .fact-area {
-        width: 100%;
-        height: 100%;
+align-items:center;
 
-        padding:
-            15px
-            7px
-            15px
-            15px;
+overflow:hidden;
 
-        align-items: center;
+}
 
-        overflow: hidden;
-    }
+.fact-card{
 
-    .fact-card {
-        position: relative;
+width:100%;
 
-        width: 100%;
-        height: calc(100dvh - 115px);
+height:
+calc(100dvh - 115px);
 
-        padding:
-            55px
-            18px
-            30px;
+padding:
+50px 18px 35px;
 
-        display: flex;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:flex-start;
 
-        flex-direction: column;
+text-align:left;
 
-        justify-content: center;
-        align-items: flex-start;
+overflow:hidden;
 
-        text-align: left;
+}
 
-        overflow: hidden;
-    }
+.date{
+position:absolute;
+top:18px;
+left:18px;
+}
 
-    .date {
-        position: absolute;
+.fact{
 
-        top: 18px;
-        left: 18px;
-    }
+width:100%;
 
-    .fact {
-        width: 100%;
+font-size:
+clamp(22px,7vw,36px);
 
-        font-size:
-            clamp(21px, 7vw, 35px);
+line-height:1.4;
 
-        line-height: 1.45;
-    }
+}
 
-    .nickname {
-        margin-top: 22px;
-    }
+.nickname{
+margin-top:22px;
+}
 
+.score-panel{
 
-    /* SCORE RIGHT */
+width:82px;
+height:100%;
 
-    .score-panel {
-        width: 82px;
-        height: 100%;
+overflow:visible;
 
-        overflow: visible;
-    }
+}
 
-    .score-line {
-        left: 50%;
-        top: 50%;
+.score-line{
 
-        width: 3px;
-        height: 72%;
+left:50%;
+top:50%;
 
-        transform:
-            translate(-50%, -50%);
+width:3px;
+height:72%;
 
-        background:
-            linear-gradient(
-                to bottom,
-                var(--forest),
-                #77717e 50%,
-                var(--olive)
-            );
-    }
+transform:
+translate(-50%,-50%);
 
-    .slider {
-        left: 50%;
-        top: 50%;
+background:linear-gradient(
+to bottom,
+var(--forest),
+#77717e 50%,
+var(--olive)
+);
 
-        width: 72%;
-        height: 100%;
+}
 
-        transform:
-            translate(-50%, -50%)
-            rotate(-90deg);
-    }
+.slider{
 
-    .knob {
-        left: 50%;
-    }
+left:50%;
+top:50%;
 
-    .value {
-        left: 50%;
+width:72%;
+height:100%;
 
-        top: calc(50% + 28px);
+transform:
+translate(-50%,-50%)
+rotate(-90deg);
 
-        transform:
-            translateX(-50%);
-    }
+}
 
-    .label {
-        left: 50% !important;
-        right: auto !important;
+.knob{
 
-        width: 70px;
+left:50%;
+top:50%;
 
-        text-align: center;
+}
 
-        transform:
-            translateX(-50%);
-    }
+.value{
 
-    .useless {
-        top: 10%;
-    }
+left:50%;
 
-    .useful {
-        top: auto;
-        bottom: 10%;
-    }
+top:calc(50% + 28px);
 
-    .down {
-        bottom: 12px;
+transform:translateX(-50%);
 
-        width: 43px;
-        height: 43px;
+}
 
-        font-size: 18px;
-    }
+.label{
+
+left:50% !important;
+right:auto !important;
+
+transform:translateX(-50%);
+
+width:70px;
+
+text-align:center;
+
+}
+
+.useless{
+top:10%;
+}
+
+.useful{
+top:auto;
+bottom:10%;
+}
+
+.down{
+
+bottom:12px;
+
+width:43px;
+height:43px;
+
+}
+
 }
 </style>
 </head>
@@ -549,28 +393,19 @@ a {
 
 <header class="header">
 
-    <a
-        href="./index.html"
-        class="logo"
-    >
-        SseulSaEop
-    </a>
+<a href="./index.html" class="logo">
+SseulSaEop
+</a>
 
-    <nav class="nav">
+<nav class="nav">
 
-        <a href="./index.html">
-            홈
-        </a>
+<a href="./index.html">홈</a>
 
-        <a href="./share.html">
-            공유
-        </a>
+<a href="./share.html">공유</a>
 
-        <a href="./explore.html">
-            구경
-        </a>
+<a href="./explore.html">구경</a>
 
-    </nav>
+</nav>
 
 </header>
 
@@ -578,103 +413,75 @@ a {
 <main class="explore">
 
 
-    <div
-        id="loading"
-        class="loading"
-    >
-        불러오는 중...
-    </div>
+<div id="loading" class="loading">
+불러오는 중...
+</div>
 
 
-    <div
-        id="content"
-        class="layout"
-        style="display:none"
-    >
+<div
+id="content"
+class="layout"
+style="display:none"
+>
 
 
-        <!-- 위쪽 : 평가 -->
+<section class="score-panel">
 
-        <section class="score-panel">
+<div class="label useless">
+−10 USELESS
+</div>
 
-            <div class="label useless">
-                −10 USELESS
-            </div>
+<div class="label useful">
++10 USEFUL
+</div>
 
-            <div class="label useful">
-                +10 USEFUL
-            </div>
-
-            <div class="score-line"></div>
+<div class="score-line"></div>
 
 
-            <input
-                id="slider"
-                class="slider"
-                type="range"
-                min="-10"
-                max="10"
-                step="0.01"
-                value="0"
-            >
+<input
+id="slider"
+class="slider"
+type="range"
+min="-10"
+max="10"
+step="0.01"
+value="0"
+>
 
 
-            <div
-                id="knob"
-                class="knob"
-            ></div>
+<div id="knob" class="knob"></div>
+
+<div id="value" class="value">
+0.00
+</div>
+
+</section>
 
 
-            <div
-                id="value"
-                class="value"
-            >
-                0.00
-            </div>
+<section id="factArea" class="fact-area">
 
-        </section>
+<article class="fact-card">
 
+<div id="date" class="date"></div>
 
-        <!-- 아래쪽 : 사실 -->
+<p id="fact" class="fact"></p>
 
-        <section
-            id="factArea"
-            class="fact-area"
-        >
+<div id="nickname" class="nickname"></div>
 
-            <article class="fact-card">
+</article>
 
-                <div
-                    id="date"
-                    class="date"
-                ></div>
+</section>
 
-                <p
-                    id="fact"
-                    class="fact"
-                ></p>
-
-                <div
-                    id="nickname"
-                    class="nickname"
-                ></div>
-
-            </article>
-
-        </section>
-
-    </div>
+</div>
 
 
-    <!-- 다음 사실 -->
-
-    <button
-        id="down"
-        class="down"
-        title="다음 사실"
-    >
-        ↓
-    </button>
+<button
+id="down"
+class="down"
+title="다음 사실"
+>
+↓
+</button>
 
 
 </main>
@@ -682,453 +489,296 @@ a {
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
-
-const db = supabase.createClient(
-
-    "https://awujryapgmbhjvagonea.supabase.co",
-
-    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
-
+const db=supabase.createClient(
+"https://awujryapgmbhjvagonea.supabase.co",
+"sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
 );
 
 
-/* =========================
-   VARIABLES
-========================= */
-
-let facts = [];
-
-let current = 0;
-
-let startY = 0;
-
-let mouseStartY = 0;
+let facts=[];
+let current=0;
+let startY=0;
 
 
-/* =========================
-   ELEMENTS
-========================= */
+const slider=
+document.getElementById("slider");
 
-const slider =
-    document.getElementById("slider");
+const knob=
+document.getElementById("knob");
 
-const knob =
-    document.getElementById("knob");
-
-const value =
-    document.getElementById("value");
-
-const factArea =
-    document.getElementById("factArea");
+const value=
+document.getElementById("value");
 
 
-/* =========================
-   SLIDER
-========================= */
+function updateSlider(){
 
-function updateSlider() {
+const score=Number(slider.value);
 
-    const score =
-        Number(slider.value);
-
-
-    value.textContent =
-        score >= 0
-            ? "+" + score.toFixed(2)
-            : score.toFixed(2);
+value.textContent=
+score>=0
+? "+"+score.toFixed(2)
+: score.toFixed(2);
 
 
-    const percent =
-        (score + 10) / 20;
+const percent=(score+10)/20;
 
 
-    if (window.innerWidth <= 800) {
+if(window.innerWidth<=800){
 
-        /*
-         모바일:
-         -10 위
-         +10 아래
-        */
+knob.style.top=
+`${100-percent*100}%`;
 
-        knob.style.top =
-            `${percent * 100}%`;
+knob.style.left="50%";
 
-        knob.style.left =
-            "50%";
+}else{
 
-    } else {
+knob.style.left=
+`${percent*100}%`;
 
-        /*
-         PC:
-         -10 왼쪽
-         +10 오른쪽
-        */
+knob.style.top="50%";
 
-        knob.style.left =
-            `${percent * 100}%`;
-
-        knob.style.top =
-            "50%";
-
-    }
+}
 
 }
 
 
 slider.addEventListener(
-    "input",
-    updateSlider
+"input",
+updateSlider
 );
 
 
-/* =========================
-   LOAD FACTS
-========================= */
+async function loadFacts(){
 
-async function loadFacts() {
-
-    const {
-        data,
-        error
-    } = await db
-
-        .from("facts")
-
-        .select(
-            "id,nickname,fact,created_at"
-        )
-
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
+const {data,error}=await db
+.from("facts")
+.select("id,nickname,fact,created_at")
+.order("created_at",{ascending:false});
 
 
-    if (error) {
+if(error){
 
-        console.error(error);
+console.error(error);
 
-        document
-            .getElementById("loading")
-            .textContent =
-            "사실을 불러오지 못했습니다.";
+document.getElementById("loading").textContent=
+"사실을 불러오지 못했습니다.";
 
-        return;
-
-    }
-
-
-    facts = data || [];
-
-
-    /* 사실이 없을 때 */
-
-    if (facts.length === 0) {
-
-        document
-            .getElementById("loading")
-            .innerHTML = `
-
-                <div style="
-                    text-align:center;
-                    line-height:1.8;
-                ">
-
-                    아직 등록된 사실이 없습니다.
-
-                    <br><br>
-
-                    <a
-                        href="./share.html"
-                        style="
-                            font-weight:700;
-                            text-decoration:underline;
-                        "
-                    >
-                        첫 번째 사실 남기기 →
-                    </a>
-
-                </div>
-
-            `;
-
-        document
-            .getElementById("down")
-            .style.display = "none";
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("loading")
-        .style.display = "none";
-
-
-    document
-        .getElementById("content")
-        .style.display = "grid";
-
-
-    showFact();
+return;
 
 }
 
 
-/* =========================
-   SHOW FACT
-========================= */
-
-function showFact() {
-
-    const item =
-        facts[current];
+facts=data||[];
 
 
-    document
-        .getElementById("fact")
-        .textContent =
-        item.fact;
+if(facts.length===0){
 
+document.getElementById("loading").innerHTML=`
+<div style="text-align:center">
+아직 등록된 사실이 없습니다.<br><br>
+<a href="./share.html"
+style="font-weight:700">
+첫 번째 사실 남기기 →
+</a>
+</div>
+`;
 
-    document
-        .getElementById("nickname")
-        .textContent =
-        "by " +
-        (item.nickname || "익명");
+document.getElementById("down").style.display="none";
 
-
-    const date =
-        new Date(item.created_at);
-
-
-    document
-        .getElementById("date")
-        .textContent =
-        date.toLocaleDateString(
-            "ko-KR",
-            {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit"
-            }
-        );
-
-
-    /*
-        새로운 사실을 볼 때
-        점수는 항상 0부터 시작
-    */
-
-    slider.value = 0;
-
-    updateSlider();
+return;
 
 }
 
 
-/* =========================
-   SAVE SCORE
-========================= */
+document.getElementById("loading").style.display="none";
 
-async function saveRating() {
+document.getElementById("content").style.display="grid";
 
-    const item =
-        facts[current];
-
-
-    const score =
-        Number(
-            Number(slider.value)
-                .toFixed(2)
-        );
-
-
-    const {
-        error
-    } = await db
-
-        .from("ratings")
-
-        .insert({
-
-            fact_id: item.id,
-
-            score: score
-
-        });
-
-
-    if (error) {
-
-        console.error(
-            "평가 저장 오류:",
-            error
-        );
-
-    }
+showFact();
 
 }
 
 
-/* =========================
-   NEXT
-========================= */
+function showFact(){
 
-async function nextFact() {
-
-    if (!facts.length) {
-        return;
-    }
+const item=facts[current];
 
 
-    /*
-       현재 점수를 저장하고
-       다음 사실로 이동
-    */
-
-    await saveRating();
+document.getElementById("fact").textContent=
+item.fact;
 
 
-    current++;
+document.getElementById("nickname").textContent=
+"by "+(item.nickname||"익명");
 
 
-    if (current >= facts.length) {
-
-        current = 0;
-
-    }
+const date=new Date(item.created_at);
 
 
-    showFact();
+document.getElementById("date").textContent=
+date.toLocaleDateString(
+"ko-KR",
+{
+year:"numeric",
+month:"2-digit",
+day:"2-digit"
+}
+);
+
+
+slider.value=0;
+
+updateSlider();
 
 }
 
 
-/* =========================
-   ↓ BUTTON
-========================= */
+async function saveRating(){
+
+const item=facts[current];
+
+const score=
+Number(Number(slider.value).toFixed(2));
+
+
+const {error}=await db
+.from("ratings")
+.insert({
+
+fact_id:item.id,
+
+score:score
+
+});
+
+
+if(error){
+
+console.error(
+"평가 저장 오류:",
+error
+);
+
+}
+
+}
+
+
+async function nextFact(){
+
+await saveRating();
+
+
+current++;
+
+if(current>=facts.length){
+current=0;
+}
+
+showFact();
+
+}
+
+
+/* ↓ 버튼 */
 
 document
-    .getElementById("down")
-    .addEventListener(
-        "click",
-        nextFact
-    );
+.getElementById("down")
+.addEventListener(
+"click",
+nextFact
+);
 
 
-/* =========================
-   SPACE / ARROW DOWN
-========================= */
+/* PC Space / 아래 화살표 */
 
 document.addEventListener(
-    "keydown",
-    function(e) {
+"keydown",
+e=>{
 
-        if (
-            e.code === "Space" ||
-            e.key === "ArrowDown"
-        ) {
+if(
+e.code==="Space" ||
+e.key==="ArrowDown"
+){
 
-            e.preventDefault();
+e.preventDefault();
 
-            nextFact();
+nextFact();
 
-        }
+}
 
-    }
+}
 );
 
 
-/* =========================
-   TOUCH SWIPE
-========================= */
+/* 위아래 스와이프 */
 
-factArea.addEventListener(
-    "touchstart",
-    function(e) {
+const area=
+document.getElementById("factArea");
 
-        startY =
-            e.changedTouches[0].clientY;
 
-    },
-    {
-        passive: true
-    }
+area.addEventListener(
+"touchstart",
+e=>{
+
+startY=
+e.changedTouches[0].clientY;
+
+},
+{passive:true}
 );
 
 
-factArea.addEventListener(
-    "touchend",
-    function(e) {
+area.addEventListener(
+"touchend",
+e=>{
 
-        const endY =
-            e.changedTouches[0].clientY;
+const endY=
+e.changedTouches[0].clientY;
 
-
-        const diff =
-            endY - startY;
+const diff=endY-startY;
 
 
-        if (
-            Math.abs(diff) > 60
-        ) {
+if(Math.abs(diff)>60){
 
-            nextFact();
+nextFact();
 
-        }
+}
 
-    },
-    {
-        passive: true
-    }
+},
+{passive:true}
 );
 
 
-/* =========================
-   MOUSE DRAG
-========================= */
+/* 마우스 드래그 */
 
-factArea.addEventListener(
-    "mousedown",
-    function(e) {
+let mouseStart=0;
 
-        mouseStartY =
-            e.clientY;
+area.addEventListener(
+"mousedown",
+e=>{
 
-    }
+mouseStart=e.clientY;
+
+}
 );
 
 
-factArea.addEventListener(
-    "mouseup",
-    function(e) {
+area.addEventListener(
+"mouseup",
+e=>{
 
-        const diff =
-            e.clientY - mouseStartY;
+const diff=e.clientY-mouseStart;
 
+if(Math.abs(diff)>60){
 
-        if (
-            Math.abs(diff) > 60
-        ) {
+nextFact();
 
-            nextFact();
+}
 
-        }
-
-    }
+}
 );
 
-
-/* =========================
-   START
-========================= */
 
 loadFacts();
 
