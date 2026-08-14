@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>쓸모없는 사실</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --lavender: #d9cff2;
+    --lavender-light: #eee9f9;
+    --lavender-dark: #8d78b8;
+
+    --forest: #315c48;
+    --forest-dark: #244635;
+
+    --olive: #85884b;
+    --olive-light: #b5b67b;
+
+    --cream: #faf9f4;
+    --ink: #252528;
+    --muted: #77757c;
+    --white: #ffffff;
+    --line: #ddd8e7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, Pretendard, Arial, sans-serif;
+    color: var(--ink);
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(217,207,242,.65),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(181,182,123,.18),
+            transparent 30%
+        ),
+        var(--cream);
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+header {
+    height: 78px;
+    padding: 0 5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(80,70,90,.12);
+
+    background: rgba(250,249,244,.82);
+    backdrop-filter: blur(16px);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--forest);
+}
+
+nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-btn {
+    border: 0;
+    background: transparent;
+
+    padding: 10px 16px;
+    border-radius: 999px;
+
+    color: var(--muted);
+
+    transition:
+        background .2s,
+        color .2s,
+        transform .2s;
+}
+
+.nav-btn:hover {
+    background: var(--lavender-light);
+    color: var(--forest);
+    transform: translateY(-1px);
+}
+
+.nav-btn.active {
+    background: var(--forest);
+    color: white;
+}
+
+
+/* ========================================
+   COMMON
+======================================== */
+
+.page {
+    width: min(1200px, 90vw);
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   HOME
+======================================== */
+
+.home {
+    padding: 85px 0 100px;
+}
+
+.hero {
+    max-width: 850px;
+    margin-bottom: 65px;
+}
+
+.eyebrow {
+    display: inline-flex;
+
+    padding: 7px 13px;
+    border-radius: 999px;
+
+    background: var(--lavender);
+    color: var(--forest-dark);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 88px);
+    line-height: .98;
+
+    letter-spacing: -5px;
+
+    margin: 0 0 25px;
+}
+
+.hero h1 em {
+    font-style: normal;
+    color: var(--forest);
+}
+
+.hero p {
+    color: var(--muted);
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    max-width: 650px;
+}
+
+
+/* ========================================
+   HOME CHOICES
+======================================== */
+
+.choice-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 90px;
+}
+
+.choice {
+    min-height: 280px;
+
+    border: 1px solid var(--line);
+    border-radius: 28px;
+
+    background: rgba(255,255,255,.65);
+
+    padding: 35px;
+
+    text-align: left;
+
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform .25s,
+        box-shadow .25s;
+}
+
+.choice:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 20px 45px rgba(50,40,70,.10);
+}
+
+.choice:nth-child(1) {
+    background: var(--lavender-light);
+}
+
+.choice:nth-child(2) {
+    background: #e9ead7;
+}
+
+.choice .number {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--olive);
+}
+
+.choice h2 {
+    font-size: 28px;
+
+    margin:
+        65px
+        0
+        12px;
+
+    letter-spacing: -1.5px;
+}
+
+.choice p {
+    color: var(--muted);
+    margin: 0;
+
+    line-height: 1.6;
+}
+
+.arrow {
+    position: absolute;
+
+    right: 30px;
+    bottom: 27px;
+
+    font-size: 28px;
+    color: var(--forest);
+}
+
+
+/* ========================================
+   RANKING
+======================================== */
+
+.ranking-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 25px;
+}
+
+.ranking-title h2 {
+    margin: 0;
+
+    font-size: 32px;
+    letter-spacing: -2px;
+}
+
+.ranking-title p {
+    color: var(--muted);
+    margin: 8px 0 0;
+}
+
+.rank-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 22px;
+}
+
+.rank-box {
+    background: white;
+
+    border: 1px solid var(--line);
+    border-radius: 25px;
+
+    padding: 25px;
+}
+
+.rank-box.useless {
+    border-top: 5px solid var(--olive);
+}
+
+.rank-box.useful {
+    border-top: 5px solid var(--forest);
+}
+
+.rank-box h3 {
+    margin: 0 0 20px;
+}
+
+.rank-item {
+    display: grid;
+
+    grid-template-columns:
+        38px
+        1fr
+        65px;
+
+    gap: 10px;
+
+    align-items: center;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+.rank-number {
+    font-weight: 800;
+    color: var(--muted);
+}
+
+.rank-fact {
+    overflow: hidden;
+}
+
+.rank-fact strong {
+    display: block;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rank-fact small {
+    color: var(--muted);
+}
+
+.rank-score {
+    font-weight: 800;
+    text-align: right;
+}
+
+.useless .rank-score {
+    color: var(--olive);
+}
+
+.useful .rank-score {
+    color: var(--forest);
+}
+
+
+/* ========================================
+   SHARE
+======================================== */
+
+.form-page {
+    padding: 80px 0 120px;
+
+    max-width: 720px;
+}
+
+.back {
+    border: 0;
+    background: none;
+
+    color: var(--forest);
+
+    margin-bottom: 40px;
+    padding: 0;
+}
+
+.form-page h1 {
+    font-size: 54px;
+
+    letter-spacing: -3px;
+
+    margin: 0 0 15px;
+}
+
+.form-page > p {
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    margin-bottom: 45px;
+}
+
+.form-card {
+    background: white;
+
+    border: 1px solid var(--line);
+    border-radius: 28px;
+
+    padding: 35px;
+}
+
+.field {
+    margin-bottom: 25px;
+}
+
+.field label {
+    display: block;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    margin-bottom: 9px;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+
+    border: 1px solid var(--line);
+    border-radius: 14px;
+
+    padding: 15px;
+
+    outline: none;
+
+    background: #fbfafc;
+
+    transition:
+        border .2s,
+        box-shadow .2s;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: var(--forest);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(49,92,72,.08);
+}
+
+.field textarea {
+    resize: vertical;
+
+    min-height: 180px;
+}
+
+.submit {
+    width: 100%;
+
+    border: 0;
+    border-radius: 15px;
+
+    padding: 17px;
+
+    color: white;
+
+    background: var(--forest);
+
+    font-weight: 800;
+
+    transition: background .2s;
+}
+
+.submit:hover {
+    background: var(--forest-dark);
+}
+
+.notice {
+    font-size: 12px;
+    color: var(--muted);
+
+    margin-top: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   EXPLORE
+======================================== */
+
+.explore-page {
+    height: calc(100vh - 78px);
+
+    overflow: hidden;
+}
+
+.explore-layout {
+    width: min(1250px, 94vw);
+
+    height: 100%;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        170px;
+
+    gap: 40px;
+
+    align-items: center;
+}
+
+.fact-area {
+    height: 88%;
+
+    min-height: 500px;
+
+    position: relative;
+
+    touch-action: pan-y;
+}
+
+.fact-card {
+    position: absolute;
+
+    inset: 0;
+
+    background: white;
+
+    border: 1px solid var(--line);
+    border-radius: 34px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding:
+        clamp(35px, 7vw, 100px);
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+
+    box-shadow:
+        0 20px 70px
+        rgba(50,40,70,.08);
+}
+
+.fact-card.leaving {
+    transform:
+        translateY(-110%)
+        rotate(-2deg);
+
+    opacity: 0;
+}
+
+.fact-index {
+    position: absolute;
+
+    top: 30px;
+    left: 35px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fact-text {
+    font-size:
+        clamp(27px, 4vw, 52px);
+
+    line-height: 1.3;
+
+    letter-spacing: -2px;
+
+    max-width: 850px;
+
+    margin: 0;
+
+    word-break: keep-all;
+}
+
+.fact-meta {
+    margin-top: 35px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: var(--lavender);
+
+    display: grid;
+
+    place-items: center;
+
+    color: var(--forest);
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ========================================
+   SCORE BAR
+======================================== */
+
+.score-panel {
+    height: 70%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.score-line {
+    height: 100%;
+    width: 3px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--forest),
+            #b8b8b8 48%,
+            var(--olive)
+        );
+
+    position: relative;
+}
+
+.score-line::before {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 11px;
+    height: 11px;
+
+    background: #999;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+}
+
+.score-slider {
+    position: absolute;
+
+    height: 100%;
+    width: 80px;
+
+    opacity: 0;
+
+    writing-mode: vertical-lr;
+    direction: rtl;
+
+    cursor: ns-resize;
+}
+
+.score-knob {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 25px;
+    height: 25px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: white;
+
+    border:
+        5px solid
+        var(--forest);
+
+    box-shadow:
+        0 3px 12px
+        rgba(0,0,0,.18);
+
+    pointer-events: none;
+
+    transition: top .08s;
+}
+
+.score-label {
+    position: absolute;
+
+    width: 110px;
+
+    left: 30px;
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    line-height: 1.5;
+}
+
+.score-label.top {
+    top: -25px;
+}
+
+.score-label.bottom {
+    bottom: -25px;
+}
+
+.score-value {
+    position: absolute;
+
+    left: 32px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-weight: 800;
+
+    color: #777;
+
+    min-width: 55px;
+}
+
+.score-help {
+    position: absolute;
+
+    bottom: -60px;
+
+    width: 160px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    text-align: center;
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   EXPLORE BUTTONS
+======================================== */
+
+.explore-controls {
+    position: absolute;
+
+    bottom: 10px;
+
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.control-btn {
+    border: 1px solid var(--line);
+
+    background: white;
+
+    border-radius: 999px;
+
+    padding: 10px 18px;
+
+    transition:
+        transform .2s,
+        background .2s;
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+}
+
+.control-btn.primary {
+    background: var(--forest);
+
+    color: white;
+
+    border-color: var(--forest);
+}
+
+
+/* ========================================
+   LOADING
+======================================== */
+
+.loading {
+    position: fixed;
+
+    inset: 0;
+
+    background: var(--cream);
+
+    display: grid;
+
+    place-items: center;
+
+    z-index: 1000;
+}
+
+.loading-inner {
+    text-align: center;
+}
+
+.loader {
+    width: 35px;
+    height: 35px;
+
+    border: 4px solid var(--lavender);
+
+    border-top-color: var(--forest);
+
+    border-radius: 50%;
+
+    animation:
+        spin .8s linear infinite;
+
+    margin:
+        auto
+        auto
+        15px;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ========================================
+   TOAST
+======================================== */
+
+.toast {
+    position: fixed;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(30px);
+
+    opacity: 0;
+
+    background: var(--forest-dark);
+
+    color: white;
+
+    padding: 13px 20px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    transition: .3s;
+
+    z-index: 500;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 750px) {
+
+    header {
+        height: 65px;
+        padding: 0 20px;
+    }
+
+    nav {
+        gap: 0;
+    }
+
+    .nav-btn {
+        padding: 8px;
+
+        font-size: 12px;
+    }
+
+    .home {
+        padding-top: 50px;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .choice-grid,
+    .rank-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .choice {
+        min-height: 220px;
+    }
+
+    .choice h2 {
+        margin-top: 40px;
+    }
+
+    .form-page {
+        padding-top: 45px;
+    }
+
+    .form-page h1 {
+        font-size: 40px;
+    }
+
+    .explore-page {
+        height: calc(100vh - 65px);
+    }
+
+    .explore-layout {
+        display: block;
+
+        width: 94vw;
+
+        padding-top: 20px;
+    }
+
+    .fact-area {
+        height: 75vh;
+    }
+
+    .fact-card {
+        padding:
+            40px
+            25px;
+
+        border-radius: 25px;
+    }
+
+    .fact-text {
+        font-size: 28px;
+
+        letter-spacing: -1px;
+
+        padding-right: 30px;
+    }
+
+    .score-panel {
+        position: absolute;
+
+        right: 5px;
+        top: 110px;
+
+        height: 55vh;
+    }
+
+    .explore-controls {
+        bottom: 0;
+
+        padding-right: 25px;
+    }
+
+    .control-btn {
+        font-size: 11px;
+
+        padding:
+            9px
+            13px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     LOADING
+======================================== -->
+
+<div id="loading" class="loading">
+
+    <div class="loading-inner">
+
+        <div class="loader"></div>
+
+        <div>
+            쓸모없는 사실을 모으는 중...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     HEADER
+======================================== -->
+
+<header>
+
+    <div class="logo">
+        쓸모없는<span>사실</span>
+    </div>
+
+    <nav>
+
+        <button
+            class="nav-btn active"
+            id="homeNav"
+        >
+            홈
+        </button>
+
+        <button
+            class="nav-btn"
+            id="shareNav"
+        >
+            공유
+        </button>
+
+        <button
+            class="nav-btn"
+            id="exploreNav"
+        >
+            구경
+        </button>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+
+<!-- ========================================
+     HOME
+======================================== -->
+
+<section
+    id="homePage"
+    class="page home"
+>
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            USELESS / USEFUL
+        </div>
+
+        <h1>
+            세상에서 가장<br>
+            <em>쓸모없는 사실</em>을 모읍니다.
+        </h1>
+
+        <p>
+            알아도 인생에 별 도움이 안 되는 이야기부터
+            의외로 쓸모가 있는 지식까지.
+            사람들이 직접 공유하고 평가합니다.
+        </p>
+
+    </div>
+
+
+    <div class="choice-grid">
+
+
+        <!-- SHARE -->
+
+        <button
+            class="choice"
+            id="shareChoice"
+        >
+
+            <div class="number">
+                01 / SHARE
+            </div>
+
+            <h2>
+                쓸모없는 사실 공유하기
+            </h2>
+
+            <p>
+                당신만 알고 있는 아무짝에도
+                쓸모없는 사실을 남겨주세요.
+            </p>
+
+            <div class="arrow">
+                ↗
+            </div>
+
+        </button>
+
+
+        <!-- EXPLORE -->
+
+        <button
+            class="choice"
+            id="exploreChoice"
+        >
+
+            <div class="number">
+                02 / EXPLORE
+            </div>
+
+            <h2>
+                쓸모없는 사실 구경하기
+            </h2>
+
+            <p>
+                다른 사람들이 남긴 사실을
+                하나씩 읽고 직접 평가해보세요.
+            </p>
+
+            <div class="arrow">
+                ↗
+            </div>
+
+        </button>
+
+    </div>
+
+
+    <!-- RANKING -->
+
+    <div class="ranking-title">
+
+        <div>
+
+            <h2>
+                이번 주의 쓸모도
+            </h2>
+
+            <p>
+                사람들이 가장 쓸모없다고 / 유용하다고 평가한 사실
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="rank-grid">
+
+
+        <!-- USELESS -->
+
+        <div class="rank-box useless">
+
+            <h3>
+                − 가장 쓸모없는 TOP 50
+            </h3>
+
+            <div id="uselessRanking"></div>
+
+        </div>
+
+
+        <!-- USEFUL -->
+
+        <div class="rank-box useful">
+
+            <h3>
+                ＋ 가장 쓸모있는 TOP 50
+            </h3>
+
+            <div id="usefulRanking"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================
+     SHARE PAGE
+======================================== -->
+
+<section
+    id="sharePage"
+    class="page form-page hidden"
+>
+
+    <button
+        class="back"
+        id="shareBack"
+    >
+        ← 홈으로
+    </button>
+
+
+    <h1>
+        사실을 하나<br>
+        남겨주세요.
+    </h1>
+
+
+    <p>
+        굳이 알아야 할 필요는 없지만,
+        알고 있으면 어쩐지 말하고 싶어지는
+        그런 사실을 기다립니다.
+    </p>
+
+
+    <div class="form-card">
+
+
+        <!-- NICKNAME -->
+
+        <div class="field">
+
+            <label>
+                닉네임
+            </label>
+
+            <input
+                id="nickname"
+                maxlength="30"
+                placeholder="예: 감자도둑"
+            >
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="field">
+
+            <label>
+                전화번호
+            </label>
+
+            <input
+                id="phone"
+                type="tel"
+                maxlength="20"
+                placeholder="010-0000-0000"
+            >
+
+        </div>
+
+
+        <!-- FACT -->
+
+        <div class="field">
+
+            <label>
+                쓸모없는 사실
+            </label>
+
+            <textarea
+                id="fact"
+                maxlength="1000"
+                placeholder="예: 문어는 심장이 3개다."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            class="submit"
+            id="submitFact"
+        >
+            사실 공유하기
+        </button>
+
+
+        <div class="notice">
+            전화번호는 본인 확인용 데이터로만 사용되며
+            다른 이용자에게 표시되지 않습니다.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================
+     EXPLORE PAGE
+======================================== -->
+
+<section
+    id="explorePage"
+    class="explore-page hidden"
+>
+
+    <div class="explore-layout">
+
+
+        <!-- FACT -->
+
+        <div
+            class="fact-area"
+            id="factArea"
+        >
+
+            <div
+                class="fact-card"
+                id="factCard"
+            >
+
+
+                <div
+                    class="fact-index"
+                    id="factIndex"
+                >
+                    FACT 0001
+                </div>
+
+
+                <p
+                    class="fact-text"
+                    id="factText"
+                >
+                    사실을 불러오는 중...
+                </p>
+
+
+                <div class="fact-meta">
+
+                    <div
+                        class="avatar"
+                        id="avatar"
+                    >
+                        ?
+                    </div>
+
+                    <span id="factNickname">
+                        익명의 사실 수집가
+                    </span>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="explore-controls">
+
+                    <button
+                        class="control-btn"
+                        id="skipBtn"
+                    >
+                        평가 안 하기
+                    </button>
+
+                    <button
+                        class="control-btn primary"
+                        id="nextBtn"
+                    >
+                        평가하고 넘기기 →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="score-panel">
+
+
+            <div class="score-line"></div>
+
+
+            <input
+                class="score-slider"
+                id="scoreSlider"
+                type="range"
+                min="-100"
+                max="100"
+                value="0"
+                step="1"
+            >
+
+
+            <div
+                class="score-knob"
+                id="scoreKnob"
+            ></div>
+
+
+            <div
+                class="score-label top"
+            >
+                +100<br>
+                아주 유용함
+            </div>
+
+
+            <div
+                class="score-label bottom"
+            >
+                -100<br>
+                매우 쓸모없음
+            </div>
+
+
+            <div
+                class="score-value"
+                id="scoreValue"
+            >
+                0
+            </div>
+
+
+            <div class="score-help">
+                점을 움직여<br>
+                쓸모도를 평가하세요
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE 연결
+========================================== */
+
+const SUPABASE_URL =
+    "https://awujryapgmbhjvagonea.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE";
+
+const {
+    createClient
+} = supabase;
+
+const db =
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+let facts = [];
+
+let currentIndex = 0;
+
+let isMoving = false;
+
+
+const pages = {
+
+    home:
+        document.getElementById(
+            "homePage"
+        ),
+
+    share:
+        document.getElementById(
+            "sharePage"
+        ),
+
+    explore:
+        document.getElementById(
+            "explorePage"
+        )
+
+};
+
+
+const navs = {
+
+    home:
+        document.getElementById(
+            "homeNav"
+        ),
+
+    share:
+        document.getElementById(
+            "shareNav"
+        ),
+
+    explore:
+        document.getElementById(
+            "exploreNav"
+        )
+
+};
+
+
+/* ==========================================
+   PAGE NAVIGATION
+========================================== */
+
+function showPage(page) {
+
+    Object.values(pages)
+        .forEach(element => {
+
+            element.classList.add(
+                "hidden"
+            );
+
+        });
+
+
+    Object.values(navs)
+        .forEach(element => {
+
+            element.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    pages[page]
+        .classList.remove(
+            "hidden"
+        );
+
+
+    if (navs[page]) {
+
+        navs[page]
+            .classList.add(
+                "active"
+            );
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
+
+
+    if (page === "home") {
+
+        loadRankings();
+
+    }
+
+
+    if (page === "explore") {
+
+        startExplore();
+
+    }
+
+}
+
+
+/* ==========================================
+   NAV EVENTS
+========================================== */
+
+document
+    .getElementById("shareChoice")
+    .addEventListener(
+        "click",
+        () => showPage("share")
+    );
+
+
+document
+    .getElementById("exploreChoice")
+    .addEventListener(
+        "click",
+        () => showPage("explore")
+    );
+
+
+document
+    .getElementById("shareNav")
+    .addEventListener(
+        "click",
+        () => showPage("share")
+    );
+
+
+document
+    .getElementById("exploreNav")
+    .addEventListener(
+        "click",
+        () => showPage("explore")
+    );
+
+
+document
+    .getElementById("homeNav")
+    .addEventListener(
+        "click",
+        () => showPage("home")
+    );
+
+
+document
+    .getElementById("shareBack")
+    .addEventListener(
+        "click",
+        () => showPage("home")
+    );
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function toast(message) {
+
+    const element =
+        document.getElementById(
+            "toast"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.classList.add(
+        "show"
+    );
+
+
+    setTimeout(() => {
+
+        element.classList.remove(
+            "show"
+        );
+
+    }, 2500);
+
+}
+
+
+/* ==========================================
+   PHONE HASH
+========================================== */
+
+async function hashPhone(phone) {
+
+    const normalized =
+        phone.replace(
+            /[^0-9]/g,
+            ""
+        );
+
+
+    const data =
+        new TextEncoder()
+            .encode(normalized);
+
+
+    const hash =
+        await crypto.subtle.digest(
+            "SHA-256",
+            data
+        );
+
+
+    return Array
+        .from(
+            new Uint8Array(hash)
+        )
+        .map(
+            byte =>
+                byte
+                    .toString(16)
+                    .padStart(2, "0")
+        )
+        .join("");
+
+}
+
+
+/* ==========================================
+   SHARE FACT
+========================================== */
+
+document
+    .getElementById("submitFact")
+    .addEventListener(
+        "click",
+        async () => {
+
+
+            const nickname =
+                document
+                    .getElementById(
+                        "nickname"
+                    )
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById(
+                        "phone"
+                    )
+                    .value
+                    .trim();
+
+
+            const fact =
+                document
+                    .getElementById(
+                        "fact"
+                    )
+                    .value
+                    .trim();
+
+
+            if (!nickname) {
+
+                toast(
+                    "닉네임을 입력해주세요."
+                );
+
+                return;
+
+            }
+
+
+            if (!phone) {
+
+                toast(
+                    "전화번호를 입력해주세요."
+                );
+
+                return;
+
+            }
+
+
+            if (!fact) {
+
+                toast(
+                    "쓸모없는 사실을 입력해주세요."
+                );
+
+                return;
+
+            }
+
+
+            const button =
+                document.getElementById(
+                    "submitFact"
+                );
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "공유하는 중...";
+
+
+            try {
+
+
+                const phoneHash =
+                    await hashPhone(
+                        phone
+                    );
+
+
+                const {
+                    error
+                } =
+                    await db
+                        .from("facts")
+                        .insert({
+
+                            nickname:
+                                nickname,
+
+                            phone_hash:
+                                phoneHash,
+
+                            fact:
+                                fact
+
+                        });
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                document
+                    .getElementById(
+                        "nickname"
+                    )
+                    .value = "";
+
+
+                document
+                    .getElementById(
+                        "phone"
+                    )
+                    .value = "";
+
+
+                document
+                    .getElementById(
+                        "fact"
+                    )
+                    .value = "";
+
+
+                toast(
+                    "사실이 저장되었습니다!"
+                );
+
+
+                setTimeout(
+                    () => showPage("home"),
+                    900
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "FACT INSERT ERROR:",
+                    error
+                );
+
+
+                toast(
+                    "저장에 실패했습니다."
+                );
+
+
+            } finally {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "사실 공유하기";
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   SEED FACTS
+========================================== */
+
+const seedFacts = [
+
+    "문어는 심장이 3개다.",
+
+    "바나나는 식물학적으로 베리류에 속한다.",
+
+    "상어는 나무보다 먼저 지구에 등장했다.",
+
+    "금성의 하루는 금성의 1년보다 길다.",
+
+    "꿀은 제대로 보관하면 매우 오래 보존될 수 있다.",
+
+    "플라밍고는 태어날 때부터 분홍색이 아니다.",
+
+    "우주에서는 소리가 공기처럼 전달되지 않는다.",
+
+    "코알라의 지문은 사람의 지문과 상당히 비슷하다.",
+
+    "달에는 발자국이 아주 오랫동안 남을 수 있다.",
+
+    "문어는 팔마다 어느 정도 독립적으로 움직일 수 있다.",
+
+    "소금은 얼음의 녹는점을 낮춘다.",
+
+    "낙타의 혹에는 물이 아니라 지방이 저장된다.",
+
+    "바다수달은 잠을 잘 때 서로 손을 잡기도 한다.",
+
+    "기린의 목뼈는 사람보다 훨씬 크지만 개수는 사람과 같다.",
+
+    "토마토는 식물학적으로 과일이다.",
+
+    "당근은 원래 주황색만 있었던 것은 아니다.",
+
+    "박쥐는 날 수 있는 유일한 포유류다.",
+
+    "펭귄에게는 무릎이 있다.",
+
+    "소는 색깔보다 움직임에 더 민감하게 반응한다.",
+
+    "해파리 중에는 노화가 매우 특이한 종이 있다."
+
+];
+
+
+/* ==========================================
+   GENERATOR
+========================================== */
+
+const subjects = [
+
+    "문어",
+    "고양이",
+    "강아지",
+    "바나나",
+    "사과",
+    "토끼",
+    "펭귄",
+    "기린",
+    "코끼리",
+    "개미",
+    "벌",
+    "상어",
+    "달",
+    "태양",
+    "금성",
+    "화성",
+    "지구",
+    "구름",
+    "나무",
+    "버섯",
+    "감자",
+    "당근",
+    "토마토",
+    "치즈",
+    "연필",
+    "지우개",
+    "책",
+    "시계",
+    "의자",
+    "숟가락"
+
+];
+
+
+const actions = [
+
+    "생각보다 오래 움직일 수 있다.",
+
+    "특정한 상황에서는 아주 이상한 행동을 한다.",
+
+    "생각보다 훨씬 무거울 수 있다.",
+
+    "사람이 예상하는 것과 반대되는 특징이 있다.",
+
+    "아주 오래전부터 비슷한 형태가 존재했다.",
+
+    "특정한 환경에서는 평소와 다른 모습을 보인다.",
+
+    "생각보다 복잡한 구조를 가지고 있다.",
+
+    "놀랍게도 일정한 패턴을 보인다.",
+
+    "사람이 잘 모르는 특이한 특징이 있다.",
+
+    "의외로 다른 것과 비슷한 성질을 가지고 있다."
+
+];
+
+
+function generateSeedFacts() {
+
+    const result =
+        [...seedFacts];
+
+
+    while (
+        result.length < 1000
+    ) {
+
+
+        const subject =
+            subjects[
+                Math.floor(
+                    Math.random() *
+                    subjects.length
+                )
+            ];
+
+
+        const action =
+            actions[
+                Math.floor(
+                    Math.random() *
+                    actions.length
+                )
+            ];
+
+
+        result.push(
+            `${subject}은(는) ${action}`
+        );
+
+    }
+
+
+    return result.slice(
+        0,
+        1000
+    );
+
+}
+
+
+/* ==========================================
+   ENSURE 1000
+========================================== */
+
+async function ensure1000Facts() {
+
+    const {
+        count,
+        error
+    } =
+        await db
+            .from("facts")
+            .select(
+                "*",
+                {
+                    count: "exact",
+                    head: true
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "COUNT ERROR:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (
+        count >= 1000
+    ) {
+
+        return;
+
+    }
+
+
+    const seed =
+        generateSeedFacts();
+
+
+    const missing =
+        1000 - count;
+
+
+    const generated =
+        seed
+            .slice(
+                0,
+                missing
+            )
+            .map(
+                fact => ({
+
+                    nickname:
+                        "쓸모없는 사실 연구소",
+
+                    phone_hash:
+                        null,
+
+                    fact:
+                        fact
+
+                })
+            );
+
+
+    for (
+        let i = 0;
+        i < generated.length;
+        i += 100
+    ) {
+
+
+        const batch =
+            generated.slice(
+                i,
+                i + 100
+            );
+
+
+        const {
+            error
+        } =
+            await db
+                .from("facts")
+                .insert(batch);
+
+
+        if (error) {
+
+            console.error(
+                "SEED ERROR:",
+                error
+            );
+
+            break;
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
+   LOAD FACTS
+========================================== */
+
+async function loadFacts() {
+
+    const {
+        data,
+        error
+    } =
+        await db
+            .from("facts")
+            .select(
+                "id,nickname,fact,created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            )
+            .limit(1500);
+
+
+    if (error) {
+
+        console.error(
+            "LOAD FACTS ERROR:",
+            error
+        );
+
+        return [];
+
+    }
+
+
+    return data || [];
+
+}
+
+
+/* ==========================================
+   VOTER ID
+========================================== */
+
+function getVoterId() {
+
+    let id =
+        localStorage.getItem(
+            "useless_fact_voter"
+        );
+
+
+    if (!id) {
+
+        id =
+            crypto.randomUUID();
+
+
+        localStorage.setItem(
+            "useless_fact_voter",
+            id
+        );
+
+    }
+
+
+    return id;
+
+}
+
+
+/* ==========================================
+   EXPLORE START
+========================================== */
+
+async function startExplore() {
+
+
+    if (
+        facts.length === 0
+    ) {
+
+        facts =
+            await loadFacts();
+
+        currentIndex = 0;
+
+    }
+
+
+    if (
+        facts.length === 0
+    ) {
+
+        document
+            .getElementById(
+                "factText"
+            )
+            .textContent =
+            "아직 사실이 없습니다.";
+
+        return;
+
+    }
+
+
+    showFact();
+
+}
+
+
+/* ==========================================
+   SHOW FACT
+========================================== */
+
+function showFact() {
+
+
+    if (
+        currentIndex >=
+        facts.length
+    ) {
+
+        currentIndex = 0;
+
+        facts.sort(
+            () =>
+                Math.random() - 0.5
+        );
+
+    }
+
+
+    const fact =
+        facts[currentIndex];
+
+
+    document
+        .getElementById(
+            "factText"
+        )
+        .textContent =
+        fact.fact;
+
+
+    document
+        .getElementById(
+            "factNickname"
+        )
+        .textContent =
+        fact.nickname ||
+        "익명의 사실 수집가";
+
+
+    document
+        .getElementById(
+            "factIndex"
+        )
+        .textContent =
+        `FACT ${String(
+            currentIndex + 1
+        ).padStart(4, "0")}`;
+
+
+    const first =
+        (
+            fact.nickname ||
+            "?"
+        ).charAt(0);
+
+
+    document
+        .getElementById(
+            "avatar"
+        )
+        .textContent =
+        first;
+
+
+    resetScore();
+
+}
+
+
+/* ==========================================
+   SCORE ELEMENTS
+========================================== */
+
+const scoreSlider =
+    document.getElementById(
+        "scoreSlider"
+    );
+
+
+const scoreKnob =
+    document.getElementById(
+        "scoreKnob"
+    );
+
+
+const scoreValue =
+    document.getElementById(
+        "scoreValue"
+    );
+
+
+/* ==========================================
+   UPDATE SCORE UI
+========================================== */
+
+function updateScoreUI() {
+
+
+    const value =
+        Number(
+            scoreSlider.value
+        );
+
+
+    const percentage =
+        (
+            (100 - value) /
+            200
+        ) * 100;
+
+
+    scoreKnob.style.top =
+        `${percentage}%`;
+
+
+    scoreValue.textContent =
+        value > 0
+            ? `+${value}`
+            : value;
+
+
+    if (value < 0) {
+
+        scoreValue.style.color =
+            "var(--olive)";
+
+        scoreKnob.style.borderColor =
+            "var(--olive)";
+
+    }
+
+    else if (value > 0) {
+
+        scoreValue.style.color =
+            "var(--forest)";
+
+        scoreKnob.style.borderColor =
+            "var(--forest)";
+
+    }
+
+    else {
+
+        scoreValue.style.color =
+            "#777";
+
+        scoreKnob.style.borderColor =
+            "var(--forest)";
+
+    }
+
+}
+
+
+function resetScore() {
+
+    scoreSlider.value = 0;
+
+    updateScoreUI();
+
+}
+
+
+scoreSlider.addEventListener(
+    "input",
+    updateScoreUI
+);
+
+
+/* ==========================================
+   SAVE RATING
+========================================== */
+
+async function rateCurrentFact() {
+
+
+    const fact =
+        facts[currentIndex];
+
+
+    if (!fact) {
+
+        return false;
+
+    }
+
+
+    const score =
+        Number(
+            scoreSlider.value
+        );
+
+
+    const voterId =
+        getVoterId();
+
+
+    const {
+        error
+    } =
+        await db
+            .from("ratings")
+            .upsert(
+
+                {
+
+                    fact_id:
+                        fact.id,
+
+                    voter_id:
+                        voterId,
+
+                    score:
+                        score
+
+                },
+
+                {
+
+                    onConflict:
+                        "fact_id,voter_id"
+
+                }
+
+            );
+
+
+    if (error) {
+
+        console.error(
+            "RATING ERROR:",
+            error
+        );
+
+        toast(
+            "평가 저장에 실패했습니다."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* ==========================================
+   NEXT FACT
+========================================== */
+
+async function nextFact(
+    saveScore = true
+) {
+
+
+    if (isMoving) {
+
+        return;
+
+    }
+
+
+    isMoving = true;
+
+
+    if (saveScore) {
+
+        const success =
+            await rateCurrentFact();
+
+
+        if (!success) {
+
+            isMoving = false;
+
+            return;
+
+        }
+
+    }
+
+
+    const card =
+        document.getElementById(
+            "factCard"
+        );
+
+
+    card.classList.add(
+        "leaving"
+    );
+
+
+    setTimeout(
+        () => {
+
+            currentIndex++;
+
+            card.classList.remove(
+                "leaving"
+            );
+
+            showFact();
+
+            isMoving = false;
+
+        },
+        300
+    );
+
+}
+
+
+/* ==========================================
+   BUTTON EVENTS
+========================================== */
+
+document
+    .getElementById(
+        "nextBtn"
+    )
+    .addEventListener(
+        "click",
+        () => nextFact(true)
+    );
+
+
+document
+    .getElementById(
+        "skipBtn"
+    )
+    .addEventListener(
+        "click",
+        () => nextFact(false)
+    );
+
+
+/* ==========================================
+   MOUSE WHEEL
+========================================== */
+
+document
+    .getElementById(
+        "factArea"
+    )
+    .addEventListener(
+
+        "wheel",
+
+        async event => {
+
+
+            event.preventDefault();
+
+
+            if (
+                Math.abs(
+                    event.deltaY
+                ) < 20
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.deltaY > 0
+            ) {
+
+                await nextFact(
+                    true
+                );
+
+            }
+
+            else {
+
+                if (
+                    currentIndex > 0
+                ) {
+
+                    currentIndex--;
+
+                    showFact();
+
+                }
+
+            }
+
+        },
+
+        {
+            passive: false
+        }
+
+    );
+
+
+/* ==========================================
+   TOUCH
+========================================== */
+
+let touchStart = 0;
+
+
+document
+    .getElementById(
+        "factArea"
+    )
+    .addEventListener(
+
+        "touchstart",
+
+        event => {
+
+            touchStart =
+                event
+                    .touches[0]
+                    .clientY;
+
+        },
+
+        {
+            passive: true
+        }
+
+    );
+
+
+document
+    .getElementById(
+        "factArea"
+    )
+    .addEventListener(
+
+        "touchend",
+
+        async event => {
+
+
+            const end =
+                event
+                    .changedTouches[0]
+                    .clientY;
+
+
+            const difference =
+                touchStart - end;
+
+
+            if (
+                difference > 60
+            ) {
+
+                await nextFact(
+                    true
+                );
+
+            }
+
+            else if (
+                difference < -60
+            ) {
+
+                if (
+                    currentIndex > 0
+                ) {
+
+                    currentIndex--;
+
+                    showFact();
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+/* ==========================================
+   WEEK START
+========================================== */
+
+function getWeekStart() {
+
+    const now =
+        new Date();
+
+
+    const day =
+        now.getDay();
+
+
+    const diff =
+        day === 0
+            ? 6
+            : day - 1;
+
+
+    const monday =
+        new Date(now);
+
+
+    monday.setDate(
+        now.getDate() - diff
+    );
+
+
+    monday.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    return monday.toISOString();
+
+}
+
+
+/* ==========================================
+   LOAD RANKINGS
+========================================== */
+
+async function loadRankings() {
+
+
+    const start =
+        getWeekStart();
+
+
+    const {
+        data,
+        error
+    } =
+        await db
+            .from("ratings")
+            .select(`
+                fact_id,
+                score,
+                created_at,
+                facts (
+                    id,
+                    fact,
+                    nickname
+                )
+            `)
+            .gte(
+                "created_at",
+                start
+            );
+
+
+    if (error) {
+
+        console.error(
+            "RANKING ERROR:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    const grouped = {};
+
+
+    (data || [])
+        .forEach(row => {
+
+
+            if (!row.facts) {
+
+                return;
+
+            }
+
+
+            if (
+                !grouped[
+                    row.fact_id
+                ]
+            ) {
+
+                grouped[
+                    row.fact_id
+                ] = {
+
+                    id:
+                        row.fact_id,
+
+                    fact:
+                        row.facts.fact,
+
+                    nickname:
+                        row.facts.nickname,
+
+                    scores:
+                        []
+
+                };
+
+            }
+
+
+            grouped[
+                row.fact_id
+            ]
+            .scores
+            .push(
+                row.score
+            );
+
+        });
+
+
+    const ranked =
+        Object
+            .values(grouped)
+            .map(item => {
+
+
+                const sum =
+                    item.scores
+                        .reduce(
+                            (a,b) =>
+                                a + b,
+                            0
+                        );
+
+
+                return {
+
+                    ...item,
+
+                    average:
+                        sum /
+                        item.scores.length
+
+                };
+
+            });
+
+
+    const useless =
+        ranked
+            .filter(
+                x =>
+                    x.average < 0
+            )
+            .sort(
+                (a,b) =>
+                    a.average -
+                    b.average
+            )
+            .slice(
+                0,
+                50
+            );
+
+
+    const useful =
+        ranked
+            .filter(
+                x =>
+                    x.average > 0
+            )
+            .sort(
+                (a,b) =>
+                    b.average -
+                    a.average
+            )
+            .slice(
+                0,
+                50
+            );
+
+
+    renderRanking(
+        "uselessRanking",
+        useless
+    );
+
+
+    renderRanking(
+        "usefulRanking",
+        useful
+    );
+
+}
+
+
+/* ==========================================
+   RENDER RANKING
+========================================== */
+
+function renderRanking(
+    id,
+    list
+) {
+
+
+    const container =
+        document.getElementById(
+            id
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !list.length
+    ) {
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    color:#888;
+                    padding:20px 0;
+                    font-size:13px;
+                "
+            >
+                아직 이번 주 평가가 없습니다.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(
+        (item, index) => {
+
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "rank-item";
+
+
+            const score =
+                Math.round(
+                    item.average
+                );
+
+
+            element.innerHTML = `
+
+                <div class="rank-number">
+                    ${String(
+                        index + 1
+                    ).padStart(2,"0")}
+                </div>
+
+                <div class="rank-fact">
+
+                    <strong>
+                        ${escapeHTML(
+                            item.fact
+                        )}
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(
+                            item.nickname ||
+                            "익명"
+                        )}
+                    </small>
+
+                </div>
+
+                <div class="rank-score">
+                    ${
+                        score > 0
+                            ? "+"
+                            : ""
+                    }${score}
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   HTML ESCAPE
+========================================== */
+
+function escapeHTML(
+    str
+) {
+
+    return String(str)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+async function init() {
+
+
+    try {
+
+
+        await ensure1000Facts();
+
+
+        facts =
+            await loadFacts();
+
+
+        await loadRankings();
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "INIT ERROR:",
+            error
+        );
+
+
+        toast(
+            "데이터를 불러오지 못했습니다."
+        );
+
+
+    }
+
+    finally {
+
+
+        document
+            .getElementById(
+                "loading"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+    }
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
