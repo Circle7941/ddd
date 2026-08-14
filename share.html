@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>사실 공유 — SseulSaEop</title>
+<title>공유 — SseulSaEop</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -11,162 +11,179 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root{
-    --purple:#eee5ff;
-    --deep:#24143d;
-    --violet:#6741b5;
-    --forest:#173d2c;
-    --muted:#756d7f;
-    --line:#d9d0e7;
+--bg:#d9c8ff;
+--deep:#211334;
+--purple:#6338a8;
+--forest:#173d2c;
+--gray:#62576e;
 }
 
 *{box-sizing:border-box}
 
 body{
-    margin:0;
-    min-height:100vh;
-    background:var(--purple);
-    color:var(--deep);
-    font-family:"IBM Plex Sans KR",sans-serif;
-}
-
-.header{
-    height:72px;
-    padding:0 5vw;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #ffffff99;
-}
-
-.logo{
-    font:700 21px "Space Grotesk";
-}
-
-.nav{
-    display:flex;
-    gap:28px;
-    font:700 13px "Space Grotesk","IBM Plex Sans KR";
+margin:0;
+min-height:100vh;
+background:
+radial-gradient(circle at 20% 10%,#fff,transparent 27%),
+linear-gradient(135deg,#d9c8ff,#b99cff);
+color:var(--deep);
+font-family:"IBM Plex Sans KR",sans-serif;
+word-break:keep-all;
 }
 
 a{
-    color:inherit;
-    text-decoration:none;
+color:inherit;
+text-decoration:none;
+}
+
+.header{
+height:72px;
+padding:0 5vw;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #ffffff88;
+}
+
+.logo{
+font:700 21px "Space Grotesk";
+}
+
+.nav{
+display:flex;
+gap:28px;
+font:700 14px "Space Grotesk","IBM Plex Sans KR";
 }
 
 .container{
-    width:min(720px,90%);
-    margin:auto;
+width:min(720px,90%);
+margin:auto;
 }
 
 .page{
-    min-height:calc(100vh - 72px);
-    display:flex;
-    align-items:center;
-    padding:70px 0;
+min-height:calc(100vh - 72px);
+display:flex;
+align-items:center;
+padding:60px 0;
 }
 
 .back{
-    display:inline-block;
-    margin-bottom:30px;
-    font:700 12px "Space Grotesk";
+display:inline-block;
+margin-bottom:30px;
+font:700 12px "Space Grotesk";
 }
 
 h1{
-    margin:0;
-    font:700 clamp(40px,7vw,70px)/1.05 "Space Grotesk","IBM Plex Sans KR";
-    letter-spacing:-3px;
+margin:0;
+font:700 clamp(40px,7vw,70px)/1.05 "Space Grotesk","IBM Plex Sans KR";
+letter-spacing:-3px;
 }
 
 .sub{
-    margin:20px 0 40px;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.8;
+color:var(--gray);
+font-size:13px;
+line-height:1.8;
+margin:22px 0 35px;
 }
 
 label{
-    display:block;
-    margin:20px 0 8px;
-    font-size:11px;
-    font-weight:700;
+display:block;
+font-size:11px;
+font-weight:700;
+margin:20px 0 8px;
 }
 
 input,
 textarea{
-    width:100%;
-    border:1px solid #cfc5dc;
-    border-radius:0;
-    outline:none;
-    padding:15px;
-    background:#ffffffc9;
+width:100%;
+padding:15px;
+border:1px solid #b7a6c9;
+border-radius:0;
+outline:none;
+background:#ffffffaa;
+font:inherit;
 }
 
-input{
-    height:50px;
-}
+input{height:50px}
 
 textarea{
-    min-height:220px;
-    resize:vertical;
+height:220px;
+resize:vertical;
 }
 
 input:focus,
 textarea:focus{
-    border-color:var(--violet);
-    box-shadow:0 0 0 3px #6741b520;
+border-color:var(--purple);
+box-shadow:0 0 0 3px #6338a820;
 }
 
-.submit{
-    width:100%;
-    margin-top:18px;
-    padding:17px;
-    border:1px solid var(--forest);
-    background:var(--forest);
-    color:white;
-    font:700 13px "Space Grotesk","IBM Plex Sans KR";
+button{
+width:100%;
+margin-top:18px;
+padding:17px;
+border:1px solid var(--forest);
+background:var(--forest);
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
 }
 
-.submit:hover{
-    background:#65702b;
+button:hover{
+background:#68752d;
 }
 
 .toast{
-    position:fixed;
-    bottom:25px;
-    left:50%;
-    transform:translateX(-50%);
-    padding:13px 18px;
-    background:var(--deep);
-    color:white;
-    font-size:12px;
-    opacity:0;
-    transition:.2s;
+position:fixed;
+left:50%;
+bottom:25px;
+transform:translateX(-50%);
+padding:13px 18px;
+background:var(--deep);
+color:white;
+font-size:12px;
+opacity:0;
+transition:.2s;
 }
 
-.toast.show{
-    opacity:1;
-}
+.toast.show{opacity:1}
 
 @media(max-width:600px){
-    .header{height:64px}
-    .nav{gap:13px;font-size:11px}
-    .page{min-height:calc(100dvh - 64px)}
+
+.header{
+height:64px;
+}
+
+.nav{
+gap:14px;
+font-size:11px;
+}
+
+.page{
+min-height:calc(100dvh - 64px);
+}
+
 }
 </style>
 </head>
+
 
 <body>
 
 <header class="header">
 
-<a class="logo" href="index.html">
-    SseulSaEop
+<a href="./index.html" class="logo">
+SseulSaEop
 </a>
 
 <nav class="nav">
-    <a href="index.html">홈</a>
-    <a href="share.html">공유</a>
-    <a href="explore.html">구경</a>
+
+<a href="./index.html">홈</a>
+
+<a href="./share.html">공유</a>
+
+<a href="./explore.html">구경</a>
+
 </nav>
 
 </header>
@@ -176,44 +193,41 @@ textarea:focus{
 
 <div class="container">
 
-<a class="back" href="index.html">
-    ← HOME
+<a href="./index.html" class="back">
+← HOME
 </a>
 
 <h1>
-    당신만의<br>
-    쓸모없는 사실은?
+당신만의<br>
+쓸모없는 사실은?
 </h1>
 
 <p class="sub">
-    아무에게도 필요하지 않을 것 같지만<br>
-    이상하게 기억에 남는 사실을 남겨주세요.
+아무에게도 필요하지 않을 것 같지만<br>
+이상하게 기억에 남는 사실을 남겨주세요.
 </p>
 
 
 <label>닉네임</label>
 
 <input
-    id="nickname"
-    maxlength="30"
-    placeholder="어떤 이름으로 남길까요?"
+id="nickname"
+maxlength="30"
+placeholder="닉네임을 입력해주세요."
 >
 
 
 <label>쓸모없는 사실</label>
 
 <textarea
-    id="fact"
-    maxlength="2000"
-    placeholder="당신만 알고 있는 쓸모없는 사실을 적어주세요."
+id="fact"
+maxlength="2000"
+placeholder="당신만 알고 있는 쓸모없는 사실을 적어주세요."
 ></textarea>
 
 
-<button
-    id="submit"
-    class="submit"
->
-    사실 남기기 →
+<button id="submit">
+사실 남기기 →
 </button>
 
 </div>
@@ -226,102 +240,80 @@ textarea:focus{
 
 <script>
 
-const db =
-supabase.createClient(
-    "https://awujryapgmbhjvagonea.supabase.co",
-    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
+const db=supabase.createClient(
+"https://awujryapgmbhjvagonea.supabase.co",
+"sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
 );
 
 
 function toast(text){
 
-    const el =
-        document.getElementById("toast");
+const t=document.getElementById("toast");
 
-    el.textContent=text;
-    el.classList.add("show");
+t.textContent=text;
+t.classList.add("show");
 
-    setTimeout(
-        ()=>el.classList.remove("show"),
-        2300
-    );
+setTimeout(()=>{
+t.classList.remove("show");
+},2500);
+
 }
 
 
 document
 .getElementById("submit")
-.addEventListener(
-    "click",
-    async ()=>{
+.addEventListener("click",async()=>{
 
-        const nickname =
-            document
-            .getElementById("nickname")
-            .value.trim();
+const nickname=
+document.getElementById("nickname").value.trim();
 
-        const fact =
-            document
-            .getElementById("fact")
-            .value.trim();
+const fact=
+document.getElementById("fact").value.trim();
 
 
-        if(!fact){
+if(!fact){
 
-            toast(
-                "사실을 하나 적어주세요."
-            );
+toast("쓸모없는 사실을 적어주세요.");
 
-            return;
-        }
+return;
 
-
-        const button =
-            document.getElementById("submit");
-
-        button.disabled=true;
-        button.textContent="저장 중...";
+}
 
 
-        const {error} =
-            await db
-            .from("facts")
-            .insert({
-                nickname:
-                    nickname || "익명",
-                fact
-            });
+const button=document.getElementById("submit");
+
+button.disabled=true;
+button.textContent="저장 중...";
 
 
-        if(error){
-
-            console.error(error);
-
-            toast(
-                "저장하지 못했습니다."
-            );
-
-        }else{
-
-            document
-            .getElementById("nickname")
-            .value="";
-
-            document
-            .getElementById("fact")
-            .value="";
-
-            toast(
-                "쓸모없는 사실이 등록되었습니다."
-            );
-
-        }
+const {error}=await db
+.from("facts")
+.insert({
+nickname:nickname||"익명",
+fact:fact
+});
 
 
-        button.disabled=false;
-        button.textContent="사실 남기기 →";
+if(error){
 
-    }
-);
+console.error(error);
+
+toast("저장하지 못했습니다.");
+
+}else{
+
+document.getElementById("nickname").value="";
+document.getElementById("fact").value="";
+
+toast("쓸모없는 사실이 등록되었습니다.");
+
+}
+
+
+button.disabled=false;
+button.textContent="사실 남기기 →";
+
+});
 
 </script>
 
