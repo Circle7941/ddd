@@ -1,186 +1,331 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
 
 <title>구경 — SseulSaEop</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   FONT
+========================================================= */
+
+@import url(
+'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+);
+
+
+/* =========================================================
+   COLOR
+========================================================= */
 
 :root{
+
     --bg:#b79bea;
     --bg-dark:#9675cf;
+
     --deep:#21152d;
+
     --purple:#6035a0;
+
     --forest:#173d2c;
+
     --olive:#68752d;
+
     --gray:#716879;
+
     --white:#f8f5ff;
+
 }
+
+
+/* =========================================================
+   BASIC
+========================================================= */
 
 *{
     box-sizing:border-box;
 }
 
+
 html,
 body{
-    margin:0;
+
     width:100%;
     height:100%;
+
+    margin:0;
+
     overflow:hidden;
+
 }
 
-body{
-    color:var(--deep);
 
-    background:
-        radial-gradient(
-            circle at 20% 10%,
-            rgba(255,255,255,.65),
-            transparent 28%
-        ),
-        linear-gradient(
-            135deg,
-            var(--bg),
-            var(--bg-dark)
-        );
+body{
+
+    color:var(--deep);
 
     font-family:
         "IBM Plex Sans KR",
         sans-serif;
 
     word-break:keep-all;
+
+    background:
+
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(255,255,255,.58),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            135deg,
+            var(--bg),
+            var(--bg-dark)
+        );
+
 }
+
+
+/* =========================================================
+   LINKS
+========================================================= */
 
 a{
+
     color:inherit;
+
     text-decoration:none;
+
 }
 
 
-/* =========================
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
 .header{
+
     width:100%;
+
     height:72px;
 
+    padding:
+        0 5vw;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
-    padding:0 5vw;
+    position:relative;
 
-    border-bottom:
-        1px solid rgba(255,255,255,.4);
+    z-index:100;
 
     background:
         rgba(210,193,245,.35);
 
-    backdrop-filter:blur(14px);
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.4);
 
-    position:relative;
-    z-index:20;
+    backdrop-filter:
+        blur(14px);
+
 }
+
 
 .logo{
+
     font:
         700 21px
-        "Space Grotesk",
-        sans-serif;
+        "Space Grotesk";
+
+    letter-spacing:-.5px;
+
+    transition:
+        transform .22s ease,
+        color .22s ease;
+
 }
 
+
+.logo:hover{
+
+    color:var(--forest);
+
+    transform:
+        translateY(-2px)
+        scale(1.02);
+
+}
+
+
 .nav{
+
     display:flex;
+
     gap:28px;
 
     font:
         700 14px
-        "Space Grotesk",
-        "IBM Plex Sans KR",
-        sans-serif;
+        "Space Grotesk";
+
 }
+
 
 .nav a{
+
+    position:relative;
+
     transition:
-        color .2s,
-        transform .2s;
+        color .2s ease,
+        transform .2s ease;
+
 }
+
 
 .nav a:hover{
+
     color:var(--forest);
-    transform:translateY(-1px);
+
+    transform:
+        translateY(-2px);
+
 }
 
 
-/* =========================
+.nav a:active{
+
+    transform:
+        scale(.92);
+
+}
+
+
+.nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--forest);
+
+    transition:
+        width .25s ease;
+
+}
+
+
+.nav a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 .explore{
+
     width:100%;
-    height:calc(100vh - 72px);
+
+    height:
+        calc(100vh - 72px);
+
 }
 
+
 .loading{
+
     width:100%;
+
     height:100%;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     font-size:13px;
+
 }
 
 
-/* =========================
+/* =========================================================
    LAYOUT
-========================= */
+========================================================= */
 
 .layout{
-    width:min(1050px,90%);
+
+    width:
+        min(1100px,94%);
+
     height:100%;
 
     margin:0 auto;
 
     display:grid;
 
-    grid-template-rows:43% 57%;
+    grid-template-rows:
+        43%
+        57%;
+
 }
 
 
-/* =========================
-   SCORE
-========================= */
+/* =========================================================
+   SCORE PANEL
+========================================================= */
 
 .score-panel{
+
     position:relative;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
 }
 
 
-/*
-    실제 평가선의 범위
-    PC:
-    11% ~ 89%
-*/
+/* 실제 가로 평가선 */
 
 .score-line{
+
     position:absolute;
 
-    left:11%;
-    right:11%;
+    left:10%;
 
-    height:3px;
+    right:10%;
+
+    height:4px;
 
     background:
         linear-gradient(
@@ -189,47 +334,54 @@ a{
             #77717e 50%,
             var(--olive)
         );
+
+    transition:
+        opacity .2s ease;
+
 }
 
 
-/*
-    range 자체는 투명.
-    실제 조작은 이것으로 함.
-*/
+/* 투명 range */
 
 .slider{
+
     position:absolute;
 
-    left:11%;
-    right:11%;
+    left:10%;
+
+    right:10%;
 
     width:auto;
 
-    height:35px;
+    height:38px;
 
     opacity:0;
 
     cursor:pointer;
 
     z-index:5;
+
 }
 
 
-/*
-    점은 선의 범위 안에서만 이동
-*/
+/* 평가 점 */
 
 .knob{
+
     position:absolute;
 
-    width:25px;
-    height:25px;
+    width:26px;
+
+    height:26px;
 
     border-radius:50%;
 
-    border:5px solid var(--purple);
+    border:
+        5px solid
+        var(--purple);
 
-    background:var(--white);
+    background:
+        var(--white);
 
     transform:
         translate(-50%,-50%);
@@ -239,54 +391,99 @@ a{
     z-index:4;
 
     box-shadow:
-        0 3px 12px rgba(33,21,45,.25);
+        0 4px 15px
+        rgba(33,21,45,.25);
+
+    transition:
+        transform .12s ease,
+        box-shadow .2s ease;
+
 }
 
 
+.slider:hover + .knob{
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.12);
+
+    box-shadow:
+        0 6px 22px
+        rgba(33,21,45,.3);
+
+}
+
+
+/* 점수 */
+
 .value{
+
     position:absolute;
 
-    top:calc(50% + 27px);
+    top:
+        calc(50% + 28px);
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
     font:
         700 13px
         "Space Grotesk";
+
+    transition:
+        opacity .15s ease;
+
 }
 
 
+/* 양쪽 라벨 */
+
 .label{
+
     position:absolute;
 
-    top:calc(50% - 39px);
+    top:
+        calc(50% - 41px);
 
     font:
         700 10px
         "Space Grotesk";
+
+    letter-spacing:.4px;
+
 }
+
 
 .useless{
-    left:11%;
 
-    color:var(--forest);
+    left:10%;
+
+    color:
+        var(--forest);
+
 }
+
 
 .useful{
-    right:11%;
 
-    color:var(--olive);
+    right:10%;
+
+    color:
+        var(--olive);
+
 }
 
 
-/* =========================
-   FACT
-========================= */
+/* =========================================================
+   FACT AREA
+========================================================= */
 
 .fact-area{
+
     display:flex;
 
     align-items:flex-start;
+
     justify-content:center;
 
     padding-top:15px;
@@ -294,80 +491,205 @@ a{
     touch-action:pan-y;
 
     user-select:none;
+
+    cursor:grab;
+
 }
 
+
+.fact-area:active{
+
+    cursor:grabbing;
+
+}
+
+
+/* =========================================================
+   FACT CARD
+========================================================= */
+
 .fact-card{
-    width:min(800px,90%);
+
+    width:
+        min(850px,92%);
+
+    min-height:
+        240px;
 
     padding:
-        32px
-        42px
-        38px;
+        38px 48px 40px;
 
     background:
-        rgba(255,255,255,.55);
+        rgba(255,255,255,.57);
 
     border:
-        1px solid rgba(255,255,255,.5);
+        1px solid
+        rgba(255,255,255,.55);
 
     border-top:
-        4px solid var(--forest);
+        4px solid
+        var(--forest);
 
     text-align:center;
 
     box-shadow:
-        0 12px 40px rgba(33,21,45,.08);
+        0 14px 45px
+        rgba(33,21,45,.1);
+
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        opacity .35s ease,
+        box-shadow .25s ease;
+
 }
 
-.date{
-    margin-bottom:18px;
 
-    color:var(--gray);
+/* 사실 카드 hover */
+
+.fact-card:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 20px 55px
+        rgba(33,21,45,.14);
+
+}
+
+
+/* 넘어갈 때 */
+
+.fact-card.slide-out{
+
+    opacity:0;
+
+    transform:
+        translateY(18px)
+        scale(.97);
+
+}
+
+
+.fact-card.slide-in{
+
+    animation:
+        factIn .38s
+        cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+@keyframes factIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(-18px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* 날짜 */
+
+.date{
+
+    margin-bottom:20px;
+
+    color:
+        var(--gray);
 
     font:
         500 10px
         "Space Grotesk";
+
 }
 
+
+/* 사실 */
+
 .fact{
+
     margin:0;
 
     font:
-        700 clamp(24px,4vw,44px)/1.4
+        700
+        clamp(25px,4vw,45px)/1.42
         "Space Grotesk",
         "IBM Plex Sans KR",
         sans-serif;
 
-    letter-spacing:-1.5px;
+    letter-spacing:
+        -1.5px;
+
 }
+
+
+/* 닉네임 */
 
 .nickname{
-    margin-top:22px;
 
-    color:var(--gray);
+    margin-top:24px;
+
+    color:
+        var(--gray);
 
     font-size:11px;
+
+    transition:
+        color .2s ease;
+
 }
 
 
-/* =========================
+.fact-card:hover .nickname{
+
+    color:
+        var(--forest);
+
+}
+
+
+/* =========================================================
    NEXT BUTTON
-========================= */
+========================================================= */
 
 .down{
+
     position:fixed;
 
-    bottom:20px;
     left:50%;
 
-    transform:translateX(-50%);
+    bottom:20px;
 
-    width:50px;
-    height:50px;
+    transform:
+        translateX(-50%);
 
-    border:1px solid var(--forest);
+    width:52px;
 
-    background:var(--forest);
+    height:52px;
+
+    border:
+        1px solid
+        var(--forest);
+
+    background:
+        var(--forest);
 
     color:white;
 
@@ -375,52 +697,125 @@ a{
 
     cursor:pointer;
 
-    z-index:30;
+    z-index:100;
+
+    box-shadow:
+        0 8px 25px
+        rgba(23,61,44,.2);
 
     transition:
-        background .2s,
-        transform .2s;
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+
+    animation:
+        buttonFloat 2.6s
+        ease-in-out infinite;
+
 }
+
+
+@keyframes buttonFloat{
+
+    0%,
+    100%{
+
+        box-shadow:
+            0 8px 25px
+            rgba(23,61,44,.2);
+
+    }
+
+    50%{
+
+        box-shadow:
+            0 12px 32px
+            rgba(23,61,44,.32);
+
+    }
+
+}
+
 
 .down:hover{
-    background:var(--olive);
+
+    background:
+        var(--olive);
 
     transform:
         translateX(-50%)
-        translateY(-2px);
+        translateY(-3px)
+        scale(1.06);
+
 }
+
 
 .down:active{
+
     transform:
         translateX(-50%)
-        translateY(1px);
+        translateY(1px)
+        scale(.92);
+
 }
 
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:800px){
 
     .header{
-        height:64px;
 
-        padding:0 5%;
+        height:62px;
+
+        padding:
+            0 5%;
+
     }
+
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
 
     .nav{
-        gap:14px;
+
+        gap:13px;
 
         font-size:11px;
+
     }
+
 
     .explore{
-        height:calc(100dvh - 64px);
+
+        height:
+            calc(100dvh - 62px);
+
     }
 
+
+    /*
+        핵심 수정:
+
+        기존에는 사실 영역이 너무 좁았기 때문에
+        모바일에서는
+
+        사실 = 76%
+        평가 = 24%
+
+        로 변경
+    */
+
     .layout{
+
         width:100%;
+
         height:100%;
 
         margin:0;
@@ -428,102 +823,154 @@ a{
         display:grid;
 
         grid-template-columns:
-            minmax(0,1fr)
-            82px;
+            minmax(0,76%)
+            minmax(70px,24%);
 
         grid-template-rows:1fr;
+
     }
 
 
-    /* =========================
+    /* =====================================================
        FACT LEFT
-    ========================= */
+    ===================================================== */
 
     .fact-area{
+
         width:100%;
+
         height:100%;
 
         padding:
-            15px
-            7px
-            15px
-            15px;
+            14px
+            8px
+            14px
+            14px;
+
+        display:flex;
 
         align-items:center;
 
+        justify-content:center;
+
         overflow:hidden;
+
     }
 
+
     .fact-card{
-        position:relative;
 
         width:100%;
 
         height:
-            calc(100dvh - 115px);
+            calc(100dvh - 105px);
+
+        min-height:0;
 
         padding:
-            55px
-            18px
+            62px
+            22px
             30px;
 
         display:flex;
 
         flex-direction:column;
 
-        justify-content:center;
         align-items:flex-start;
+
+        justify-content:center;
 
         text-align:left;
 
         overflow:hidden;
-    }
 
-    .date{
-        position:absolute;
+        border-top:
+            4px solid
+            var(--forest);
 
-        top:18px;
-        left:18px;
-    }
-
-    .fact{
-        width:100%;
-
-        font-size:
-            clamp(21px,7vw,35px);
-
-        line-height:1.45;
-    }
-
-    .nickname{
-        margin-top:22px;
-    }
-
-
-    /* =========================
-       SCORE RIGHT
-    ========================= */
-
-    .score-panel{
-        width:82px;
-        height:100%;
-
-        overflow:visible;
     }
 
 
     /*
-        모바일 실제 선:
-        위 14% ~ 아래 86%
+        모바일 사실 글자도
+        너무 작아지지 않도록 확대
+    */
+
+    .fact{
+
+        width:100%;
+
+        font:
+            700
+            clamp(24px,6vw,37px)/1.48
+            "IBM Plex Sans KR",
+            sans-serif;
+
+        letter-spacing:
+            -1px;
+
+        overflow-wrap:
+            break-word;
+
+    }
+
+
+    .date{
+
+        position:absolute;
+
+        top:20px;
+
+        left:22px;
+
+        margin:0;
+
+        font-size:10px;
+
+    }
+
+
+    .nickname{
+
+        margin-top:25px;
+
+        font-size:11px;
+
+    }
+
+
+    /* =====================================================
+       SCORE RIGHT
+    ===================================================== */
+
+    .score-panel{
+
+        width:100%;
+
+        height:100%;
+
+        overflow:visible;
+
+    }
+
+
+    /*
+        세로선의 범위를
+        화면 안쪽으로 충분히 확보
     */
 
     .score-line{
-        top:14%;
-        bottom:14%;
+
+        top:12%;
+
+        bottom:12%;
 
         left:50%;
 
-        width:3px;
+        right:auto;
+
+        width:4px;
+
         height:auto;
 
         transform:
@@ -536,58 +983,69 @@ a{
                 #77717e 50%,
                 var(--olive)
             );
+
     }
 
 
     /*
-        range를 세로로 돌림
+        range를 세로 방향으로 사용
     */
 
     .slider{
-        top:14%;
-        bottom:14%;
+
+        top:12%;
+
+        bottom:12%;
 
         left:50%;
 
+        right:auto;
+
         width:72px;
+
         height:auto;
 
         transform:
             translateX(-50%)
             rotate(90deg);
 
-        transform-origin:center;
+        transform-origin:
+            center center;
 
-        opacity:0;
-
-        /*
-            range의 실제 유효범위가
-            선의 길이와 일치하도록 설정
-        */
     }
 
 
+    /*
+        점은 반드시
+        12% ~ 88% 사이에만 위치
+    */
+
     .knob{
+
         left:50%;
 
-        /*
-            JS에서 top 계산
-        */
     }
 
 
     .value{
+
         left:50%;
 
-        top:calc(50% + 28px);
+        top:
+            calc(50% + 27px);
 
         transform:
             translateX(-50%);
+
+        font-size:12px;
+
     }
 
 
     .label{
+
         left:50% !important;
+
         right:auto !important;
 
         width:70px;
@@ -596,35 +1054,114 @@ a{
 
         transform:
             translateX(-50%);
+
+        font-size:9px;
+
     }
+
 
     .useless{
-        top:7%;
+
+        top:5%;
+
     }
+
 
     .useful{
+
         top:auto;
-        bottom:7%;
+
+        bottom:5%;
+
     }
 
+
+    /* =====================================================
+       MOBILE NEXT
+    ===================================================== */
 
     .down{
-        bottom:12px;
 
-        width:43px;
-        height:43px;
+        bottom:
+            max(12px,env(safe-area-inset-bottom));
+
+        width:44px;
+
+        height:44px;
 
         font-size:18px;
+
     }
+
 }
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:390px){
+
+    .layout{
+
+        grid-template-columns:
+            minmax(0,74%)
+            minmax(72px,26%);
+
+    }
+
+
+    .fact-area{
+
+        padding:
+            10px
+            6px
+            10px
+            10px;
+
+    }
+
+
+    .fact-card{
+
+        padding:
+            58px
+            18px
+            25px;
+
+    }
+
+
+    .fact{
+
+        font-size:
+            clamp(21px,5.8vw,29px);
+
+    }
+
+
+    .nav{
+
+        gap:10px;
+
+    }
+
+}
+
 </style>
+
 </head>
 
 
 <body>
 
 
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <header class="header">
+
 
     <a
         href="./index.html"
@@ -650,9 +1187,14 @@ a{
 
     </nav>
 
+
 </header>
 
 
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
 
 <main class="explore">
 
@@ -673,16 +1215,24 @@ a{
     >
 
 
-        <!-- 평가 영역 -->
+        <!-- =================================================
+             SCORE
+        ================================================== -->
 
         <section class="score-panel">
 
+
             <div class="label useless">
+
                 −10 USELESS
+
             </div>
 
+
             <div class="label useful">
+
                 +10 USEFUL
+
             </div>
 
 
@@ -713,18 +1263,26 @@ a{
                 0.00
             </div>
 
+
         </section>
 
 
 
-        <!-- 사실 영역 -->
+        <!-- =================================================
+             FACT
+        ================================================== -->
 
         <section
             id="factArea"
             class="fact-area"
         >
 
-            <article class="fact-card">
+
+            <article
+                id="factCard"
+                class="fact-card"
+            >
+
 
                 <div
                     id="date"
@@ -743,9 +1301,12 @@ a{
                     class="nickname"
                 ></div>
 
+
             </article>
 
+
         </section>
+
 
     </div>
 
@@ -755,8 +1316,11 @@ a{
         id="down"
         class="down"
         title="다음 사실"
+        aria-label="다음 사실"
     >
+
         ↓
+
     </button>
 
 
@@ -766,23 +1330,23 @@ a{
 
 <script>
 
-/* =========================
+/* =========================================================
    SUPABASE
-========================= */
+========================================================= */
 
-const db = supabase.createClient(
+const db =
+    supabase.createClient(
 
-    "https://awujryapgmbhjvagonea.supabase.co",
+        "https://awujryapgmbhjvagonea.supabase.co",
 
-    "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
+        "sb_publishable_kTh-cDGS1NZxuTnBMe0qtQ_M6Wn65DE"
 
-);
+    );
 
 
-
-/* =========================
+/* =========================================================
    VARIABLES
-========================= */
+========================================================= */
 
 let facts = [];
 
@@ -795,90 +1359,130 @@ let mouseStartY = 0;
 let moving = false;
 
 
-
-/* =========================
+/* =========================================================
    ELEMENTS
-========================= */
+========================================================= */
 
 const slider =
-    document.getElementById("slider");
+    document.getElementById(
+        "slider"
+    );
+
 
 const knob =
-    document.getElementById("knob");
+    document.getElementById(
+        "knob"
+    );
+
 
 const value =
-    document.getElementById("value");
+    document.getElementById(
+        "value"
+    );
+
 
 const factArea =
-    document.getElementById("factArea");
+    document.getElementById(
+        "factArea"
+    );
 
 
+const factCard =
+    document.getElementById(
+        "factCard"
+    );
 
-/* =========================
-   UPDATE SLIDER
-========================= */
+
+/* =========================================================
+   SLIDER UPDATE
+========================================================= */
 
 function updateSlider(){
 
+
     const score =
-        Number(slider.value);
+        Number(
+            slider.value
+        );
 
-
-    /* 숫자 표시 */
 
     value.textContent =
+
         score >= 0
-            ? "+" + score.toFixed(2)
+
+            ? "+" +
+              score.toFixed(2)
+
             : score.toFixed(2);
 
 
+
     /*
-        -10 = 0%
-        +10 = 100%
+        -10 = 0
+        +10 = 1
     */
 
     const percent =
         (score + 10) / 20;
 
 
-    if(window.innerWidth <= 800){
+
+    if(
+        window.innerWidth <= 800
+    ){
 
         /*
             모바일 실제 선:
-            top 14% ~ bottom 14%
 
-            따라서 점도 그 안에서만 움직임.
+            12% ~ 88%
         */
 
-        const min = 14;
-        const max = 86;
+        const min =
+            12;
 
-        const top =
-            min + (max - min) * percent;
+        const max =
+            88;
+
+
+        const position =
+            min +
+            (max - min) *
+            percent;
 
 
         knob.style.top =
-            `${top}%`;
+            position + "%";
+
 
         knob.style.left =
             "50%";
 
-    }else{
+    }
+
+    else{
 
         /*
-            PC 실제 선:
-            left 11% ~ right 11%
+            PC:
+
+            10% ~ 90%
         */
 
-        const min = 11;
-        const max = 89;
+        const min =
+            10;
 
-        const left =
-            min + (max - min) * percent;
+        const max =
+            90;
+
+
+        const position =
+            min +
+            (max - min) *
+            percent;
 
 
         knob.style.left =
-            `${left}%`;
+            position + "%";
+
 
         knob.style.top =
             "50%";
@@ -888,23 +1492,25 @@ function updateSlider(){
 }
 
 
-
 slider.addEventListener(
     "input",
     updateSlider
 );
 
 
-
-/* =========================
+/* =========================================================
    LOAD FACTS
-========================= */
+========================================================= */
 
 async function loadFacts(){
 
+
     const {
+
         data,
+
         error
+
     } = await db
 
         .from("facts")
@@ -921,34 +1527,49 @@ async function loadFacts(){
         );
 
 
+
     if(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         document
-            .getElementById("loading")
+            .getElementById(
+                "loading"
+            )
             .textContent =
             "사실을 불러오지 못했습니다.";
+
 
         return;
 
     }
 
 
+
     facts =
         data || [];
 
 
-    if(facts.length === 0){
+
+    if(
+        facts.length === 0
+    ){
 
         document
-            .getElementById("loading")
+            .getElementById(
+                "loading"
+            )
             .innerHTML = `
 
-                <div style="
-                    text-align:center;
-                    line-height:1.8;
-                ">
+                <div
+                    style="
+                        text-align:center;
+                        line-height:1.8;
+                    "
+                >
 
                     아직 등록된 사실이 없습니다.
 
@@ -961,7 +1582,9 @@ async function loadFacts(){
                             text-decoration:underline;
                         "
                     >
+
                         첫 번째 사실 남기기 →
+
                     </a>
 
                 </div>
@@ -970,23 +1593,31 @@ async function loadFacts(){
 
 
         document
-            .getElementById("down")
+            .getElementById(
+                "down"
+            )
             .style.display =
             "none";
+
 
         return;
 
     }
 
 
+
     document
-        .getElementById("loading")
+        .getElementById(
+            "loading"
+        )
         .style.display =
         "none";
 
 
     document
-        .getElementById("content")
+        .getElementById(
+            "content"
+        )
         .style.display =
         "grid";
 
@@ -996,37 +1627,50 @@ async function loadFacts(){
 }
 
 
-
-/* =========================
+/* =========================================================
    SHOW FACT
-========================= */
+========================================================= */
 
 function showFact(){
+
 
     const item =
         facts[current];
 
 
     document
-        .getElementById("fact")
+        .getElementById(
+            "fact"
+        )
         .textContent =
         item.fact;
 
 
     document
-        .getElementById("nickname")
+        .getElementById(
+            "nickname"
+        )
         .textContent =
         "by " +
-        (item.nickname || "익명");
+        (
+            item.nickname ||
+            "익명"
+        );
+
 
 
     const date =
-        new Date(item.created_at);
+        new Date(
+            item.created_at
+        );
 
 
     document
-        .getElementById("date")
+        .getElementById(
+            "date"
+        )
         .textContent =
+
         date.toLocaleDateString(
             "ko-KR",
             {
@@ -1037,41 +1681,109 @@ function showFact(){
         );
 
 
+
     /*
-        새 사실은 항상 0점에서 시작
+        새로운 사실은
+        항상 0점
     */
 
-    slider.value = 0;
+    slider.value =
+        0;
+
 
     updateSlider();
 
 }
 
 
+/* =========================================================
+   SHOW FACT WITH ANIMATION
+========================================================= */
 
-/* =========================
+function changeFactWithAnimation(){
+
+
+    factCard.classList.add(
+        "slide-out"
+    );
+
+
+    setTimeout(
+        function(){
+
+            current++;
+
+
+            if(
+                current >= facts.length
+            ){
+
+                current = 0;
+
+            }
+
+
+            showFact();
+
+
+            factCard.classList.remove(
+                "slide-out"
+            );
+
+
+            /*
+                reflow
+
+                애니메이션을 다시 실행하기 위해
+            */
+
+            void factCard.offsetWidth;
+
+
+            factCard.classList.add(
+                "slide-in"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    factCard.classList.remove(
+                        "slide-in"
+                    );
+
+                },
+                400
+            );
+
+        },
+        220
+    );
+
+}
+
+
+/* =========================================================
    SAVE RATING
-========================= */
+========================================================= */
 
 async function saveRating(){
+
 
     const item =
         facts[current];
 
 
-    /*
-        소수 둘째 자리까지 저장
-    */
-
     const score =
         Number(
-            Number(slider.value)
-                .toFixed(2)
+            Number(
+                slider.value
+            ).toFixed(2)
         );
 
 
+
     const {
-        data,
         error
     } = await db
 
@@ -1079,13 +1791,14 @@ async function saveRating(){
 
         .insert({
 
-            fact_id:item.id,
+            fact_id:
+                item.id,
 
-            score:score
+            score:
+                score
 
-        })
+        });
 
-        .select();
 
 
     if(error){
@@ -1095,15 +1808,10 @@ async function saveRating(){
             error
         );
 
+
         return false;
 
     }
-
-
-    console.log(
-        "평가 저장 완료:",
-        data
-    );
 
 
     return true;
@@ -1111,19 +1819,20 @@ async function saveRating(){
 }
 
 
-
-/* =========================
+/* =========================================================
    NEXT FACT
-========================= */
+========================================================= */
 
 async function nextFact(){
 
-    if(moving){
-        return;
-    }
 
-    if(!facts.length){
+    if(
+        moving ||
+        !facts.length
+    ){
+
         return;
+
     }
 
 
@@ -1131,55 +1840,72 @@ async function nextFact(){
 
 
     /*
-        현재 사실의 점수를 저장
+        현재 점수 저장
     */
 
     await saveRating();
 
 
     /*
-        다음 사실
+        애니메이션으로 다음 사실
     */
 
-    current++;
+    changeFactWithAnimation();
 
 
-    if(current >= facts.length){
+    setTimeout(
+        function(){
 
-        current = 0;
+            moving = false;
 
-    }
-
-
-    showFact();
-
-
-    moving = false;
+        },
+        350
+    );
 
 }
 
 
-
-/* =========================
+/* =========================================================
    BUTTON
-========================= */
+========================================================= */
 
 document
-    .getElementById("down")
+    .getElementById(
+        "down"
+    )
     .addEventListener(
         "click",
         nextFact
     );
 
 
-
-/* =========================
-   SPACE / ARROWDOWN
-========================= */
+/* =========================================================
+   SPACE / ARROW DOWN
+========================================================= */
 
 document.addEventListener(
     "keydown",
     function(e){
+
+
+        /*
+            textarea나 input에 입력 중이면
+            다음 사실로 넘어가지 않음
+        */
+
+        const tag =
+            document.activeElement.tagName;
+
+
+        if(
+            tag === "INPUT" ||
+            tag === "TEXTAREA"
+        ){
+
+            return;
+
+        }
+
 
         if(
             e.code === "Space" ||
@@ -1187,6 +1913,7 @@ document.addEventListener(
         ){
 
             e.preventDefault();
+
 
             nextFact();
 
@@ -1196,17 +1923,17 @@ document.addEventListener(
 );
 
 
-
-/* =========================
+/* =========================================================
    TOUCH SWIPE
-========================= */
+========================================================= */
 
 factArea.addEventListener(
     "touchstart",
     function(e){
 
         startY =
-            e.changedTouches[0].clientY;
+            e.changedTouches[0]
+                .clientY;
 
     },
     {
@@ -1219,16 +1946,23 @@ factArea.addEventListener(
     "touchend",
     function(e){
 
+
         const endY =
-            e.changedTouches[0].clientY;
+            e.changedTouches[0]
+                .clientY;
 
 
         const diff =
             endY - startY;
 
 
+        /*
+            위/아래 어느 방향으로
+            넘겨도 다음 사실
+        */
+
         if(
-            Math.abs(diff) > 60
+            Math.abs(diff) > 55
         ){
 
             nextFact();
@@ -1242,10 +1976,9 @@ factArea.addEventListener(
 );
 
 
-
-/* =========================
+/* =========================================================
    MOUSE DRAG
-========================= */
+========================================================= */
 
 factArea.addEventListener(
     "mousedown",
@@ -1262,12 +1995,14 @@ factArea.addEventListener(
     "mouseup",
     function(e){
 
+
         const diff =
-            e.clientY - mouseStartY;
+            e.clientY -
+            mouseStartY;
 
 
         if(
-            Math.abs(diff) > 60
+            Math.abs(diff) > 55
         ){
 
             nextFact();
@@ -1278,14 +2013,25 @@ factArea.addEventListener(
 );
 
 
+/* =========================================================
+   RESIZE
+========================================================= */
 
-/* =========================
+window.addEventListener(
+    "resize",
+    updateSlider
+);
+
+
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 loadFacts();
 
 </script>
 
+
 </body>
+
 </html>
